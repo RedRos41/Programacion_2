@@ -11,8 +11,9 @@ public class GestionUsuario {
         this.usuarios = new ArrayList<>();
     }
 
-    public void agregarUsuario() {
-
+    public void agregarUsuario(String nombreUsuario, String direccion, String correo, String contrasena, long idUsuario, long telefono) {
+        Usuario usuario = new Usuario(nombreUsuario, direccion, correo, contrasena, idUsuario, telefono);
+        usuarios.add(usuario);
     }
 
     public void actualizarUsuario() {
