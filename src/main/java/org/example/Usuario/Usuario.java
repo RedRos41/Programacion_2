@@ -1,7 +1,6 @@
 package org.example.Usuario;
 
 public class Usuario {
-
     private String nombreUsuario, direccion, correo, contrasena;
     private final long idUsuario;
     private long telefono;

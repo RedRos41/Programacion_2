@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class GestionUsuario {
-
     private final List<Usuario> usuarios;
 
     public GestionUsuario() {
@@ -25,6 +24,8 @@ public class GestionUsuario {
     }
 
     public void imprimirUsuario() {
-        System.out.println(usuarios);
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario);
+        }
     }
 }
