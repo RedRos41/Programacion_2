@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Scanner;
 import org.example.Usuario.GestionUsuario;
 import org.example.Usuario.Usuario;
 

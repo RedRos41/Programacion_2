@@ -4,25 +4,25 @@ import java.util.ArrayList;
 
 public class GestionUsuario {
 
-    private ArrayList<Usuario> usuarios;
+    private final ArrayList<Usuario> usuarios;
 
-    public GestionUsuario(){
+    public GestionUsuario() {
         this.usuarios = new ArrayList<>();
     }
 
-    public void agregarUsuario(){
+    public void agregarUsuario() {
 
     }
 
-    public void actualizarUsuario(){
+    public void actualizarUsuario() {
 
     }
 
-    public void eliminarUsuario(){
+    public void eliminarUsuario() {
 
     }
 
-    public void imprimirUsuario(){
+    public void imprimirUsuario() {
         System.out.println(usuarios);
     }
 }
