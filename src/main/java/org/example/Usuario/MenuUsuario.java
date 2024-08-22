@@ -48,17 +48,36 @@ public class MenuUsuario {
                     break;
 
                 case 2:
-                    // Funcionalidad de actualización
-                    System.out.println("Funcionalidad de actualización de usuario no implementada aún.");
+                    System.out.println("Ingrese el ID del usuario:");
+                    long idUsuarioActualizar = scanner.nextLong();
+                    scanner.nextLine();
+
+                    System.out.println("Ingrese el nombre del usuario:");
+                    String actualizarNombreUsuario = scanner.nextLine();
+
+                    System.out.println("Ingrese la dirección del usuario:");
+                    String actualizarDireccion = scanner.nextLine();
+
+                    System.out.println("Ingrese el correo del usuario:");
+                    String actualizarCorreo = scanner.nextLine();
+
+                    System.out.println("Ingrese la contraseña del usuario:");
+                    String actualizarContrasena = scanner.nextLine();
+
+                    System.out.println("Ingrese el teléfono del usuario:");
+                    String actualizarTelefono = scanner.nextLine();
+
+                    gestionUsuario.actualizarUsuario(idUsuarioActualizar, actualizarNombreUsuario, actualizarDireccion, actualizarCorreo, actualizarContrasena, actualizarTelefono);
                     break;
 
                 case 3:
-                    // Funcionalidad de eliminación
-                    System.out.println("Funcionalidad de eliminación de usuario no implementada aún.");
+                    System.out.println("Ingrese el ID del usuario:");
+                    long eliminarUsuario = scanner.nextLong();
+
+                    gestionUsuario.eliminarUsuario(eliminarUsuario);
                     break;
 
                 case 4:
-                    System.out.println("Usuarios registrados:");
                     gestionUsuario.imprimirUsuario();
                     break;
 
