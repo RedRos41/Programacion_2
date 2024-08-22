@@ -2,7 +2,6 @@ package org.example.Usuario;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class GestionUsuario {
     private final List<Usuario> usuarios;
