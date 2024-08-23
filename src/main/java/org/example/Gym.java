@@ -1,12 +1,15 @@
 package org.example;
 
 import java.util.Scanner;
+
+import org.example.Clase.MenuClase;
 import org.example.Usuario.MenuUsuario;
 
 public class Gym {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         MenuUsuario menuUsuario = new MenuUsuario();
+        MenuClase menuClase = new MenuClase();
         boolean salir = false;
 
         while (!salir) {
@@ -29,6 +32,7 @@ public class Gym {
 
                 case 2:
                     // Menú para gestionar Clases
+                    menuClase.mostrarMenu(scanner);
                     System.out.println("Funcionalidad de gestión de clases no implementada aún.");
                     break;
 
