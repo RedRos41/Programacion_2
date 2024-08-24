@@ -10,19 +10,19 @@ public class GestionUsuario {
         this.usuarios = new ArrayList<>();
     }
 
-    public void agregarUsuario(String nombreUsuario, String direccion, String correo, String contrasena, long idUsuario, long telefono) {
-        Usuario usuario = new Usuario(nombreUsuario, direccion, correo, contrasena, idUsuario, telefono);
+    public void agregarUsuario(String nombre, long id, String direccion, String correo, String contrasena,  long telefono) {
+        Usuario usuario = new Usuario(nombre, id, direccion, correo, contrasena, telefono);
         usuarios.add(usuario);
-        System.out.println("Usuario con ID " + idUsuario + " agregado correctamente.");
+        System.out.println("Usuario con ID " + id + " agregado correctamente.");
     }
 
-    public void actualizarUsuario(long idUsuario, String nombreUsuario, String direccion, String correo, String contrasena, String telefono) {
+    public void actualizarUsuario(long id, String nombre, String direccion, String correo, String contrasena, String telefono) {
         boolean actualizar = false;
 
         for (Usuario usuario : usuarios) {
-            if (usuario.getIdUsuario() == idUsuario) {
-                if (!nombreUsuario.isEmpty()) {
-                    usuario.setNombreUsuario(nombreUsuario);
+            if (usuario.getId() == id) {
+                if (!nombre.isEmpty()) {
+                    usuario.setNombre(nombre);
                 }
                 if (!direccion.isEmpty()) {
                     usuario.setDireccion(direccion);
@@ -37,28 +37,28 @@ public class GestionUsuario {
                     usuario.setTelefono(Long.parseLong(telefono));
                 }
                 actualizar = true;
-                System.out.println("Usuario con ID " + idUsuario + " actualizado correctamente.");
+                System.out.println("Usuario con ID " + id + " actualizado correctamente.");
                 break;
             }
         }
         if (!actualizar) {
-            System.out.println("Usuario con ID " + idUsuario + " no encontrado.");
+            System.out.println("Usuario con ID " + id + " no encontrado.");
         }
     }
 
-    public void eliminarUsuario(long idUsuario) {
+    public void eliminarUsuario(long id) {
         boolean eliminar = false;
 
         for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getIdUsuario() == idUsuario) {
+            if (usuarios.get(i).getId() == id) {
                 usuarios.remove(i);
                 eliminar = true;
-                System.out.println("Usuario con ID " + idUsuario + " eliminado correctamemte.");
+                System.out.println("Usuario con ID " + id + " eliminado correctamemte.");
                 break;
             }
         }
         if (!eliminar) {
-            System.out.println("Usuario con ID " + idUsuario + " no encontrado.");
+            System.out.println("Usuario con ID " + id + " no encontrado.");
         }
     }
 

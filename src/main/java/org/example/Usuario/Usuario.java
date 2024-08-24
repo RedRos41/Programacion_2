@@ -1,21 +1,17 @@
 package org.example.Usuario;
 
-public class Usuario {
-    private String nombreUsuario, direccion, correo, contrasena;
-    private final long idUsuario;
+import org.example.Persona;
+
+public class Usuario extends Persona {
+    private String direccion, correo, contrasena;
     private long telefono;
 
-    public Usuario(String nombreUsuario, String direccion, String correo, String contrasena, long idUsuario, long telefono) {
-        this.nombreUsuario = nombreUsuario;
+    public Usuario(String nombre, long id, String direccion, String correo, String contrasena, long telefono) {
+        super(nombre, id);
         this.direccion = direccion;
         this.correo = correo;
         this.contrasena = contrasena;
-        this.idUsuario = idUsuario;
         this.telefono = telefono;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
     }
 
     public String getDireccion() {
@@ -30,16 +26,8 @@ public class Usuario {
         return contrasena;
     }
 
-    public long getIdUsuario() {
-        return idUsuario;
-    }
-
     public long getTelefono() {
         return telefono;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
     }
 
     public void setDireccion(String direccion) {
@@ -61,11 +49,11 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
-                "nombreUsuario='" + nombreUsuario + '\'' +
+                "nombre='" + nombre + '\'' +
+                ", id=" + id +
                 ", direccion='" + direccion + '\'' +
                 ", correo='" + correo + '\'' +
                 ", contrasena='" + contrasena + '\'' +
-                ", idUsuario=" + idUsuario +
                 ", telefono=" + telefono +
                 '}';
     }

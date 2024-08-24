@@ -27,7 +27,11 @@ public class MenuUsuario {
             switch (opcion) {
                 case 1:
                     System.out.println("Ingrese el nombre del usuario:");
-                    String nombreUsuario = scanner.nextLine();
+                    String nombre = scanner.nextLine();
+
+                    System.out.println("Ingrese el ID del usuario:");
+                    long id = scanner.nextLong();
+                    scanner.nextLine();
 
                     System.out.println("Ingrese la dirección del usuario:");
                     String direccion = scanner.nextLine();
@@ -38,22 +42,19 @@ public class MenuUsuario {
                     System.out.println("Ingrese la contraseña del usuario:");
                     String contrasena = scanner.nextLine();
 
-                    System.out.println("Ingrese el ID del usuario:");
-                    long idUsuario = scanner.nextLong();
-
                     System.out.println("Ingrese el teléfono del usuario:");
                     long telefono = scanner.nextLong();
 
-                    gestionUsuario.agregarUsuario(nombreUsuario, direccion, correo, contrasena, idUsuario, telefono);
+                    gestionUsuario.agregarUsuario(nombre, id, direccion, correo, contrasena, telefono);
                     break;
 
                 case 2:
                     System.out.println("Ingrese el ID del usuario:");
-                    long idUsuarioActualizar = scanner.nextLong();
+                    long idUActualizar = scanner.nextLong();
                     scanner.nextLine();
 
                     System.out.println("Ingrese el nombre del usuario:");
-                    String actualizarNombreUsuario = scanner.nextLine();
+                    String actualizarNombre = scanner.nextLine();
 
                     System.out.println("Ingrese la dirección del usuario:");
                     String actualizarDireccion = scanner.nextLine();
@@ -67,7 +68,7 @@ public class MenuUsuario {
                     System.out.println("Ingrese el teléfono del usuario:");
                     String actualizarTelefono = scanner.nextLine();
 
-                    gestionUsuario.actualizarUsuario(idUsuarioActualizar, actualizarNombreUsuario, actualizarDireccion, actualizarCorreo, actualizarContrasena, actualizarTelefono);
+                    gestionUsuario.actualizarUsuario(idUActualizar, actualizarNombre, actualizarDireccion, actualizarCorreo, actualizarContrasena, actualizarTelefono);
                     break;
 
                 case 3:
