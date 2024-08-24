@@ -10,7 +10,13 @@ public class GestionUsuario {
         this.usuarios = new ArrayList<>();
     }
 
-    public void agregarUsuario(String nombre, long id, String direccion, String correo, String contrasena,  long telefono) {
+    public void agregarUsuario(String nombre, long id, String direccion, String correo, String contrasena, long telefono) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getId() == id) {
+                System.out.println("Usuario con ID " + id + " ya existe.");
+                return;
+            }
+        }
         Usuario usuario = new Usuario(nombre, id, direccion, correo, contrasena, telefono);
         usuarios.add(usuario);
         System.out.println("Usuario con ID " + id + " agregado correctamente.");
