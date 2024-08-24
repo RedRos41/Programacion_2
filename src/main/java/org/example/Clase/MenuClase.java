@@ -1,5 +1,7 @@
 package org.example.Clase;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class MenuClase {
@@ -32,27 +34,31 @@ public class MenuClase {
                     System.out.println("Ingrese el nombre de la clase:");
                     String nombreClase = scanner.nextLine();
 
-                    System.out.println("Ingrese el tipo de clase:");
-                    String tipoClase = scanner.nextLine();
+                    System.out.println("Ingrese el Nombre del Tipo de clase:");
+                    String nombreTipoInput = scanner.nextLine();
+                    TipoClase tipoClase = new TipoClase(nombreTipoInput);
 
-                    System.out.println("Ingrese el horario de la clase (en formato HH-MM):");
-                    int horarioClase = scanner.nextInt();
+                    System.out.println("Ingrese el horario de la clase (en formato HH:MM):");
+                    String horarioClaseInput = scanner.nextLine();
+                    LocalTime horarioClase = LocalTime.parse(horarioClaseInput);
 
-                    System.out.println("Ingrese la fecha de inicio de la clase (en formato AAAAMMDD):");
-                    int fechaInicioClase = scanner.nextInt();
+                    System.out.println("Ingrese la fecha de inicio de la clase (en formato AAAA-MM-DD):");
+                    String fechaInicioInput = scanner.nextLine();
+                    LocalDate fechaInicioClase = LocalDate.parse(fechaInicioInput);
 
                     System.out.println("Ingrese la fecha de fin de la clase (en formato AAAA-MM-DD):");
-                    int fechaFinClase = scanner.nextInt();
+                    String fechaFinInput = scanner.nextLine();
+                    LocalDate fechaFinClase = LocalDate.parse(fechaFinInput);
 
                     System.out.println("Ingrese la capacidad de la clase:");
                     short capacidad = scanner.nextShort();
 
                     System.out.println("Ingrese el estado de la clase (true para activa, false para inactiva):");
                     boolean estadoClase = scanner.nextBoolean();
+                    scanner.nextLine();
 
                     System.out.println("Ingrese el ID de la clase:");
-                    long idClase = scanner.nextLong();
-                    scanner.nextLine();
+                    String idClase = scanner.nextLine();
 
                     gestionClase.agregarClase(idClase, estadoClase, capacidad, fechaInicioClase, fechaFinClase, horarioClase, tipoClase, nombreClase);
                     System.out.println("Clase agregada: " + nombreClase);
@@ -60,7 +66,8 @@ public class MenuClase {
 
                 case 2:
                     System.out.println("Ingrese el horario de la clase (en formato HH-MM):");
-                    int horario = scanner.nextInt();
+                    String horarioInput = scanner.nextLine();
+                    LocalTime horario = LocalTime.parse(horarioInput);
                     Clase claseHorario = gestionClase.buscarClaseHorario(horario);
                     if (claseHorario != null) {
                         System.out.println("Clase encontrada: " + claseHorario);
@@ -69,14 +76,14 @@ public class MenuClase {
                     }
                     break;
                 case 3:
-                    System.out.println("Ingrese el tipo de clase:");
-
-                    String tipo = scanner.nextLine();
-                    Clase claseTipo = gestionClase.buscarClaseTipo(tipo);
+                    System.out.println("Ingrese el Nombre de Tipo de clase:");
+                    String nombreTipo = scanner.nextLine();
+                    TipoClase tipoClaseBusqueda = new TipoClase(nombreTipo);
+                    Clase claseTipo = gestionClase.buscarClaseTipo(tipoClaseBusqueda);
                     if (claseTipo != null) {
                         System.out.println("Clases encontradas:" + claseTipo);
                     } else {
-                        System.out.println("No se encontraron clases de ese tipo.");
+                        System.out.println("No se encontraron clases de ese NombreTipo.");
                     }
                     break;
                 case 4:

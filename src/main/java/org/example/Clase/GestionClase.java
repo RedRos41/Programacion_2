@@ -1,5 +1,7 @@
 package org.example.Clase;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,46 +11,41 @@ public class GestionClase {
 
     public GestionClase() {this.clases = new ArrayList<>();
     }
-
-    public boolean agregarClase (long idClase, boolean estadoClase, short capacidad, int fechaInicioClase, int fechaFinClase, int horarioClase, String tipoClase, String nombreClase) {
+    int plazas = 0;
+    public boolean agregarClase (String idClase, boolean estadoClase, short capacidad, LocalDate fechaInicioClase, LocalDate fechaFinClase, LocalTime horarioClase, TipoClase tipoClase, String nombreClase) {
         if (buscarClaseId(idClase) == null) {
             Clase clase = new Clase(idClase, estadoClase, capacidad, fechaInicioClase, fechaFinClase, horarioClase, tipoClase, nombreClase);
             clases.add(clase);
+            plazas+=1;
             return true;
         }
         return false;
     }
-    public Clase buscarClaseId(long idClase) {
+    public Clase buscarClaseId(String idClase) {
         for (Clase clase : clases) {
-            if (clase.getIdClase() == idClase) {
+            if (clase.getIdClase().equals(idClase)) {
                 return clase;
             }
         }
         return null;
     }
-    public Clase buscarClaseHorario(int horarioClase){
+    public Clase buscarClaseHorario(LocalTime horarioClase){
         for (Clase clase: clases){
-            if(clase.getHorarioClase() == horarioClase){
+            if(clase.getHorarioClase().equals(horarioClase)){
                 return clase;
             }
 
         }
         return null;
     }
-    public Clase buscarClaseTipo(String tipoClase){
+    public Clase buscarClaseTipo(TipoClase tipoClase){
         for (Clase clase: clases){
-            if(clase.getTipoClase().equalsIgnoreCase(tipoClase)){
+            if(clase.getTipoClase().equals(tipoClase)){
                 return clase;
             }
         }
     // falta el metodo con el entrenador
         return null;
-    }
-
-
-
-    public void cancelarClase(){
-
     }
 
     public void consultarDisponibilidadClase(){

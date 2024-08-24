@@ -1,14 +1,20 @@
 package org.example.Clase;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 public class Clase {
-    private String nombreClase, tipoClase;
-    private int horarioClase, fechaInicioClase, fechaFinClase;
+    private String nombreClase;
+    private TipoClase tipoClase;
+    //private Entrenador entrenador;
+    private LocalTime horarioClase;
+    private LocalDate fechaInicioClase, fechaFinClase;
     private short capacidad;
     private boolean estadoClase;
-    private final long idClase;
+    private final String idClase;
 
     // entrenador (nombre, numId, especialidad)
-    public Clase(long idClase, boolean estadoClase, short capacidad, int fechaInicioClase, int fechaFinClase, int horarioClase, String tipoClase, String nombreClase) {
+    public Clase(String idClase, boolean estadoClase, short capacidad, LocalDate fechaInicioClase, LocalDate fechaFinClase, LocalTime horarioClase, TipoClase tipoClase, String nombreClase) {
         this.idClase = idClase;
         this.estadoClase = estadoClase;
         this.capacidad = capacidad;
@@ -22,16 +28,16 @@ public class Clase {
     public String getNombreClase() {return nombreClase;
     }
 
-    public String getTipoClase() {return tipoClase;
+    public TipoClase getTipoClase() {return tipoClase;
     }
 
-    public int getHorarioClase() {return horarioClase;
+    public LocalTime getHorarioClase() {return horarioClase;
     }
 
-    public int getFechaInicioClase() {return fechaInicioClase;
+    public LocalDate getFechaInicioClase() {return fechaInicioClase;
     }
 
-    public int getFechaFinClase() {return fechaFinClase;
+    public LocalDate getFechaFinClase() {return fechaFinClase;
     }
 
     public short getCapacidad() {return capacidad;
@@ -40,26 +46,26 @@ public class Clase {
     public boolean isEstadoClase() {return estadoClase;
     }
 
-    public long getIdClase() {return idClase;
+    public String getIdClase() {return idClase;
     }
 
     public void setNombreClase(String nombreClase) {
         this.nombreClase = nombreClase;
     }
 
-    public void setTipoClase(String tipoClase) {
+    public void setTipoClase(TipoClase tipoClase) {
         this.tipoClase = tipoClase;
     }
 
-    public void setHorarioClase(int horarioClase) {
+    public void setHorarioClase(LocalTime horarioClase) {
         this.horarioClase = horarioClase;
     }
 
-    public void setFechaInicioClase(int fechaInicioClase) {
+    public void setFechaInicioClase(LocalDate fechaInicioClase) {
         this.fechaInicioClase = fechaInicioClase;
     }
 
-    public void setFechaFinClase(int fechaFinClase) {
+    public void setFechaFinClase(LocalDate fechaFinClase) {
         this.fechaFinClase = fechaFinClase;
     }
 
