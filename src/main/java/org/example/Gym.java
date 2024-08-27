@@ -1,4 +1,6 @@
 package org.example;
+import org.example.Entrenador.MenuEntrenador;
+import org.example.Entrenamiento.MenuEntrenamiento;
 
 import java.util.Scanner;
 
@@ -37,14 +39,16 @@ public class Gym {
                     break;
 
                 case 3:
-                    // Menú para gestionar Entrenadores
-                    System.out.println("Funcionalidad de gestión de entrenadores no implementada aún.");
+                    MenuEntrenador menuEntrenador = new MenuEntrenador();
+                    menuEntrenador.mostrarMenu(scanner);
                     break;
 
+
                 case 4:
-                    // Menú para gestionar Entrenamientos
-                    System.out.println("Funcionalidad de gestión de entrenamientos no implementada aún.");
+                    MenuEntrenamiento menuEntrenamiento = new MenuEntrenamiento();
+                    menuEntrenamiento.mostrarMenu(scanner);
                     break;
+
 
                 case 5:
                     // Menú para gestionar Reportes
