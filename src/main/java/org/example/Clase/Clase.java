@@ -1,6 +1,7 @@
 package org.example.Clase;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Clase {
@@ -9,12 +10,13 @@ public class Clase {
     //private Entrenador entrenador;
     private LocalTime horarioClase;
     private LocalDate fechaInicioClase, fechaFinClase;
-    private short capacidad;
-    private boolean estadoClase;
+    private short capacidad; //seria la capacidad de clases que hay segun el tipo de clase
+    private boolean estadoClase; // este indica si hay o no disponibilidad de plazas de la clase
     private final String idClase;
+    private List<Reserva> registroReserva;
 
     // entrenador (nombre, numId, especialidad)
-    public Clase(String idClase, boolean estadoClase, short capacidad, LocalDate fechaInicioClase, LocalDate fechaFinClase, LocalTime horarioClase, TipoClase tipoClase, String nombreClase) {
+    public Clase(String idClase, boolean estadoClase, short capacidad, LocalDate fechaInicioClase, LocalDate fechaFinClase, LocalTime horarioClase, TipoClase tipoClase, String nombreClase,List<Reserva> registroReserva ) {
         this.idClase = idClase;
         this.estadoClase = estadoClase;
         this.capacidad = capacidad;
@@ -23,6 +25,7 @@ public class Clase {
         this.horarioClase = horarioClase;
         this.tipoClase = tipoClase;
         this.nombreClase = nombreClase;
+        this.registroReserva = new ArrayList<>();
     }
 
     public String getNombreClase() {return nombreClase;
@@ -47,6 +50,9 @@ public class Clase {
     }
 
     public String getIdClase() {return idClase;
+    }
+
+    public List<Reserva> getRegistroReserva(){return registroReserva;
     }
 
     public void setNombreClase(String nombreClase) {

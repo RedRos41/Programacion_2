@@ -12,16 +12,16 @@ public class GestionClase {
     public GestionClase() {this.clases = new ArrayList<>();
     }
 
-    public boolean agregarClase (String idClase, boolean estadoClase, short capacidad, LocalDate fechaInicioClase, LocalDate fechaFinClase, LocalTime horarioClase, TipoClase tipoClase, String nombreClase) {
-        if (buscarClaseId(idClase) == null) {
-            Clase clase = new Clase(idClase, estadoClase, capacidad, fechaInicioClase, fechaFinClase, horarioClase, tipoClase, nombreClase);
+    public boolean agregarClase (String idClase, boolean estadoClase, short capacidad, LocalDate fechaInicioClase, LocalDate fechaFinClase, LocalTime horarioClase, TipoClase tipoClase, String nombreClase, List<Reserva> registroReserva) {
+        if (verificarClaseId(idClase) == null) {
+            Clase clase = new Clase(idClase, estadoClase, capacidad, fechaInicioClase, fechaFinClase, horarioClase, tipoClase, nombreClase,registroReserva);
             clases.add(clase);
 
             return true;
         }
         return false;
     }
-    public Clase buscarClaseId(String idClase) {
+    public Clase verificarClaseId(String idClase) {
         for (Clase clase : clases) {
             if (clase.getIdClase().equals(idClase)) {
                 return clase;
@@ -49,9 +49,14 @@ public class GestionClase {
     }
     // falta el metodo con el entrenador
 
-    public void consultarDisponibilidadClase(){
+
+
+    public void disponibilidadClase(){
 
     }
+
+
+
 
     public void imprimirClases() {
         for (Clase clase : clases) {

@@ -1,25 +1,19 @@
 package org.example.Clase;
 
+import org.example.Usuario.Usuario;
+
 import java.time.LocalDateTime;
 
 public class Reserva {
 
     private LocalDateTime fechaReserva;
-    //usuario
-    private String codigo;
+    private Usuario usuario;
+    private Clase clase;
 
-    public Reserva(LocalDateTime fechaReserva, String codigo) {
+    public Reserva(Usuario usuario, LocalDateTime fechaReserva, Clase clase) {
+        this.usuario = usuario;
         this.fechaReserva = fechaReserva;
-        this.codigo = codigo;
-
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.clase = clase;
     }
 
     public LocalDateTime getFechaReserva() {
@@ -28,5 +22,22 @@ public class Reserva {
 
     public void setFechaReserva(LocalDateTime fechaReserva) {
         this.fechaReserva = fechaReserva;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public Clase getClase() {
+        return clase;
+    }
+
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "fechaReserva=" + fechaReserva +
+                ", usuario=" + usuario.getNombre() +
+                ", clase=" + clase.getNombreClase() +
+                '}';
     }
 }
