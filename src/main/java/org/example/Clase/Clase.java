@@ -80,8 +80,8 @@ public class Clase {
     @Override
     public String toString() {
         return "Clase{" +
-                ", idClase=" + idClase +
-                "nombreClase='" + nombreClase + '\'' +
+                "idClase=" + idClase +
+                ", nombreClase='" + nombreClase + '\'' +
                 ", tipoClase='" + tipoClase + '\'' +
                 ", horarioClase=" + horarioClase +
                 ", fechaInicioClase=" + fechaInicioClase +

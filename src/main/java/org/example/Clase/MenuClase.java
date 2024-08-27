@@ -2,6 +2,7 @@ package org.example.Clase;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuClase {
@@ -34,9 +35,32 @@ public class MenuClase {
                     System.out.println("Ingrese el nombre de la clase:");
                     String nombreClase = scanner.nextLine();
 
-                    System.out.println("Ingrese el Nombre del Tipo de clase:");
-                    String nombreTipoInput = scanner.nextLine();
-                    TipoClase tipoClase = new TipoClase(nombreTipoInput);
+                    System.out.println("Seleccione el tipo de clase:");
+                    System.out.println("1. AEROBICOS");
+                    System.out.println("2. FLEXIBILIDAD");
+                    System.out.println("3. FUERZA");
+                    System.out.println("4. RESISTENCIA");
+                    int tipoOpcion = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea
+
+                    TipoClase tipoClase;
+                    switch (tipoOpcion) {
+                        case 1:
+                            tipoClase = TipoClase.AEROBICOS;
+                            break;
+                        case 2:
+                            tipoClase = TipoClase.FLEXIBILIDAD;
+                            break;
+                        case 3:
+                            tipoClase = TipoClase.FUERZA;
+                            break;
+                        case 4:
+                            tipoClase = TipoClase.RESISTENCIA;
+                            break;
+                        default:
+                            System.out.println("Opción no válida. Seleccionando AEROBICOS por defecto.");
+                            tipoClase = TipoClase.AEROBICOS;
+                    }
 
                     System.out.println("Ingrese el horario de la clase (en formato HH:MM):");
                     String horarioClaseInput = scanner.nextLine();
@@ -65,27 +89,67 @@ public class MenuClase {
                     break;
 
                 case 2:
-                    System.out.println("Ingrese el horario de la clase (en formato HH-MM):");
+                    System.out.println("Ingrese el horario de la clase (en formato HH:MM):");
                     String horarioInput = scanner.nextLine();
                     LocalTime horario = LocalTime.parse(horarioInput);
-                    Clase claseHorario = gestionClase.buscarClaseHorario(horario);
-                    if (claseHorario != null) {
-                        System.out.println("Clase encontrada: " + claseHorario);
+                    List<Clase> clasesHorario = gestionClase.buscarClaseHorario(horario);
+
+                    if (!clasesHorario.isEmpty()) {
+                        System.out.println("Clases encontradas en el horario " + horario + ":");
+                        for (Clase clase : clasesHorario) {
+                            System.out.println(clase);
+                        }
                     } else {
                         System.out.println("No se encontró ninguna clase en ese horario.");
                     }
                     break;
+
                 case 3:
-                    System.out.println("Ingrese el Nombre de Tipo de clase:");
-                    String nombreTipo = scanner.nextLine();
-                    TipoClase tipoClaseBusqueda = new TipoClase(nombreTipo);
-                    Clase claseTipo = gestionClase.buscarClaseTipo(tipoClaseBusqueda);
-                    if (claseTipo != null) {
-                        System.out.println("Clases encontradas:" + claseTipo);
+                    System.out.println("Seleccione el tipo de clase:");
+                    System.out.println("1. AEROBICOS");
+                    System.out.println("2. FLEXIBILIDAD");
+                    System.out.println("3. FUERZA");
+                    System.out.println("4. RESISTENCIA");
+                    int tipoOpcionBusqueda = scanner.nextInt();
+                    scanner.nextLine();
+
+                    TipoClase tipoClaseBusqueda=null;
+                    boolean opcionValida=false;
+
+                    while (!opcionValida) {
+                        switch (tipoOpcionBusqueda) {
+                            case 1:
+                                tipoClaseBusqueda = TipoClase.AEROBICOS;
+                                opcionValida=true;
+                                break;
+                            case 2:
+                                tipoClaseBusqueda = TipoClase.FLEXIBILIDAD;
+                                opcionValida=true;
+                                break;
+                            case 3:
+                                tipoClaseBusqueda = TipoClase.FUERZA;
+                                opcionValida=true;
+                                break;
+                            case 4:
+                                tipoClaseBusqueda = TipoClase.RESISTENCIA;
+                                opcionValida=true;
+                                break;
+                            default:
+                                System.out.println("Opción no válida. Por favor, intente nuevamente.");
+                        }
+                    }
+                    List<Clase> clasesTipo = gestionClase.buscarClaseTipo(tipoClaseBusqueda);
+
+                    if (!clasesTipo.isEmpty()) {
+                        System.out.println("Clases encontradas para el tipo " + tipoClaseBusqueda + ":");
+                        for (Clase clase : clasesTipo) {
+                            System.out.println(clase);
+                        }
                     } else {
-                        System.out.println("No se encontraron clases de ese NombreTipo.");
+                        System.out.println("No se encontraron clases de ese tipo.");
                     }
                     break;
+
                 case 4:
                     // Implementar lógica para cancelar clase
                     break;
