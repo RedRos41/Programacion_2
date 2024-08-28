@@ -10,6 +10,10 @@ public class GestionUsuario {
         this.usuarios = new ArrayList<>();
     }
 
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
     public void agregarUsuario(String nombre, long id, String direccion, String correo, String contrasena, long telefono) {
         for (Usuario usuario : usuarios) {
             if (usuario.getId() == id) {
@@ -69,9 +73,13 @@ public class GestionUsuario {
     }
 
     public void imprimirUsuario() {
-        System.out.println("Usuarios registrados:");
-        for (Usuario usuario : usuarios) {
-            System.out.println(usuario);
+        if (usuarios.isEmpty()) {
+            System.out.println("No hay usuarios registrados.");
+        } else {
+            System.out.println("Usuarios registrados:");
+            for (Usuario usuario : usuarios) {
+                System.out.println(usuario);
+            }
         }
     }
 }
