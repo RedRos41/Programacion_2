@@ -23,12 +23,12 @@ public class MenuClase {
             System.out.println("3. Buscar Clase por Tipo");
             System.out.println("4. Cancelar Clase");
             System.out.println("5. Consultar Disponibilidad de Clase");
-            System.out.println("6. Imprimir clases");
+            System.out.println("6. Imprimir Clases");
             System.out.println("7. Salir");
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine();  // Consumir el salto de línea
 
             switch (opcion) {
                 case 1:
@@ -84,7 +84,7 @@ public class MenuClase {
                     System.out.println("Ingrese el ID de la clase:");
                     String idClase = scanner.nextLine();
 
-                    gestionClase.agregarClase(idClase, estadoClase, capacidad, fechaInicioClase, fechaFinClase, horarioClase, tipoClase, nombreClase);
+                    gestionClase.agregarClase(nombreClase, tipoClase, null, horarioClase, fechaInicioClase, fechaFinClase, capacidad, idClase);
                     System.out.println("Clase agregada: " + nombreClase);
                     break;
 
@@ -113,26 +113,26 @@ public class MenuClase {
                     int tipoOpcionBusqueda = scanner.nextInt();
                     scanner.nextLine();
 
-                    TipoClase tipoClaseBusqueda=null;
-                    boolean opcionValida=false;
+                    TipoClase tipoClaseBusqueda = null;
+                    boolean opcionValida = false;
 
                     while (!opcionValida) {
                         switch (tipoOpcionBusqueda) {
                             case 1:
                                 tipoClaseBusqueda = TipoClase.AEROBICOS;
-                                opcionValida=true;
+                                opcionValida = true;
                                 break;
                             case 2:
                                 tipoClaseBusqueda = TipoClase.FLEXIBILIDAD;
-                                opcionValida=true;
+                                opcionValida = true;
                                 break;
                             case 3:
                                 tipoClaseBusqueda = TipoClase.FUERZA;
-                                opcionValida=true;
+                                opcionValida = true;
                                 break;
                             case 4:
                                 tipoClaseBusqueda = TipoClase.RESISTENCIA;
-                                opcionValida=true;
+                                opcionValida = true;
                                 break;
                             default:
                                 System.out.println("Opción no válida. Por favor, intente nuevamente.");
@@ -153,9 +153,11 @@ public class MenuClase {
                 case 4:
                     // Implementar lógica para cancelar clase
                     break;
+
                 case 5:
                     // Implementar lógica para consultar disponibilidad de clase
                     break;
+
                 case 6:
                     gestionClase.imprimirClases();
                     break;
@@ -163,9 +165,11 @@ public class MenuClase {
                 case 7:
                     salir = true;
                     break;
+
                 default:
                     System.out.println("Opción no válida. Intente nuevamente.");
             }
         }
     }
 }
+

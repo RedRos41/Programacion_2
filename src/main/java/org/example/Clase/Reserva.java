@@ -9,11 +9,22 @@ public class Reserva {
     private LocalDateTime fechaReserva;
     private Usuario usuario;
     private Clase clase;
+    private String codigo;
 
-    public Reserva(Usuario usuario, LocalDateTime fechaReserva, Clase clase) {
+    public Reserva(Usuario usuario, LocalDateTime fechaReserva, Clase clase, String codigo) {
         this.usuario = usuario;
         this.fechaReserva = fechaReserva;
         this.clase = clase;
+        this.codigo = codigo;
+
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public LocalDateTime getFechaReserva() {
@@ -38,6 +49,7 @@ public class Reserva {
                 "fechaReserva=" + fechaReserva +
                 ", usuario=" + usuario.getNombre() +
                 ", clase=" + clase.getNombreClase() +
+                ", codigo= " + codigo +
                 '}';
     }
 }

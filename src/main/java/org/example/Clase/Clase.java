@@ -1,58 +1,73 @@
 package org.example.Clase;
+import org.example.Entrenador.Entrenador;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Clase {
     private String nombreClase;
     private TipoClase tipoClase;
-    //private Entrenador entrenador;
+    private Entrenador entrenador;
     private LocalTime horarioClase;
     private LocalDate fechaInicioClase, fechaFinClase;
-    private short capacidad; //seria la capacidad de clases que hay segun el tipo de clase
-    private boolean estadoClase; // este indica si hay o no disponibilidad de plazas de la clase
+    private short capacidad;
+    private boolean estadoClase;
     private final String idClase;
     private List<Reserva> registroReserva;
 
-    // entrenador (nombre, numId, especialidad)
-    public Clase(String idClase, boolean estadoClase, short capacidad, LocalDate fechaInicioClase, LocalDate fechaFinClase, LocalTime horarioClase, TipoClase tipoClase, String nombreClase,List<Reserva> registroReserva ) {
-        this.idClase = idClase;
-        this.estadoClase = estadoClase;
-        this.capacidad = capacidad;
+
+    public Clase(String nombreClase, TipoClase tipoClase, Entrenador entrenador, LocalTime horarioClase, LocalDate fechaInicioClase, LocalDate fechaFinClase, short capacidad, String idClase, List<Reserva> registroReserva) {
+        this.nombreClase = nombreClase;
+        this.tipoClase = tipoClase;
+        this.entrenador = entrenador;
+        this.horarioClase = horarioClase;
         this.fechaInicioClase = fechaInicioClase;
         this.fechaFinClase = fechaFinClase;
-        this.horarioClase = horarioClase;
-        this.tipoClase = tipoClase;
-        this.nombreClase = nombreClase;
-        this.registroReserva = new ArrayList<>();
+        this.capacidad = capacidad;
+        this.idClase = idClase;
+        this.registroReserva = registroReserva;
+        this.estadoClase = registroReserva.size() <= capacidad;
     }
 
-    public String getNombreClase() {return nombreClase;
+    public String getNombreClase() {
+        return nombreClase;
     }
 
-    public TipoClase getTipoClase() {return tipoClase;
+    public boolean isEstadoClase() {
+        return estadoClase;
     }
 
-    public LocalTime getHorarioClase() {return horarioClase;
+    public short getCapacidad() {
+        return capacidad;
     }
 
-    public LocalDate getFechaInicioClase() {return fechaInicioClase;
+    public LocalDate getFechaFinClase() {
+        return fechaFinClase;
     }
 
-    public LocalDate getFechaFinClase() {return fechaFinClase;
+    public LocalDate getFechaInicioClase() {
+        return fechaInicioClase;
     }
 
-    public short getCapacidad() {return capacidad;
+    public LocalTime getHorarioClase() {
+        return horarioClase;
     }
 
-    public boolean isEstadoClase() {return estadoClase;
+    public Entrenador getEntrenador() {
+        return entrenador;
     }
 
-    public String getIdClase() {return idClase;
+    public TipoClase getTipoClase() {
+        return tipoClase;
     }
 
-    public List<Reserva> getRegistroReserva(){return registroReserva;
+    public List<Reserva> getRegistroReserva() {
+        return registroReserva;
+    }
+
+    public String getIdClase() {
+        return idClase;
     }
 
     public void setNombreClase(String nombreClase) {
@@ -61,6 +76,10 @@ public class Clase {
 
     public void setTipoClase(TipoClase tipoClase) {
         this.tipoClase = tipoClase;
+    }
+
+    public void setEntrenador(Entrenador entrenador) {
+        this.entrenador = entrenador;
     }
 
     public void setHorarioClase(LocalTime horarioClase) {
@@ -79,21 +98,26 @@ public class Clase {
         this.capacidad = capacidad;
     }
 
-    public void setEstadoClase(boolean estadoClase) {
-        this.estadoClase = estadoClase;
+    public void setRegistroReserva(List<Reserva> registroReserva) {
+        this.registroReserva = registroReserva;
     }
 
+    public void actualizarEstadoClase() {
+        this.estadoClase = registroReserva.size() <= capacidad;
+    }
     @Override
     public String toString() {
         return "Clase{" +
-                "idClase=" + idClase +
-                ", nombreClase='" + nombreClase + '\'' +
-                ", tipoClase='" + tipoClase + '\'' +
+                "nombreClase='" + nombreClase + '\'' +
+                ", tipoClase=" + tipoClase +
+                ", entrenador=" + entrenador +
                 ", horarioClase=" + horarioClase +
                 ", fechaInicioClase=" + fechaInicioClase +
                 ", fechaFinClase=" + fechaFinClase +
                 ", capacidad=" + capacidad +
                 ", estadoClase=" + estadoClase +
+                ", idClase='" + idClase + '\'' +
+                ", registroReserva=" + registroReserva +
                 '}';
     }
 }

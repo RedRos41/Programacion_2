@@ -5,6 +5,4 @@ public enum TipoClase {
     FLEXIBILIDAD,
     FUERZA,
     RESISTENCIA
-
-
 }
