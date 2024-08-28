@@ -66,4 +66,9 @@ class TestUsuario {
         gestionUsuario.agregarUsuario("Juan", 1L, "Calle 123", "juan@example.com", "password123", 1234567890L);
         gestionUsuario.imprimirUsuario();
     }
+
+    @Test
+    void testImprimirUsuarioNoExistente() {
+        gestionUsuario.imprimirUsuario();
+    }
 }
