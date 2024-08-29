@@ -46,21 +46,15 @@ public class MenuEntrenador {
     private void agregarEntrenador(Scanner scanner) {
         System.out.print("Ingrese ID: ");
         long id = Long.parseLong(scanner.nextLine());
+
         System.out.print("Ingrese nombre: ");
         String nombre = scanner.nextLine();
-        System.out.print("Ingrese dirección: ");
-        String direccion = scanner.nextLine();
-        System.out.print("Ingrese correo: ");
-        String correo = scanner.nextLine();
-        System.out.print("Ingrese contraseña: ");
-        String contrasena = scanner.nextLine();
-        System.out.print("Ingrese teléfono: ");
-        long telefono = Long.parseLong(scanner.nextLine());
+
         System.out.print("Ingrese especialidad: ");
         String especialidad = scanner.nextLine();
 
         try {
-            gestionEntrenador.agregarEntrenador(new Entrenador(nombre, id, direccion, correo, contrasena, telefono, especialidad));
+            gestionEntrenador.agregarEntrenador(nombre, id, especialidad);
             System.out.println("Entrenador agregado exitosamente.");
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());

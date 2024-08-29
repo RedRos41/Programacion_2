@@ -24,7 +24,7 @@ public class MenuEntrenamiento {
                     agregarEntrenamiento(scanner);
                     break;
                 case 2:
-                    mostrarEntrenamientosPorTipoClase(scanner);
+                    System.out.println("AUN NO!");
                     break;
                 case 0:
                     System.out.println("Volviendo al Menú Principal...");
@@ -36,19 +36,18 @@ public class MenuEntrenamiento {
     }
 
     private void agregarEntrenamiento(Scanner scanner) {
-        System.out.print("Ingrese ID del Entrenamiento: ");
-        long id = Long.parseLong(scanner.nextLine());
-        System.out.print("Ingrese ID del Usuario: ");
-        long idUsuario = Long.parseLong(scanner.nextLine());
-        System.out.print("Ingrese Tipo de Clase (AEROBICOS, FLEXIBILIDAD, FUERZA, RESISTENCIA): ");
-        TipoClase tipoClase = TipoClase.valueOf(scanner.nextLine().toUpperCase());
+        System.out.print("Ingrese la duracion del entrenamiento: ");
+        int duracion = scanner.nextInt();
+        System.out.print("Ingrese las calorias quemadas: ");
+        int caloriasQuemadas = scanner.nextInt();
+        scanner.nextLine();
         System.out.print("Ingrese Tipo de Entrenamiento (CARDIO, PESAS, FLEXIBILIDAD, HIIT, YOGA, PILATES, ZUMBA, NATACION, CROSSFIT): ");
         TipoEntrenamiento tipoEntrenamiento = TipoEntrenamiento.valueOf(scanner.nextLine().toUpperCase());
         System.out.print("Ingrese Descripción del Entrenamiento: ");
         String descripcion = scanner.nextLine();
 
         try {
-            Entrenamiento entrenamiento = new Entrenamiento(id, idUsuario, tipoClase, tipoEntrenamiento, descripcion);
+            Entrenamiento entrenamiento = new Entrenamiento(tipoEntrenamiento, descripcion, duracion, caloriasQuemadas);
             entrenamientos.add(entrenamiento);
             System.out.println("Entrenamiento agregado exitosamente.");
         } catch (IllegalArgumentException e) {
@@ -56,16 +55,4 @@ public class MenuEntrenamiento {
         }
     }
 
-
-    private void mostrarEntrenamientosPorTipoClase(Scanner scanner) {
-        System.out.print("Ingrese Tipo de Clase (AEROBICOS, FLEXIBILIDAD, FUERZA, RESISTENCIA): ");
-        TipoClase tipoClase = TipoClase.valueOf(scanner.nextLine().toUpperCase());
-
-        System.out.println("Entrenamientos para la clase " + tipoClase + ":");
-        for (Entrenamiento entrenamiento : entrenamientos) {
-            if (entrenamiento.getTipoClase() == tipoClase) {
-                System.out.println(entrenamiento);
-            }
-        }
-    }
 }

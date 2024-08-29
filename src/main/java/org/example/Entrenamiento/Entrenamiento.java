@@ -3,30 +3,24 @@ package org.example.Entrenamiento;
 import org.example.Clase.TipoClase;
 
 public class Entrenamiento {
-    private long id;
-    private long idUsuario;
-    private TipoClase tipoClase;
+    private int duracion;
+    private int caloriasQuemadas;
     private TipoEntrenamiento tipoEntrenamiento;
     private String descripcion;
 
-    public Entrenamiento(long id, long idUsuario, TipoClase tipoClase, TipoEntrenamiento tipoEntrenamiento, String descripcion) {
-        this.id = id;
-        this.idUsuario = idUsuario;
-        this.tipoClase = tipoClase;
+    public Entrenamiento(TipoEntrenamiento tipoEntrenamiento, String descripcion, int duracion, int caloriasQuemadas) {
+        this.duracion = duracion;
+        this.caloriasQuemadas = caloriasQuemadas;
         this.tipoEntrenamiento = tipoEntrenamiento;
         this.descripcion = descripcion;
     }
 
-    public long getId() {
-        return id;
+    public int getDuracion() {
+        return duracion;
     }
 
-    public long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public TipoClase getTipoClase() {
-        return tipoClase;
+    public int getCaloriasQuemadas() {
+        return caloriasQuemadas;
     }
 
     public TipoEntrenamiento getTipoEntrenamiento() {
@@ -37,12 +31,27 @@ public class Entrenamiento {
         return descripcion;
     }
 
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
+
+    public void setCaloriasQuemadas(int caloriasQuemadas) {
+        this.caloriasQuemadas = caloriasQuemadas;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setTipoEntrenamiento(TipoEntrenamiento tipoEntrenamiento) {
+        this.tipoEntrenamiento = tipoEntrenamiento;
+    }
+
     @Override
     public String toString() {
         return "Entrenamiento{" +
-                "id=" + id +
-                ", idUsuario=" + idUsuario +
-                ", tipoClase=" + tipoClase +
+                "duracion=" + duracion +
+                ", caloriasQuemadas=" + caloriasQuemadas +
                 ", tipoEntrenamiento=" + tipoEntrenamiento +
                 ", descripcion='" + descripcion + '\'' +
                 '}';
