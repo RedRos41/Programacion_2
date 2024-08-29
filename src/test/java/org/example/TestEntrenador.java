@@ -14,7 +14,7 @@ public class TestEntrenador {
     }
 
     @Test
-    void testAgregarUsuario() {
+    void testAgregarEntrenador() {
         gestionEntrenador.agregarEntrenador("Juan", 1L, "Calle 123");
         assertEquals(1, gestionEntrenador.getEntrenadores().size(), "El tamaño de la lista de entrenador debería ser 1");
     }

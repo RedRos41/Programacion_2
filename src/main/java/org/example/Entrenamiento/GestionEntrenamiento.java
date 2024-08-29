@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GestionEntrenamiento {
-    private List<Entrenamiento> entrenamientos = new ArrayList<>();
+    private List<Integer> entrenamientos = new ArrayList<>();
 
-    public void agregarEntrenamiento(Entrenamiento entrenamiento) {
+    public void agregarEntrenamiento(int entrenamiento) {
         entrenamientos.add(entrenamiento);
     }
 
 
-    public List<Entrenamiento> listarEntrenamientos() {
+    public ArrayList<Integer> listarEntrenamientos() {
         return new ArrayList<>(entrenamientos);
     }
 
