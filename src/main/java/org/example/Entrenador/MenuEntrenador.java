@@ -5,8 +5,9 @@ import java.util.Scanner;
 public class MenuEntrenador {
     private final GestionEntrenador gestionEntrenador;
 
-    public MenuEntrenador() {
-        this.gestionEntrenador = new GestionEntrenador();
+    public MenuEntrenador(GestionEntrenador gestionEntrenador) {
+
+        this.gestionEntrenador = gestionEntrenador;
     }
 
     public void mostrarMenu(Scanner scanner) {

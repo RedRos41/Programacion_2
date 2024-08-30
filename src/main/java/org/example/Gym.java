@@ -1,4 +1,5 @@
 package org.example;
+import org.example.Entrenador.GestionEntrenador;
 import org.example.Entrenador.MenuEntrenador;
 import org.example.Entrenamiento.MenuEntrenamiento;
 
@@ -12,10 +13,11 @@ public class Gym {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         GestionUsuario gestionUsuario = new GestionUsuario();
+        GestionEntrenador gestionEntrenador = new GestionEntrenador();
 
         MenuUsuario menuUsuario = new MenuUsuario(gestionUsuario);
-        MenuClase menuClase = new MenuClase(gestionUsuario);
-        MenuEntrenador menuEntrenador = new MenuEntrenador();
+        MenuClase menuClase = new MenuClase(gestionUsuario, gestionEntrenador);
+        MenuEntrenador menuEntrenador = new MenuEntrenador(gestionEntrenador);
         MenuEntrenamiento menuEntrenamiento = new MenuEntrenamiento();
         boolean salir = false;
 

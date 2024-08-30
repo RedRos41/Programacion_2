@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 public class GestionClase {
     private final List <Clase> clases;
@@ -20,7 +20,7 @@ public class GestionClase {
         this.reservas = new ArrayList<>();
     }
 
-    public void agregarClase(String nombreClase, TipoClase tipoClase, Optional<Entrenador> entrenador, LocalTime horarioClase, LocalDate fechaInicioClase, LocalDate fechaFinClase, short capacidad, String idClase) {
+    public void agregarClase(String nombreClase, TipoClase tipoClase, Entrenador entrenador, LocalTime horarioClase, LocalDate fechaInicioClase, LocalDate fechaFinClase, short capacidad, String idClase) {
         if (verificarClaseId(idClase) == null) {
             Clase clase = new Clase(nombreClase, tipoClase, entrenador, horarioClase, fechaInicioClase, fechaFinClase, capacidad, idClase, new ArrayList<>());
             clases.add(clase);
@@ -98,5 +98,10 @@ public class GestionClase {
         }
     }
 
-}
+    public  void imprimirReservas(){
+
+        }
+    }
+
+
 

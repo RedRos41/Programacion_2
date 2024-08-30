@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.UUID;
+
 
 public class MenuClase {
 
@@ -21,10 +21,10 @@ public class MenuClase {
     private GestionEntrenador gestionEntrenador;
     private Scanner scanner;
 
-    public MenuClase(GestionUsuario gestionUsuario) {
+    public MenuClase(GestionUsuario gestionUsuario, GestionEntrenador gestionEntrenador) {
         this.gestionUsuario = gestionUsuario;
+        this.gestionEntrenador = gestionEntrenador;
         this.gestionClase = new GestionClase();
-        this.gestionEntrenador = new GestionEntrenador();
         this.scanner = new Scanner(System.in);
     }
 
@@ -38,10 +38,11 @@ public class MenuClase {
             System.out.println("3. Reservar Clase");
             System.out.println("4. Cancelar Reserva");
             System.out.println("5. Listar Clases");
+            //System.out.println("6. Listar Reservas");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
-            scanner.nextLine();  // Limpiar buffer
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1:
@@ -59,6 +60,11 @@ public class MenuClase {
                 case 5:
                     listarClases();
                     break;
+
+                //case 6:
+                    //listarReservas();
+                    //break;
+
                 case 0:
                     System.out.println("Saliendo del menú...");
                     break;
@@ -77,13 +83,17 @@ public class MenuClase {
         scanner.nextLine();
         TipoClase tipoClase = TipoClase.values()[tipo - 1];
 
-        System.out.print("ID del Entrenador: ");
+        System.out.print("Ingrese el ID del entrenador: ");
         long idEntrenador = scanner.nextLong();
-        scanner.nextLine(); // limpiar buffer
+        scanner.nextLine();
+        Optional<Entrenador> entrenadorOptional = gestionEntrenador.buscarEntrenadorPorId(idEntrenador);
 
-        // Buscar el entrenador por su ID
-        Optional<Entrenador> entrenador = gestionEntrenador.buscarEntrenadorPorId(idEntrenador);
+        if (entrenadorOptional.isEmpty()) {
+            System.out.println("Entrenador no encontrado.");
+            return; // Terminar el método si no se encuentra el entrenador
+        }
 
+        Entrenador entrenador = entrenadorOptional.get();
 
         System.out.print("Horario de la Clase (HH:mm): ");
         String horarioClaseStr = scanner.nextLine();
@@ -101,7 +111,8 @@ public class MenuClase {
         short capacidad = scanner.nextShort();
         scanner.nextLine();
 
-        String idClase = UUID.randomUUID().toString();
+        System.out.print("Id de la Clase: ");
+        String idClase = scanner.nextLine();
 
         // Crear y agregar la nueva clase
         gestionClase.agregarClase(nombreClase, tipoClase, entrenador, horarioClase, fechaInicioClase, fechaFinClase, capacidad, idClase);
@@ -145,21 +156,18 @@ public class MenuClase {
                 long idEntrenador = scanner.nextLong();
                 scanner.nextLine();
                 Optional<Entrenador> entrenadorOptional = gestionEntrenador.buscarEntrenadorPorId(idEntrenador);
-                if (entrenadorOptional.isPresent()) {
-                    List<Clase> clasesPorEntrenador = gestionClase.buscarClaseEntrenador(entrenadorOptional.get());
-                    if (!clasesPorEntrenador.isEmpty()) {
-                        clasesPorEntrenador.forEach(System.out::println);
-                    } else {
-                        System.out.println("No se encontraron clases para este entrenador.");
-                    }
-                } else {
+
+                if (entrenadorOptional.isEmpty()) {
                     System.out.println("Entrenador no encontrado.");
+                    return; // Terminar el método si no se encuentra el entrenador
                 }
+
+                Entrenador entrenador = entrenadorOptional.get();
+                // Implementación adicional si es necesario...
                 break;
 
             default:
                 System.out.println("Opción no válida.");
-                break;
         }
     }
 
@@ -170,14 +178,12 @@ public class MenuClase {
 
         Optional<Usuario> usuarioOptional = gestionUsuario.buscarUsuarioPorId(idUsuario);
 
-
-        Usuario usuario = null;
-        if (usuarioOptional.isPresent()) {
-            usuario = usuarioOptional.get();
-
-        } else {
+        if (usuarioOptional.isEmpty()) {
             System.out.println("Usuario no encontrado.");
+            return;
         }
+
+        Usuario usuario = usuarioOptional.get();
 
         System.out.print("Ingrese el ID de la clase a reservar: ");
         String idClase = scanner.nextLine();
@@ -188,14 +194,22 @@ public class MenuClase {
             return;
         }
 
-        Reserva reservada = gestionClase.agregarReserva(usuario, LocalDateTime.now(), clase, UUID.randomUUID().toString());
+        System.out.print("Codigo de la reserva: ");
+        String codigo = scanner.nextLine();
 
+        Reserva reservada = gestionClase.agregarReserva(usuario, LocalDateTime.now(), clase, codigo);
+        System.out.println("Reserva realizada exitosamente.");
     }
-
 
     private void listarClases() {
         gestionClase.imprimirClases();
     }
+
+    private void listarReservas(){
+        gestionClase.imprimirReservas();
+    }
+
+
 }
 
 
