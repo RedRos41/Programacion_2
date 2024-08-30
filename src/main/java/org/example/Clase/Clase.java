@@ -4,11 +4,12 @@ import org.example.Entrenador.Entrenador;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public class Clase {
     private String nombreClase;
     private TipoClase tipoClase;
-    private Entrenador entrenador;
+    private Optional<Entrenador> entrenador;
     private LocalTime horarioClase;
     private LocalDate fechaInicioClase, fechaFinClase;
     private short capacidad;
@@ -17,7 +18,7 @@ public class Clase {
     private List<Reserva> registroReserva;
 
 
-    public Clase(String nombreClase, TipoClase tipoClase, Entrenador entrenador, LocalTime horarioClase, LocalDate fechaInicioClase, LocalDate fechaFinClase, short capacidad, String idClase, List<Reserva> registroReserva) {
+    public Clase(String nombreClase, TipoClase tipoClase, Optional<Entrenador> entrenador, LocalTime horarioClase, LocalDate fechaInicioClase, LocalDate fechaFinClase, short capacidad, String idClase, List<Reserva> registroReserva) {
         this.nombreClase = nombreClase;
         this.tipoClase = tipoClase;
         this.entrenador = entrenador;
@@ -54,7 +55,7 @@ public class Clase {
         return horarioClase;
     }
 
-    public Entrenador getEntrenador() {
+    public Optional<Entrenador> getEntrenador() {
         return entrenador;
     }
 
@@ -79,7 +80,7 @@ public class Clase {
     }
 
     public void setEntrenador(Entrenador entrenador) {
-        this.entrenador = entrenador;
+        this.entrenador = Optional.ofNullable(entrenador);
     }
 
     public void setHorarioClase(LocalTime horarioClase) {

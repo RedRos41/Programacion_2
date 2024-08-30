@@ -5,8 +5,9 @@ import java.util.Scanner;
 public class MenuUsuario {
     private final GestionUsuario gestionUsuario;
 
-    public MenuUsuario() {
-        this.gestionUsuario = new GestionUsuario();
+    public MenuUsuario(GestionUsuario gestionUsuario) {
+
+        this.gestionUsuario = gestionUsuario;
     }
 
     public void mostrarMenu(Scanner scanner) {

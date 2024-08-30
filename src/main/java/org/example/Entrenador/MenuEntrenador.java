@@ -3,7 +3,11 @@ package org.example.Entrenador;
 import java.util.Scanner;
 
 public class MenuEntrenador {
-    private GestionEntrenador gestionEntrenador = new GestionEntrenador();
+    private final GestionEntrenador gestionEntrenador;
+
+    public MenuEntrenador() {
+        this.gestionEntrenador = new GestionEntrenador();
+    }
 
     public void mostrarMenu(Scanner scanner) {
         int opcion = -1;
@@ -20,8 +24,18 @@ public class MenuEntrenador {
 
             switch (opcion) {
                 case 1:
-                    agregarEntrenador(scanner);
+                    System.out.print("Ingrese ID: ");
+                    long id = Long.parseLong(scanner.nextLine());
+
+                    System.out.print("Ingrese nombre: ");
+                    String nombre = scanner.nextLine();
+
+                    System.out.print("Ingrese especialidad: ");
+                    String especialidad = scanner.nextLine();
+
+                    gestionEntrenador.agregarEntrenador(nombre, id, especialidad);
                     break;
+
                 case 2:
                     buscarEntrenadorPorId(scanner);
                     break;
@@ -32,7 +46,7 @@ public class MenuEntrenador {
                     eliminarEntrenador(scanner);
                     break;
                 case 5:
-                    listarEntrenadores();
+                    gestionEntrenador.imprimirEntrenador();
                     break;
                 case 0:
                     System.out.println("Volviendo al Menú Principal...");
@@ -40,24 +54,6 @@ public class MenuEntrenador {
                 default:
                     System.out.println("Opción no válida.");
             }
-        }
-    }
-
-    private void agregarEntrenador(Scanner scanner) {
-        System.out.print("Ingrese ID: ");
-        long id = Long.parseLong(scanner.nextLine());
-
-        System.out.print("Ingrese nombre: ");
-        String nombre = scanner.nextLine();
-
-        System.out.print("Ingrese especialidad: ");
-        String especialidad = scanner.nextLine();
-
-        try {
-            gestionEntrenador.agregarEntrenador(nombre, id, especialidad);
-            System.out.println("Entrenador agregado exitosamente.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -90,17 +86,5 @@ public class MenuEntrenador {
         long id = Long.parseLong(scanner.nextLine());
         gestionEntrenador.eliminarEntrenador(id);
         System.out.println("Entrenador eliminado si existía.");
-    }
-
-    private void listarEntrenadores() {
-        var entrenadores = gestionEntrenador.listarEntrenadores();
-        if (entrenadores.isEmpty()) {
-            System.out.println("No hay entrenadores registrados.");
-        } else {
-            System.out.println("Lista de entrenadores:");
-            for (Entrenador entrenador : entrenadores) {
-                System.out.println(entrenador);
-            }
-        }
     }
 }

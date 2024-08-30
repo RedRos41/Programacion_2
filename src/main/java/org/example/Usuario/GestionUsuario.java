@@ -2,6 +2,7 @@ package org.example.Usuario;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class GestionUsuario {
     private final List<Usuario> usuarios;
@@ -82,4 +83,12 @@ public class GestionUsuario {
             }
         }
     }
+
+    public Optional<Usuario> buscarUsuarioPorId(long id) {
+        return usuarios.stream()
+                .filter(usuario -> usuario.getId() == id)
+                .findFirst();
+    }
+
+
 }

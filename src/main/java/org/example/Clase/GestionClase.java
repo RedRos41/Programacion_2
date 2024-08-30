@@ -1,21 +1,26 @@
 package org.example.Clase;
 
 import org.example.Entrenador.Entrenador;
+import org.example.Usuario.Usuario;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GestionClase {
     private final List <Clase> clases;
+    private final List <Reserva> reservas;
 
 
     public GestionClase() {
         this.clases = new ArrayList<>();
+        this.reservas = new ArrayList<>();
     }
 
-    public void agregarClase(String nombreClase, TipoClase tipoClase, Entrenador entrenador, LocalTime horarioClase, LocalDate fechaInicioClase, LocalDate fechaFinClase, short capacidad, String idClase) {
+    public void agregarClase(String nombreClase, TipoClase tipoClase, Optional<Entrenador> entrenador, LocalTime horarioClase, LocalDate fechaInicioClase, LocalDate fechaFinClase, short capacidad, String idClase) {
         if (verificarClaseId(idClase) == null) {
             Clase clase = new Clase(nombreClase, tipoClase, entrenador, horarioClase, fechaInicioClase, fechaFinClase, capacidad, idClase, new ArrayList<>());
             clases.add(clase);
@@ -61,24 +66,22 @@ public class GestionClase {
     }
 
     public boolean verificarDisponibilidadClase(Clase clase){
-        boolean verificarDisponibilidad = true;
         return clase.getRegistroReserva().size() > clase.getCapacidad();
     }
 
-    public boolean agregarReserva(Reserva reserva){
-        boolean agregarReserva = true;
-        Clase clase = reserva.getClase();
+    public Reserva agregarReserva(Usuario usuario, LocalDateTime fechaReserva, Clase clase, String codigo){
+
         if (clases.contains(clase) && verificarDisponibilidadClase(clase)) {
-            clase.getRegistroReserva().add(reserva);
-                clase.actualizarEstadoClase();
-            return true;
+            Reserva reserva = new Reserva(usuario, fechaReserva, clase, codigo);
+            reservas.add(reserva);
         }
-        else {return false;
-        }
+        return null;
     }
 
+
+
     public boolean cancelarReserva(Reserva reserva){
-        boolean cancelarReserva =true;
+
         Clase clase = reserva.getClase();
         if (clases.contains(clase) && clase.getRegistroReserva().remove(reserva)){
              clase.actualizarEstadoClase();

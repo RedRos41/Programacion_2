@@ -5,13 +5,18 @@ import org.example.Entrenamiento.MenuEntrenamiento;
 import java.util.Scanner;
 
 import org.example.Clase.MenuClase;
+import org.example.Usuario.GestionUsuario;
 import org.example.Usuario.MenuUsuario;
 
 public class Gym {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        MenuUsuario menuUsuario = new MenuUsuario();
-        MenuClase menuClase = new MenuClase();
+        GestionUsuario gestionUsuario = new GestionUsuario();
+
+        MenuUsuario menuUsuario = new MenuUsuario(gestionUsuario);
+        MenuClase menuClase = new MenuClase(gestionUsuario);
+        MenuEntrenador menuEntrenador = new MenuEntrenador();
+        MenuEntrenamiento menuEntrenamiento = new MenuEntrenamiento();
         boolean salir = false;
 
         while (!salir) {
@@ -33,19 +38,17 @@ public class Gym {
                     break;
 
                 case 2:
-                    // Menú para gestionar Clases
+
                     menuClase.mostrarMenu(scanner);
-                    System.out.println("Funcionalidad de gestión de clases no implementada aún.");
                     break;
 
                 case 3:
-                    MenuEntrenador menuEntrenador = new MenuEntrenador();
                     menuEntrenador.mostrarMenu(scanner);
                     break;
 
 
                 case 4:
-                    MenuEntrenamiento menuEntrenamiento = new MenuEntrenamiento();
+
                     menuEntrenamiento.mostrarMenu(scanner);
                     break;
 
