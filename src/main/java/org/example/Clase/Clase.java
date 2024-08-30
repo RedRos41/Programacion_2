@@ -31,6 +31,8 @@ public class Clase {
         this.estadoClase = registroReserva.size() <= capacidad;
     }
 
+
+
     public String getNombreClase() {
         return nombreClase;
     }
@@ -103,9 +105,10 @@ public class Clase {
         this.registroReserva = registroReserva;
     }
 
-    public void actualizarEstadoClase() {
-        this.estadoClase = registroReserva.size() <= capacidad;
+    public void setEstadoClase(boolean estadoClase) {
+        this.estadoClase = estadoClase;
     }
+
     @Override
     public String toString() {
         return "Clase{" +

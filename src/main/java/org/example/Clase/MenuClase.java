@@ -38,7 +38,7 @@ public class MenuClase {
             System.out.println("3. Reservar Clase");
             System.out.println("4. Cancelar Reserva");
             System.out.println("5. Listar Clases");
-            //System.out.println("6. Listar Reservas");
+            System.out.println("6. Listar Reservas");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -55,15 +55,15 @@ public class MenuClase {
                     reservarClase();
                     break;
                 case 4:
-                    //cancelarReserva();
+                    cancelarReserva();
                     break;
                 case 5:
                     listarClases();
                     break;
 
-                //case 6:
-                    //listarReservas();
-                    //break;
+                case 6:
+                    listarReservas();
+                    break;
 
                 case 0:
                     System.out.println("Saliendo del menú...");
@@ -90,7 +90,7 @@ public class MenuClase {
 
         if (entrenadorOptional.isEmpty()) {
             System.out.println("Entrenador no encontrado.");
-            return; // Terminar el método si no se encuentra el entrenador
+            return;
         }
 
         Entrenador entrenador = entrenadorOptional.get();
@@ -114,7 +114,6 @@ public class MenuClase {
         System.out.print("Id de la Clase: ");
         String idClase = scanner.nextLine();
 
-        // Crear y agregar la nueva clase
         gestionClase.agregarClase(nombreClase, tipoClase, entrenador, horarioClase, fechaInicioClase, fechaFinClase, capacidad, idClase);
 
         System.out.println("Clase agregada exitosamente.");
@@ -193,13 +192,43 @@ public class MenuClase {
             System.out.println("Clase no encontrada.");
             return;
         }
-
         System.out.print("Codigo de la reserva: ");
         String codigo = scanner.nextLine();
 
+        if (!gestionClase.verificarDisponibilidadClase(clase)) {
+            System.out.println("No hay disponibilidad en la clase seleccionada.");
+            return;
+        }
         Reserva reservada = gestionClase.agregarReserva(usuario, LocalDateTime.now(), clase, codigo);
-        System.out.println("Reserva realizada exitosamente.");
+        if (reservada != null) {
+            System.out.println("Reserva realizada exitosamente.");
+        }
     }
+
+    private void cancelarReserva() {
+        System.out.println("Ingrese el ID del usuario: ");
+        long idUsuario = scanner.nextLong();
+        scanner.nextLine();
+
+        Optional<Usuario> usuarioOptional = gestionUsuario.buscarUsuarioPorId(idUsuario);
+
+        if (usuarioOptional.isEmpty()) {
+            System.out.println("Usuario no encontrado.");
+            return;
+        }
+
+        Usuario usuario = usuarioOptional.get();
+
+        System.out.print("Ingrese el codigo de la reserva a cancelar: ");
+        String codigo = scanner.nextLine();
+
+        // Intentar cancelar la reserva
+        boolean cancelada = gestionClase.cancelarReserva(usuario, codigo);
+        if (!cancelada) {
+            System.out.println("No se pudo cancelar la reserva. Verifique el código y el usuario.");
+        }
+    }
+
 
     private void listarClases() {
         gestionClase.imprimirClases();

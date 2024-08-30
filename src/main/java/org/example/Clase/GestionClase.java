@@ -8,11 +8,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class GestionClase {
-    private final List <Clase> clases;
-    private final List <Reserva> reservas;
+    private final List<Clase> clases;
+    private final List<Reserva> reservas;
 
 
     public GestionClase() {
@@ -35,19 +36,21 @@ public class GestionClase {
         }
         return null;
     }
-    public List<Clase> buscarClaseHorario(LocalTime horarioClase){
+
+    public List<Clase> buscarClaseHorario(LocalTime horarioClase) {
         List<Clase> clasesEncontradasHorario = new ArrayList<>();
-        for (Clase clase: clases){
-            if(clase.getHorarioClase().equals(horarioClase)){
+        for (Clase clase : clases) {
+            if (clase.getHorarioClase().equals(horarioClase)) {
                 clasesEncontradasHorario.add(clase);
             }
         }
         return clasesEncontradasHorario;
     }
-    public List<Clase> buscarClaseTipo(TipoClase tipoClase){
+
+    public List<Clase> buscarClaseTipo(TipoClase tipoClase) {
         List<Clase> clasesEncontradasTipo = new ArrayList<>();
-        for (Clase clase: clases){
-            if(clase.getTipoClase().equals(tipoClase)){
+        for (Clase clase : clases) {
+            if (clase.getTipoClase().equals(tipoClase)) {
                 clasesEncontradasTipo.add(clase);
             }
         }
@@ -55,41 +58,59 @@ public class GestionClase {
     }
 
 
-    public List<Clase> buscarClaseEntrenador(Entrenador entrenador){
+    public List<Clase> buscarClaseEntrenador(Entrenador entrenador) {
         List<Clase> clasesEncontradasEntrenador = new ArrayList<>();
-        for(Clase clase : clases){
-            if (clase.getEntrenador().equals(entrenador)){
+        for (Clase clase : clases) {
+            if (clase.getEntrenador().equals(entrenador)) {
                 clasesEncontradasEntrenador.add(clase);
             }
         }
-        return  clasesEncontradasEntrenador;
+        return clasesEncontradasEntrenador;
     }
 
-    public boolean verificarDisponibilidadClase(Clase clase){
-        return clase.getRegistroReserva().size() > clase.getCapacidad();
+    public boolean verificarDisponibilidadClase(Clase clase) {
+        return clase.getRegistroReserva().size() < clase.getCapacidad();
     }
 
-    public Reserva agregarReserva(Usuario usuario, LocalDateTime fechaReserva, Clase clase, String codigo){
-
-        if (clases.contains(clase) && verificarDisponibilidadClase(clase)) {
-            Reserva reserva = new Reserva(usuario, fechaReserva, clase, codigo);
-            reservas.add(reserva);
-        }
-        return null;
+    private void actualizarEstadoClase(Clase clase) {
+        boolean estadoActualizado = clase.getRegistroReserva().size() < clase.getCapacidad();
+        clase.setEstadoClase(estadoActualizado);
     }
 
+    public Reserva agregarReserva(Usuario usuario, LocalDateTime fechaReserva, Clase clase, String codigo) {
 
-
-    public boolean cancelarReserva(Reserva reserva){
-
-        Clase clase = reserva.getClase();
-        if (clases.contains(clase) && clase.getRegistroReserva().remove(reserva)){
-             clase.actualizarEstadoClase();
-            return true;
+        if (!verificarDisponibilidadClase(clase)) {
+            System.out.println("No hay disponibilidad en la clase seleccionada.");
+            return null;
         }
-        else{
-           return false;
+
+
+        Reserva nuevaReserva = new Reserva(usuario, fechaReserva, clase, codigo);
+        clase.getRegistroReserva().add(nuevaReserva);
+        actualizarEstadoClase(clase);
+        System.out.println("Reserva realizada exitosamente.");
+        return nuevaReserva;
+
+
+    }
+
+    public boolean cancelarReserva(Usuario usuario, String codigo) {
+        for (Clase clase : clases) {
+            Optional<Reserva> reservaOptional = clase.getRegistroReserva().stream()
+                    .filter(r -> r.getCodigo().equals(codigo) && r.getUsuario().equals(usuario))
+                    .findFirst();
+
+            if (reservaOptional.isPresent()) {
+                Reserva reserva = reservaOptional.get();
+                clase.getRegistroReserva().remove(reserva);
+                actualizarEstadoClase(clase);
+                System.out.println("Reserva cancelada exitosamente.");
+                return true;
+            }
         }
+
+        System.out.println("Reserva no encontrada.");
+        return false;
     }
 
     public void imprimirClases() {
@@ -98,10 +119,14 @@ public class GestionClase {
         }
     }
 
-    public  void imprimirReservas(){
-
+    public List<Reserva> imprimirReservas() {
+        List<Reserva> todasLasReservas = new ArrayList<>();
+        for (Clase clase : clases) {
+            todasLasReservas.addAll(clase.getRegistroReserva());
         }
+        return todasLasReservas;
     }
 
+}
 
 
