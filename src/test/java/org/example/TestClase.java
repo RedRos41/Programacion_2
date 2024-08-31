@@ -146,7 +146,7 @@ public class TestClase {
         LocalDate fechaFinClase = LocalDate.of(2024, 12, 31);
         short capacidad = 30;
         String idClase = "CLASE001";
-        LocalDateTime fechaReserva = LocalDateTime.of(2024, 3, 5, 10, 0);;
+        LocalDateTime fechaReserva = LocalDateTime.of(2024, 3, 5, 10, 0);
         String codigo = "RESERVA001";
 
         gestionClase.agregarClase(nombreClase, tipoClase, entrenador, horarioClase, fechaInicioClase, fechaFinClase, capacidad, idClase);
@@ -171,7 +171,7 @@ public class TestClase {
         LocalDate fechaFinClase = LocalDate.of(2024, 12, 31);
         short capacidad = 30;
         String idClase = "CLASE001";
-        LocalDateTime fechaReserva = LocalDateTime.of(2024, 3, 5, 10, 0);;
+        LocalDateTime fechaReserva = LocalDateTime.of(2024, 3, 5, 10, 0);
         String codigo = "RESERVA001";
 
         gestionClase.agregarClase(nombreClase, tipoClase, entrenador, horarioClase, fechaInicioClase, fechaFinClase, capacidad, idClase);
@@ -216,7 +216,7 @@ public class TestClase {
         LocalDate fechaFinClase = LocalDate.of(2024, 12, 31);
         short capacidad = 30;
         String idClase = "CLASE001";
-        LocalDateTime fechaReserva = LocalDateTime.of(2024, 3, 5, 10, 0);;
+        LocalDateTime fechaReserva = LocalDateTime.of(2024, 3, 5, 10, 0);
         String codigo = "RESERVA001";
 
         gestionClase.agregarClase(nombreClase, tipoClase, entrenador, horarioClase, fechaInicioClase, fechaFinClase, capacidad, idClase);
