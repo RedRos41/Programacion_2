@@ -23,12 +23,6 @@ public class GestionReporte {
         this.gestionUsuario = gestionUsuario;
     }
 
-    /**
-     * Método para generar un reporte completo que incluye la clase más popular,
-     * los tres usuarios más activos y el tipo de ejercicio más practicado.
-     * @param entrenamientos Lista de entrenamientos.
-     * @return Un objeto Reporte con la información generada.
-     */
     public Reporte generarReporte(List<Entrenamiento> entrenamientos) {
         Clase claseMasPopular = obtenerClaseMasPopular().orElse(null);
         List<Usuario> topTresUsuariosMasActivos = obtenerTopTresUsuariosMasActivos(entrenamientos);

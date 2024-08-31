@@ -1,6 +1,6 @@
 package org.example.Entrenamiento;
 
-import org.example.Entrenador.Entrenador;
+
 
 import java.util.ArrayList;
 import java.util.List;

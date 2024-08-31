@@ -1,6 +1,6 @@
 package org.example.Entrenamiento;
 
-import org.example.Usuario.Usuario; // Importar la clase Usuario
+import org.example.Usuario.Usuario;
 
 public class Entrenamiento {
     private int duracion;
@@ -8,7 +8,7 @@ public class Entrenamiento {
     private TipoEntrenamiento tipoEntrenamiento;
     private String descripcion;
     private long codigo;
-    private Usuario usuario; // Añadir este atributo
+    private Usuario usuario;
 
     public Entrenamiento(TipoEntrenamiento tipoEntrenamiento, String descripcion, int duracion, int caloriasQuemadas, long codigo, Usuario usuario) {
         this.duracion = duracion;
@@ -16,7 +16,7 @@ public class Entrenamiento {
         this.tipoEntrenamiento = tipoEntrenamiento;
         this.descripcion = descripcion;
         this.codigo = codigo;
-        this.usuario = usuario; // Inicializar el atributo
+        this.usuario = usuario;
     }
 
     public int getDuracion() {
@@ -59,7 +59,7 @@ public class Entrenamiento {
         this.codigo = codigo;
     }
 
-    public Usuario getUsuario() { // Añadir este método
+    public Usuario getUsuario() {
         return usuario;
     }
 
@@ -71,7 +71,7 @@ public class Entrenamiento {
                 ", tipoEntrenamiento=" + tipoEntrenamiento +
                 ", descripcion='" + descripcion + '\'' +
                 ", codigo='" + codigo + '\'' +
-                ", usuario=" + usuario.getNombre() + // Ajustar toString para incluir usuario
+                ", usuario=" + usuario.getNombre() +
                 '}';
     }
 }

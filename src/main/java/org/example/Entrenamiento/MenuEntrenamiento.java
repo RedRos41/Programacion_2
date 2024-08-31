@@ -1,11 +1,11 @@
 package org.example.Entrenamiento;
 
 
-import org.example.Clase.Clase;
+
 import org.example.Usuario.GestionUsuario;
 import org.example.Usuario.Usuario;
 
-import java.util.List;
+
 import java.util.Optional;
 import java.util.Scanner;
 
