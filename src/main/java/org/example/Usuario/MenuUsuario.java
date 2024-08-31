@@ -1,19 +1,12 @@
 package org.example.Usuario;
 
-
-import org.example.Entrenamiento.Entrenamiento;
-import org.example.Entrenamiento.GestionEntrenamiento;
-
-import java.util.Optional;
 import java.util.Scanner;
 
 public class MenuUsuario {
     private final GestionUsuario gestionUsuario;
-    private  final GestionEntrenamiento gestionEntrenamiento;
 
-    public MenuUsuario(GestionUsuario gestionUsuario, GestionEntrenamiento gestionEntrenamiento) {
+    public MenuUsuario(GestionUsuario gestionUsuario) {
         this.gestionUsuario = gestionUsuario;
-        this.gestionEntrenamiento = gestionEntrenamiento;
     }
 
     public void mostrarMenu(Scanner scanner) {
@@ -52,22 +45,7 @@ public class MenuUsuario {
                     System.out.println("Ingrese el teléfono del usuario:");
                     long telefono = scanner.nextLong();
 
-                    System.out.print("Ingrese el codigo del entrenamiento: ");
-                    long codigoEntrenador = scanner.nextLong();
-                    scanner.nextLine();
-                    Optional<Entrenamiento> entrenamientoOptional = gestionEntrenamiento.buscarEntrenadorCodigo(codigoEntrenador);
-
-                    if (entrenamientoOptional.isEmpty()) {
-                        System.out.println("Entrenamiento no encontrado.");
-                        return;
-                    }
-
-                    Entrenamiento entrenamiento = entrenamientoOptional.get();
-
-
-
-
-                    gestionUsuario.agregarUsuario(nombre, id, direccion, correo, contrasena, telefono, entrenamiento);
+                    gestionUsuario.agregarUsuario(nombre, id, direccion, correo, contrasena, telefono);
                     break;
 
                 case 2:

@@ -1,7 +1,5 @@
 package org.example.Usuario;
 
-import org.example.Entrenamiento.Entrenamiento;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -17,14 +15,14 @@ public class GestionUsuario {
         return usuarios;
     }
 
-    public void agregarUsuario(String nombre, long id, String direccion, String correo, String contrasena, long telefono, Entrenamiento entrenamiento) {
+    public void agregarUsuario(String nombre, long id, String direccion, String correo, String contrasena, long telefono) {
         for (Usuario usuario : usuarios) {
             if (usuario.getId() == id) {
                 System.out.println("Usuario con ID " + id + " ya existe.");
                 return;
             }
         }
-        Usuario usuario = new Usuario(nombre, id, direccion, correo, contrasena, telefono, entrenamiento);
+        Usuario usuario = new Usuario(nombre, id, direccion, correo, contrasena, telefono);
         usuarios.add(usuario);
         System.out.println("Usuario con ID " + id + " agregado correctamente.");
     }

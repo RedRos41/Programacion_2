@@ -17,7 +17,7 @@ public class Gym {
         GestionEntrenador gestionEntrenador = new GestionEntrenador();
         GestionEntrenamiento gestionEntrenamiento = new GestionEntrenamiento();
 
-        MenuUsuario menuUsuario = new MenuUsuario(gestionUsuario, gestionEntrenamiento);
+        MenuUsuario menuUsuario = new MenuUsuario(gestionUsuario);
         MenuClase menuClase = new MenuClase(gestionUsuario, gestionEntrenador);
         MenuEntrenador menuEntrenador = new MenuEntrenador(gestionEntrenador);
         MenuEntrenamiento menuEntrenamiento = new MenuEntrenamiento(gestionEntrenamiento);

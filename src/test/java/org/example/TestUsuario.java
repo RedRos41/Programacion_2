@@ -59,15 +59,4 @@ class TestUsuario {
         gestionUsuario.eliminarUsuario(2L);
         assertEquals(1, gestionUsuario.getUsuarios().size(), "El tamaño de la lista de usuarios debería seguir siendo 1 porque no se eliminó ningún usuario existente");
     }
-
-    @Test
-    void testImprimirUsuario() {
-        gestionUsuario.agregarUsuario("Juan", 1L, "Calle 123", "juan@example.com", "password123", 1234567890L);
-        gestionUsuario.imprimirUsuario();
-    }
-
-    @Test
-    void testImprimirUsuarioNoExistente() {
-        gestionUsuario.imprimirUsuario();
-    }
 }
