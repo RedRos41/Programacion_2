@@ -1,14 +1,20 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import org.example.Entrenamiento.Entrenamiento;
 import org.example.Usuario.GestionUsuario;
 import org.example.Clase.GestionClase;
 import org.example.Entrenador.GestionEntrenador;
 import org.example.Entrenamiento.GestionEntrenamiento;
+import org.example.Reporte.GestionReporte;
 import org.example.Usuario.MenuUsuario;
 import org.example.Clase.MenuClase;
 import org.example.Entrenador.MenuEntrenador;
 import org.example.Entrenamiento.MenuEntrenamiento;
+import org.example.Reporte.MenuReporte;
+import java.util.List;
 
 public class Gym {
     public static void main(String[] args) {
@@ -17,11 +23,15 @@ public class Gym {
         GestionClase gestionClase = new GestionClase();
         GestionEntrenador gestionEntrenador = new GestionEntrenador();
         GestionEntrenamiento gestionEntrenamiento = new GestionEntrenamiento();
+        GestionReporte gestionReporte = new GestionReporte(gestionClase, gestionUsuario);
+
+        List<Entrenamiento> entrenamientos = new ArrayList<>();
 
         MenuUsuario menuUsuario = new MenuUsuario(gestionUsuario);
         MenuClase menuClase = new MenuClase(gestionUsuario, gestionEntrenador);
         MenuEntrenador menuEntrenador = new MenuEntrenador(gestionEntrenador);
         MenuEntrenamiento menuEntrenamiento = new MenuEntrenamiento(gestionEntrenamiento);
+        MenuReporte menuReporte = new MenuReporte(gestionReporte, entrenamientos);
         boolean salir = false;
 
         while (!salir) {
@@ -59,8 +69,7 @@ public class Gym {
 
 
                 case 5:
-                    // Menú para gestionar Reportes
-                    System.out.println("Funcionalidad de gestión de reportes no implementada aún.");
+                    menuReporte.mostrarMenu(scanner);
                     break;
 
                 case 6:

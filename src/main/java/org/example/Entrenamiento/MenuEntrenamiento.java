@@ -1,14 +1,21 @@
 package org.example.Entrenamiento;
 
 
+import org.example.Clase.Clase;
+import org.example.Usuario.GestionUsuario;
+import org.example.Usuario.Usuario;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class MenuEntrenamiento {
     private GestionEntrenamiento gestionEntrenamiento;
+    private GestionUsuario gestionUsuario;
 
     public MenuEntrenamiento(GestionEntrenamiento gestionEntrenamiento) {
         this.gestionEntrenamiento = new GestionEntrenamiento();
+        this.gestionUsuario = new GestionUsuario();
     }
 
     public void mostrarMenu(Scanner scanner) {
@@ -59,7 +66,20 @@ public class MenuEntrenamiento {
             long codigo = scanner.nextLong();
             scanner.nextLine();
 
-            Entrenamiento entrenamiento = new Entrenamiento(tipoEntrenamiento, descripcion, duracion, caloriasQuemadas, codigo);
+            System.out.println("Ingrese el ID del usuario: ");
+            long id = scanner.nextLong();
+            scanner.nextLine();
+
+            Optional<Usuario> usuarioOptional = gestionUsuario.buscarUsuarioPorId(id);
+
+            if (usuarioOptional.isEmpty()) {
+                System.out.println("Usuario no encontrado.");
+                return;
+            }
+
+            Usuario usuario = usuarioOptional.get();
+
+            Entrenamiento entrenamiento = new Entrenamiento(tipoEntrenamiento, descripcion, duracion, caloriasQuemadas, codigo, usuario);
             gestionEntrenamiento.agregarEntrenamiento(entrenamiento);
             System.out.println("Entrenamiento agregado exitosamente.");
 
