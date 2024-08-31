@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.Entrenador.Entrenador;
 import org.example.Entrenamiento.Entrenamiento;
 import org.example.Entrenamiento.GestionEntrenamiento;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,28 +8,27 @@ import org.example.Entrenamiento.TipoEntrenamiento;
 
 import java.util.List;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestEntrenamiento {
     private GestionEntrenamiento gestionEntrenamiento;
-
 
     @BeforeEach
     void setUp() {
         gestionEntrenamiento = new GestionEntrenamiento();
     }
 
+    @Test
     void testAgregarEntrenamiento() {
-        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300);
+        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300, 123);
         gestionEntrenamiento.agregarEntrenamiento(entrenamiento);
         assertEquals(1, gestionEntrenamiento.listarEntrenamientos().size(), "El tamaño de la lista de entrenamientos debería ser 1");
     }
 
     @Test
     void testAgregarEntrenamientoExistente() {
-        Entrenamiento entrenamiento1 = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300);
-        Entrenamiento entrenamiento2 = new Entrenamiento(TipoEntrenamiento.HIIT, "HIIT Avanzado", 45, 500);
+        Entrenamiento entrenamiento1 = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300, 123);
+        Entrenamiento entrenamiento2 = new Entrenamiento(TipoEntrenamiento.HIIT, "HIIT Avanzado", 45, 500, 234);
         gestionEntrenamiento.agregarEntrenamiento(entrenamiento1);
         gestionEntrenamiento.agregarEntrenamiento(entrenamiento2);
         assertEquals(2, gestionEntrenamiento.listarEntrenamientos().size(), "El tamaño de la lista de entrenamientos debería ser 2 ya que los tipos son diferentes");
@@ -38,8 +36,8 @@ public class TestEntrenamiento {
 
     @Test
     void testBuscarEntrenamientoPorTipo() {
-        Entrenamiento entrenamiento1 = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300);
-        Entrenamiento entrenamiento2 = new Entrenamiento(TipoEntrenamiento.HIIT, "HIIT Avanzado", 45, 500);
+        Entrenamiento entrenamiento1 = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300, 345);
+        Entrenamiento entrenamiento2 = new Entrenamiento(TipoEntrenamiento.HIIT, "HIIT Avanzado", 45, 500, 567);
         gestionEntrenamiento.agregarEntrenamiento(entrenamiento1);
         gestionEntrenamiento.agregarEntrenamiento(entrenamiento2);
 
@@ -52,7 +50,7 @@ public class TestEntrenamiento {
 
     @Test
     void testBuscarEntrenamientoPorTipoNoExistente() {
-        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300);
+        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300, 234);
         gestionEntrenamiento.agregarEntrenamiento(entrenamiento);
 
         List<Entrenamiento> entrenamientosPesas = gestionEntrenamiento.buscarEntrenamientoPorTipo(TipoEntrenamiento.PESAS);
@@ -61,7 +59,7 @@ public class TestEntrenamiento {
 
     @Test
     void testEliminarEntrenamientoPorTipo() {
-        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300);
+        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300, 234);
         gestionEntrenamiento.agregarEntrenamiento(entrenamiento);
         gestionEntrenamiento.eliminarEntrenamientoPorTipo(TipoEntrenamiento.CARDIO);
         assertEquals(0, gestionEntrenamiento.listarEntrenamientos().size(), "El tamaño de la lista de entrenamientos debería ser 0 después de eliminar el entrenamiento de tipo CARDIO");
@@ -69,7 +67,7 @@ public class TestEntrenamiento {
 
     @Test
     void testEliminarEntrenamientoPorTipoNoExistente() {
-        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300);
+        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300, 234);
         gestionEntrenamiento.agregarEntrenamiento(entrenamiento);
         gestionEntrenamiento.eliminarEntrenamientoPorTipo(TipoEntrenamiento.PESAS);
         assertEquals(1, gestionEntrenamiento.listarEntrenamientos().size(), "El tamaño de la lista de entrenamientos debería seguir siendo 1 porque no se eliminó ningún entrenamiento existente");
@@ -77,7 +75,7 @@ public class TestEntrenamiento {
 
     @Test
     void testImprimirEntrenamiento() {
-        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300);
+        Entrenamiento entrenamiento = new Entrenamiento(TipoEntrenamiento.CARDIO, "Cardio Básico", 30, 300, 234);
         gestionEntrenamiento.agregarEntrenamiento(entrenamiento);
         gestionEntrenamiento.imprimirEntrenamientos();
     }
