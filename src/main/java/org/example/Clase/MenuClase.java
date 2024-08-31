@@ -243,7 +243,16 @@ public class MenuClase {
     }
 
     private void listarReservas(){
-        gestionClase.imprimirReservas();
+        List<Reserva> reservas = gestionClase.imprimirReservas();
+
+        if (reservas.isEmpty()) {
+            System.out.println("No hay reservas registradas.");
+        } else {
+            System.out.println("\n--- Lista de Reservas ---");
+            for (Reserva reserva : reservas) {
+                System.out.println(reserva);
+            }
+        }
     }
 
 

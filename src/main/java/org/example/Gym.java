@@ -1,19 +1,20 @@
 package org.example;
-import org.example.Entrenador.GestionEntrenador;
-import org.example.Entrenador.MenuEntrenador;
-import org.example.Entrenamiento.GestionEntrenamiento;
-import org.example.Entrenamiento.MenuEntrenamiento;
 
 import java.util.Scanner;
-
-import org.example.Clase.MenuClase;
 import org.example.Usuario.GestionUsuario;
+import org.example.Clase.GestionClase;
+import org.example.Entrenador.GestionEntrenador;
+import org.example.Entrenamiento.GestionEntrenamiento;
 import org.example.Usuario.MenuUsuario;
+import org.example.Clase.MenuClase;
+import org.example.Entrenador.MenuEntrenador;
+import org.example.Entrenamiento.MenuEntrenamiento;
 
 public class Gym {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         GestionUsuario gestionUsuario = new GestionUsuario();
+        GestionClase gestionClase = new GestionClase();
         GestionEntrenador gestionEntrenador = new GestionEntrenador();
         GestionEntrenamiento gestionEntrenamiento = new GestionEntrenamiento();
 
