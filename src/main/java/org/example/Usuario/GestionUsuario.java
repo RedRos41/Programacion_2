@@ -89,6 +89,4 @@ public class GestionUsuario {
                 .filter(usuario -> usuario.getId() == id)
                 .findFirst();
     }
-
-
 }

@@ -11,7 +11,7 @@ class TestUsuario {
 
     @BeforeEach
     void setUp() {
-        gestionUsuario = new GestionUsuario();
+        this.gestionUsuario = new GestionUsuario();
     }
 
     @Test

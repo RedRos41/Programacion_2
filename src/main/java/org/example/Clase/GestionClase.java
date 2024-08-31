@@ -21,6 +21,10 @@ public class GestionClase {
         this.reservas = new ArrayList<>();
     }
 
+    public List<Clase> getClases() {
+        return clases;
+    }
+
     public void agregarClase(String nombreClase, TipoClase tipoClase, Entrenador entrenador, LocalTime horarioClase, LocalDate fechaInicioClase, LocalDate fechaFinClase, short capacidad, String idClase) {
         if (verificarClaseId(idClase) == null) {
             Clase clase = new Clase(nombreClase, tipoClase, entrenador, horarioClase, fechaInicioClase, fechaFinClase, capacidad, idClase, new ArrayList<>());
@@ -72,7 +76,7 @@ public class GestionClase {
         return clase.getRegistroReserva().size() < clase.getCapacidad();
     }
 
-    private void actualizarEstadoClase(Clase clase) {
+    public void actualizarEstadoClase(Clase clase) {
         boolean estadoActualizado = clase.getRegistroReserva().size() < clase.getCapacidad();
         clase.setEstadoClase(estadoActualizado);
     }
