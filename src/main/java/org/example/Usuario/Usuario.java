@@ -1,6 +1,5 @@
 package org.example.Usuario;
 
-import org.example.Entrenamiento.Entrenamiento;
 import org.example.Persona;
 
 public class Usuario extends Persona {
