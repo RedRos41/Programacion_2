@@ -1,6 +1,7 @@
 package org.example;
 import org.example.Entrenador.GestionEntrenador;
 import org.example.Entrenador.MenuEntrenador;
+import org.example.Entrenamiento.GestionEntrenamiento;
 import org.example.Entrenamiento.MenuEntrenamiento;
 
 import java.util.Scanner;
@@ -14,11 +15,12 @@ public class Gym {
         Scanner scanner = new Scanner(System.in);
         GestionUsuario gestionUsuario = new GestionUsuario();
         GestionEntrenador gestionEntrenador = new GestionEntrenador();
+        GestionEntrenamiento gestionEntrenamiento = new GestionEntrenamiento();
 
-        MenuUsuario menuUsuario = new MenuUsuario(gestionUsuario);
+        MenuUsuario menuUsuario = new MenuUsuario(gestionUsuario, gestionEntrenamiento);
         MenuClase menuClase = new MenuClase(gestionUsuario, gestionEntrenador);
         MenuEntrenador menuEntrenador = new MenuEntrenador(gestionEntrenador);
-        MenuEntrenamiento menuEntrenamiento = new MenuEntrenamiento();
+        MenuEntrenamiento menuEntrenamiento = new MenuEntrenamiento(gestionEntrenamiento);
         boolean salir = false;
 
         while (!salir) {

@@ -1,7 +1,10 @@
 package org.example.Entrenamiento;
 
+import org.example.Entrenador.Entrenador;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GestionEntrenamiento {
     private List<Entrenamiento> entrenamientos = new ArrayList<>();
@@ -10,7 +13,6 @@ public class GestionEntrenamiento {
     public void agregarEntrenamiento(Entrenamiento entrenamiento) {
         entrenamientos.add(entrenamiento);
     }
-
 
     public List<Entrenamiento> listarEntrenamientos() {
         return new ArrayList<>(entrenamientos);
@@ -30,6 +32,12 @@ public class GestionEntrenamiento {
 
     public void eliminarEntrenamientoPorTipo(TipoEntrenamiento tipoEntrenamiento) {
         entrenamientos.removeIf(entrenamiento -> entrenamiento.getTipoEntrenamiento().equals(tipoEntrenamiento));
+    }
+
+    public Optional<Entrenamiento> buscarEntrenadorCodigo(long codigo) {
+        return entrenamientos.stream()
+                .filter(entrenador -> entrenador.getCodigo() == codigo)
+                .findFirst();
     }
 
 

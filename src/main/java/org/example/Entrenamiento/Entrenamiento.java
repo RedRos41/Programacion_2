@@ -1,18 +1,20 @@
 package org.example.Entrenamiento;
 
-import org.example.Clase.TipoClase;
 
 public class Entrenamiento {
     private int duracion;
     private int caloriasQuemadas;
     private TipoEntrenamiento tipoEntrenamiento;
     private String descripcion;
+    private long codigo;
 
-    public Entrenamiento(TipoEntrenamiento tipoEntrenamiento, String descripcion, int duracion, int caloriasQuemadas) {
+
+    public Entrenamiento(TipoEntrenamiento tipoEntrenamiento, String descripcion, int duracion, int caloriasQuemadas, long codigo) {
         this.duracion = duracion;
         this.caloriasQuemadas = caloriasQuemadas;
         this.tipoEntrenamiento = tipoEntrenamiento;
         this.descripcion = descripcion;
+        this.codigo = codigo;
     }
 
     public int getDuracion() {
@@ -47,6 +49,14 @@ public class Entrenamiento {
         this.tipoEntrenamiento = tipoEntrenamiento;
     }
 
+    public long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(long codigo) {
+        this.codigo = codigo;
+    }
+
     @Override
     public String toString() {
         return "Entrenamiento{" +
@@ -54,6 +64,7 @@ public class Entrenamiento {
                 ", caloriasQuemadas=" + caloriasQuemadas +
                 ", tipoEntrenamiento=" + tipoEntrenamiento +
                 ", descripcion='" + descripcion + '\'' +
+                ", codigo='" + codigo + '\'' +
                 '}';
     }
 }

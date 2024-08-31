@@ -1,13 +1,19 @@
 package org.example.Usuario;
 
+
+import org.example.Entrenamiento.Entrenamiento;
+import org.example.Entrenamiento.GestionEntrenamiento;
+
+import java.util.Optional;
 import java.util.Scanner;
 
 public class MenuUsuario {
     private final GestionUsuario gestionUsuario;
+    private  final GestionEntrenamiento gestionEntrenamiento;
 
-    public MenuUsuario(GestionUsuario gestionUsuario) {
-
+    public MenuUsuario(GestionUsuario gestionUsuario, GestionEntrenamiento gestionEntrenamiento) {
         this.gestionUsuario = gestionUsuario;
+        this.gestionEntrenamiento = gestionEntrenamiento;
     }
 
     public void mostrarMenu(Scanner scanner) {
@@ -19,7 +25,7 @@ public class MenuUsuario {
             System.out.println("2. Actualizar usuario");
             System.out.println("3. Eliminar usuario");
             System.out.println("4. Imprimir usuarios");
-            System.out.println("5. Volver al menú principal");
+            System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
@@ -46,7 +52,22 @@ public class MenuUsuario {
                     System.out.println("Ingrese el teléfono del usuario:");
                     long telefono = scanner.nextLong();
 
-                    gestionUsuario.agregarUsuario(nombre, id, direccion, correo, contrasena, telefono);
+                    System.out.print("Ingrese el codigo del entrenamiento: ");
+                    long codigoEntrenador = scanner.nextLong();
+                    scanner.nextLine();
+                    Optional<Entrenamiento> entrenamientoOptional = gestionEntrenamiento.buscarEntrenadorCodigo(codigoEntrenador);
+
+                    if (entrenamientoOptional.isEmpty()) {
+                        System.out.println("Entrenamiento no encontrado.");
+                        return;
+                    }
+
+                    Entrenamiento entrenamiento = entrenamientoOptional.get();
+
+
+
+
+                    gestionUsuario.agregarUsuario(nombre, id, direccion, correo, contrasena, telefono, entrenamiento);
                     break;
 
                 case 2:
@@ -83,7 +104,7 @@ public class MenuUsuario {
                     gestionUsuario.imprimirUsuario();
                     break;
 
-                case 5:
+                case 0:
                     salir = true;
                     break;
 

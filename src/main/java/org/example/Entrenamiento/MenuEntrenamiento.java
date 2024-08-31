@@ -1,13 +1,15 @@
 package org.example.Entrenamiento;
 
-import org.example.Clase.TipoClase;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
 
 public class MenuEntrenamiento {
-    private List<Entrenamiento> entrenamientos = new ArrayList<>();
+    private GestionEntrenamiento gestionEntrenamiento;
+
+    public MenuEntrenamiento(GestionEntrenamiento gestionEntrenamiento) {
+        this.gestionEntrenamiento = new GestionEntrenamiento();
+    }
 
     public void mostrarMenu(Scanner scanner) {
         int opcion = -1;
@@ -15,6 +17,7 @@ public class MenuEntrenamiento {
             System.out.println("\n--- Menú Entrenamiento ---");
             System.out.println("1. Agregar Entrenamiento");
             System.out.println("2. Ver Entrenamientos por Tipo de Clase");
+            System.out.println("3. Listar Todos los Entrenamientos");
             System.out.println("0. Volver al Menú Principal");
             System.out.print("Seleccione una opción: ");
             opcion = Integer.parseInt(scanner.nextLine());
@@ -24,7 +27,10 @@ public class MenuEntrenamiento {
                     agregarEntrenamiento(scanner);
                     break;
                 case 2:
-                    System.out.println("AUN NO!");
+                    verEntrenamientosPorTipo(scanner);
+                    break;
+                case 3:
+                    listarEntrenamientos();
                     break;
                 case 0:
                     System.out.println("Volviendo al Menú Principal...");
@@ -36,23 +42,52 @@ public class MenuEntrenamiento {
     }
 
     private void agregarEntrenamiento(Scanner scanner) {
-        System.out.print("Ingrese la duracion del entrenamiento: ");
-        int duracion = scanner.nextInt();
-        System.out.print("Ingrese las calorias quemadas: ");
-        int caloriasQuemadas = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Ingrese Tipo de Entrenamiento (CARDIO, PESAS, FLEXIBILIDAD, HIIT, YOGA, PILATES, ZUMBA, NATACION, CROSSFIT): ");
-        TipoEntrenamiento tipoEntrenamiento = TipoEntrenamiento.valueOf(scanner.nextLine().toUpperCase());
-        System.out.print("Ingrese Descripción del Entrenamiento: ");
-        String descripcion = scanner.nextLine();
-
         try {
-            Entrenamiento entrenamiento = new Entrenamiento(tipoEntrenamiento, descripcion, duracion, caloriasQuemadas);
-            entrenamientos.add(entrenamiento);
+            System.out.print("Ingrese la duracion del entrenamiento: ");
+            int duracion = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Ingrese las calorias quemadas: ");
+            int caloriasQuemadas = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Ingrese Tipo de Entrenamiento (CARDIO, PESAS, FLEXIBILIDAD, HIIT, YOGA, PILATES, ZUMBA, NATACION, CROSSFIT): ");
+            TipoEntrenamiento tipoEntrenamiento = TipoEntrenamiento.valueOf(scanner.nextLine().toUpperCase());
+
+            System.out.print("Ingrese Descripción del Entrenamiento: ");
+            String descripcion = scanner.nextLine();
+
+            System.out.print("Ingrese el codigo del entrenamiento: ");
+            long codigo = scanner.nextLong();
+            scanner.nextLine();
+
+            Entrenamiento entrenamiento = new Entrenamiento(tipoEntrenamiento, descripcion, duracion, caloriasQuemadas, codigo);
+            gestionEntrenamiento.agregarEntrenamiento(entrenamiento);
             System.out.println("Entrenamiento agregado exitosamente.");
+
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Entrada inválida. Por favor, intente nuevamente.");
         }
     }
 
+    private void verEntrenamientosPorTipo(Scanner scanner) {
+        try {
+            System.out.print("Ingrese Tipo de Entrenamiento para buscar (CARDIO, PESAS, FLEXIBILIDAD, HIIT, YOGA, PILATES, ZUMBA, NATACION, CROSSFIT): ");
+            TipoEntrenamiento tipoEntrenamiento = TipoEntrenamiento.valueOf(scanner.nextLine().toUpperCase());
+
+            var entrenamientosPorTipo = gestionEntrenamiento.buscarEntrenamientoPorTipo(tipoEntrenamiento);
+            if (entrenamientosPorTipo.isEmpty()) {
+                System.out.println("No se encontraron entrenamientos de este tipo.");
+            } else {
+                entrenamientosPorTipo.forEach(System.out::println);
+            }
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Tipo de entrenamiento no válido.");
+        }
+    }
+
+    private void listarEntrenamientos() {
+        gestionEntrenamiento.imprimirEntrenamientos();
+    }
 }

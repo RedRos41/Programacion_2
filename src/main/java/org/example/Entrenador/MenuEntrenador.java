@@ -3,7 +3,11 @@ package org.example.Entrenador;
 import java.util.Scanner;
 
 public class MenuEntrenador {
-    private GestionEntrenador gestionEntrenador = new GestionEntrenador();
+    private final GestionEntrenador gestionEntrenador;
+
+    public MenuEntrenador(GestionEntrenador gestionEntrenador) {
+        this.gestionEntrenador= gestionEntrenador;
+    }
 
     public void mostrarMenu(Scanner scanner) {
         int opcion = -1;

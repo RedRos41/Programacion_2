@@ -1,17 +1,20 @@
 package org.example.Usuario;
 
+import org.example.Entrenamiento.Entrenamiento;
 import org.example.Persona;
 
 public class Usuario extends Persona {
     private String direccion, correo, contrasena;
     private long telefono;
+    private Entrenamiento entrenamiento;
 
-    public Usuario(String nombre, long id, String direccion, String correo, String contrasena, long telefono) {
+    public Usuario(String nombre, long id, String direccion, String correo, String contrasena, long telefono, Entrenamiento entrenamiento) {
         super(nombre, id);
         this.direccion = direccion;
         this.correo = correo;
         this.contrasena = contrasena;
         this.telefono = telefono;
+        this.entrenamiento=entrenamiento;
     }
 
     public String getDireccion() {
@@ -29,6 +32,8 @@ public class Usuario extends Persona {
     public long getTelefono() {
         return telefono;
     }
+
+    public  Entrenamiento getEntrenamiento(){return  entrenamiento;}
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
@@ -55,6 +60,7 @@ public class Usuario extends Persona {
                 ", correo='" + correo + '\'' +
                 ", contrasena='" + contrasena + '\'' +
                 ", telefono=" + telefono +
+                ", entrenamiento=" + entrenamiento +
                 '}';
     }
 }

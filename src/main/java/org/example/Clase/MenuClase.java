@@ -158,12 +158,20 @@ public class MenuClase {
 
                 if (entrenadorOptional.isEmpty()) {
                     System.out.println("Entrenador no encontrado.");
-                    return; // Terminar el método si no se encuentra el entrenador
+                    return;
                 }
 
                 Entrenador entrenador = entrenadorOptional.get();
-                // Implementación adicional si es necesario...
+
+                List<Clase> clasesPorEntrenador = gestionClase.buscarClaseEntrenador(entrenador);
+
+                if (!clasesPorEntrenador.isEmpty()) {
+                    clasesPorEntrenador.forEach(System.out::println);
+                } else {
+                    System.out.println("No se encontraron clases para ese entrenador.");
+                }
                 break;
+
 
             default:
                 System.out.println("Opción no válida.");
