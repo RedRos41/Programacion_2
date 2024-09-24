@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.notas.controladores.InicioControlador"
+            prefHeight="400.0" prefWidth="600.0">
+
+
+    <Label layoutX="27.0" layoutY="35.0" text="Titulo:" />
+    <TextField fx:id="txtTitulo" layoutX="100.0" layoutY="30.0" minWidth="270.0" />
+
+
+    <Label layoutX="27.0" layoutY="85.0" text="Categoria:" />
+    <TextField fx:id="txtCategoria" layoutX="100.0" layoutY="80.0" minWidth="270.0" />
+
+
+    <Label layoutX="27.0" layoutY="135.0" text="Nota:" />
+    <TextArea fx:id="txtNota" layoutX="100.0" layoutY="130.0" prefHeight="100.0" prefWidth="270.0" />
+
+
+    <Button fx:id="btnNuevaNota" onAction="#crearNota" layoutX="150.0" layoutY="280.0" text="Crear nueva nota" />
+
+    <TableView fx:id="tablaNotas" layoutX="27.0" layoutY="340.0" prefHeight="200.0" prefWidth="340.0">
+        <columns>
+            <TableColumn fx:id="colTitulo" text="Título" />
+            <TableColumn fx:id="colCategoria" text="Categoría" />
+            <TableColumn fx:id="colTexto" text="Nota" />
+            <TableColumn fx:id="colFecha" text="Fecha creación" />
+        </columns>
+    </TableView>
+
+</AnchorPane>
