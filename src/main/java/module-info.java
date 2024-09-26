@@ -1,4 +1,4 @@
-module co.edu.uniquindio.seguimiento2 {
+module co.edu.uniquindio.seguimiento {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
