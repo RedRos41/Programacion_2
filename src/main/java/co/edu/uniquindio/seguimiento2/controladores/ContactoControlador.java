@@ -7,10 +7,27 @@ import javafx.scene.control.Label;
 
 public class ContactoControlador {
     @FXML
-    private Label welcomeText;
+    private Label añadirText;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    protected void crearButton() {
+        añadirText.setText("Acción de añadir contacto");
     }
+
+    @FXML
+    private Label editarText;
+
+    @FXML
+    protected void actualizarButton() {
+        editarText.setText("Acción de editar contacto");
+    }
+
+    @FXML
+    private Label eliminarText;
+
+    @FXML
+    protected void eliminarButton() {
+        eliminarText.setText("Acción de eliminar contacto");
+    }
+
 }

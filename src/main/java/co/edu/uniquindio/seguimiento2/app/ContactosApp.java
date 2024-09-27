@@ -13,7 +13,7 @@ public class ContactosApp extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ContactosApp.class.getResource("/Contactos.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        stage.setTitle("Contactos");
         stage.setScene(scene);
         stage.show();
     }
@@ -21,4 +21,5 @@ public class ContactosApp extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }
