@@ -1,9 +1,9 @@
-package co.edu.uniquindio.seguimiento2;
+package co.edu.uniquindio.seguimiento2.controladores;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class ContactoControlador {
     @FXML
     private Label welcomeText;
 
