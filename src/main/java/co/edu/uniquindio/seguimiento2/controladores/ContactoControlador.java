@@ -7,11 +7,11 @@ import javafx.scene.control.Label;
 
 public class ContactoControlador {
     @FXML
-    private Label añadirText;
+    private Label anadirText;
 
     @FXML
     protected void crearButton() {
-        añadirText.setText("Acción de añadir contacto");
+        anadirText.setText("Acción de añadir contacto");
     }
 
     @FXML
