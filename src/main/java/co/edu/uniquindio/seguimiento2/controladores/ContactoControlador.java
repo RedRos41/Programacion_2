@@ -11,34 +11,26 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ContactoControlador implements Initializable {
 
     @FXML
-    private TextField txtNombre;
-    @FXML
-    private TextField txtApellido;
-    @FXML
-    private TextField txtTelefono;
-    @FXML
-    private TextField txtCorreo;
+    private TextField txtNombre, txtApellido, txtTelefono, txtCorreo, txtUrlFoto, txtBuscar;
     @FXML
     private DatePicker dateCumpleanos;
-
     @FXML
     private TableView<Contacto> tablaContactos;
     @FXML
-    private TableColumn<Contacto, String> colNombre;
+    private TableColumn<Contacto, String> colNombre, colApellido, colTelefono;
     @FXML
-    private TableColumn<Contacto, String> colApellido;
-    @FXML
-    private TableColumn<Contacto, String> colTelefono;
+    private ComboBox<String> comboBuscarPor;
 
-    private final ContactoPrincipal contactoPrincipal; // Instancia del modelo ContactoPrincipal
-    private Contacto contactoSeleccionado; // Contacto seleccionado en la tabla
-    private ObservableList<Contacto> contactosObservable; // Lista observable de contactos
+    private final ContactoPrincipal contactoPrincipal;
+    private Contacto contactoSeleccionado;
+    private ObservableList<Contacto> contactosObservable;
 
     public ContactoControlador() {
         contactoPrincipal = new ContactoPrincipal();
@@ -46,16 +38,18 @@ public class ContactoControlador implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Configurar las columnas de la tabla
+
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         colApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
         colTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
 
-        // Inicializar lista observable y cargar los contactos
         contactosObservable = FXCollections.observableArrayList();
         cargarContactos();
 
-        // Configurar la selección en la tabla
+
+        comboBuscarPor.setItems(FXCollections.observableArrayList("Nombre", "Teléfono"));
+        comboBuscarPor.setValue("Nombre");
+
         tablaContactos.setOnMouseClicked(e -> {
             contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
             if (contactoSeleccionado != null) {
@@ -63,6 +57,7 @@ public class ContactoControlador implements Initializable {
                 txtApellido.setText(contactoSeleccionado.getApellido());
                 txtTelefono.setText(contactoSeleccionado.getTelefono());
                 txtCorreo.setText(contactoSeleccionado.getCorreoElectronico());
+                txtUrlFoto.setText(contactoSeleccionado.getFotoUrl());
                 dateCumpleanos.setValue(contactoSeleccionado.getCumpleaños());
             }
         });
@@ -76,7 +71,7 @@ public class ContactoControlador implements Initializable {
                     txtTelefono.getText(),
                     dateCumpleanos.getValue(),
                     txtCorreo.getText(),
-                    ""
+                    txtUrlFoto.getText()
             );
             limpiarCampos();
             actualizarContactos();
@@ -111,7 +106,7 @@ public class ContactoControlador implements Initializable {
                         txtTelefono.getText(),
                         dateCumpleanos.getValue(),
                         txtCorreo.getText(),
-                        ""
+                        txtUrlFoto.getText()
                 );
                 limpiarCampos();
                 actualizarContactos();
@@ -122,6 +117,25 @@ public class ContactoControlador implements Initializable {
         } else {
             mostrarAlerta("Debe seleccionar un contacto de la tabla", Alert.AlertType.WARNING);
         }
+    }
+    public void buscarContacto(ActionEvent e) {
+        String textoBusqueda = txtBuscar.getText().toLowerCase();
+        String criterioBusqueda = comboBuscarPor.getValue();
+
+        List<Contacto> contactosFiltrados;
+
+        if (criterioBusqueda.equals("Nombre")) {
+            contactosFiltrados = contactoPrincipal.listarContactos().stream()
+                    .filter(c -> c.getNombre().toLowerCase().contains(textoBusqueda))
+                    .collect(Collectors.toList());
+        } else {
+            contactosFiltrados = contactoPrincipal.listarContactos().stream()
+                    .filter(c -> c.getTelefono().contains(textoBusqueda))
+                    .collect(Collectors.toList());
+        }
+
+        contactosObservable.setAll(contactosFiltrados);
+        tablaContactos.setItems(contactosObservable);
     }
 
     private void cargarContactos() {
@@ -138,6 +152,7 @@ public class ContactoControlador implements Initializable {
         txtApellido.clear();
         txtTelefono.clear();
         txtCorreo.clear();
+        txtUrlFoto.clear();
         dateCumpleanos.setValue(null);
     }
 
