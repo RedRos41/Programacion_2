@@ -1,25 +1,28 @@
 package co.edu.uniquindio.seguimiento2.app;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.io.IOException;
-
 
 public class ContactosApp extends Application {
+
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ContactosApp.class.getResource("/Contactos.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Contactos");
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage primaryStage) throws Exception {
+        // Cargar el archivo FXML
+        Parent root = FXMLLoader.load(getClass().getResource("/contacto_view.fxml"));
+
+        // Crear la escena con el contenido del FXML
+        Scene scene = new Scene(root);
+
+        // Configurar y mostrar el escenario principal
+        primaryStage.setTitle("Gestor de Contactos");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
-
 }

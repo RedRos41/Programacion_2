@@ -40,20 +40,20 @@ public class ContactoPrincipal {
         contactos.add(contacto);
     }
 
-    public int obtenerContacto(String id){
+    public int obtenerContacto(String id) {
 
         for (int i = 0; i < contactos.size(); i++) {
-            if( contactos.get(i).getId().equals(id) ){
+            if (contactos.get(i).getId().equals(id)) {
                 return i;
             }
         }
         return -1;
     }
 
-    public void eliminarContacto (String id)throws Exception{
+    public void eliminarContacto(String id) throws Exception {
         int posContacto = obtenerContacto(id);
 
-        if(posContacto == -1){
+        if (posContacto == -1) {
             throw new Exception("que va a borrar si eso no existe, brut@");
         }
 
@@ -61,11 +61,11 @@ public class ContactoPrincipal {
 
     }
 
-    public void editarContacto (String id, String nombre, String apellido, String telefono, LocalDate cumpleaños, String correoElectronico, String fotoUrl)throws Exception{
-        
+    public void editarContacto(String id, String nombre, String apellido, String telefono, LocalDate cumpleaños, String correoElectronico, String fotoUrl) throws Exception {
+
         int posContacto = obtenerContacto(id);
 
-        if(posContacto == -1){
+        if (posContacto == -1) {
             throw new Exception("oe tont@, no existe un contacto con esa ID, busque bien ");
         }
 
@@ -93,30 +93,29 @@ public class ContactoPrincipal {
 
     }
 
-    public List<Contacto> listarContactos(){
+    public List<Contacto> buscarContactosNombre(String nombre) {
+        List<Contacto> contactosEncontrados = new ArrayList<>();
+        for (Contacto c : contactos) {
+            if (c.getNombre().equals(nombre)) { // Corregido: Llaves agregadas
+                contactosEncontrados.add(c);
+            }
+        }
+        return contactosEncontrados;
+    }
+
+    public List<Contacto> buscarContactosTelefono(String telefono) {
+        List<Contacto> contactosEncontrados = new ArrayList<>();
+        for (Contacto c : contactos) {
+            if (c.getTelefono().equals(telefono)) { // Corregido: Llaves agregadas
+                contactosEncontrados.add(c);
+            }
+        }
+        return contactosEncontrados;
+    }
+
+    public List<Contacto> listarContactos() {
         return contactos;
     }
 
-    public List<Contacto> buscarContactosNombre(String nombre){
-        List<Contacto> contactosEncontrados = new ArrayList<>();
-
-        for(Contacto c : contactos){
-
-            if(c.getNombre().equals(nombre));
-            contactosEncontrados.add(c);
-        }
-        return contactosEncontrados;
-    }
-
-    public List<Contacto> buscarContactosTelefono(String telefono){
-        List<Contacto> contactosEncontrados = new ArrayList<>();
-
-        for(Contacto c : contactos){
-
-            if(c.getTelefono().equals(telefono));
-            contactosEncontrados.add(c);
-        }
-        return contactosEncontrados;
-    }
-
 }
+
