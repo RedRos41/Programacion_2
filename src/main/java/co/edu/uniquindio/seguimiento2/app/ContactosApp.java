@@ -10,13 +10,10 @@ public class ContactosApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Cargar el archivo FXML
-        Parent root = FXMLLoader.load(getClass().getResource("/contacto_view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Contactos.fxml"));
 
-        // Crear la escena con el contenido del FXML
         Scene scene = new Scene(root);
 
-        // Configurar y mostrar el escenario principal
         primaryStage.setTitle("Gestor de Contactos");
         primaryStage.setScene(scene);
         primaryStage.show();

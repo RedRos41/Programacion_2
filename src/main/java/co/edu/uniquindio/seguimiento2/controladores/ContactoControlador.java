@@ -31,12 +31,10 @@ public class ContactoControlador {
 
     @FXML
     public void initialize() {
-        // Inicializar la lista y la clase de gestión
         gestionContactos = new ContactoPrincipal();
         listaContactos = FXCollections.observableArrayList(gestionContactos.listarContactos());
         tablaContactos.setItems(listaContactos);
 
-        // Configurar las columnas de la tabla
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colApellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
@@ -48,20 +46,19 @@ public class ContactoControlador {
         String apellido = txtApellido.getText();
         String telefono = txtTelefono.getText();
         String correoElectronico = txtCorreo.getText();
-        LocalDate cumpleanos = LocalDate.now(); // Por ahora se usará la fecha actual como ejemplo
+        LocalDate cumpleanos = LocalDate.now();
 
         gestionContactos.agregarContacto(nombre, apellido, telefono, cumpleanos, correoElectronico, "");
-        listaContactos.setAll(gestionContactos.listarContactos()); // Actualizar la tabla
+        listaContactos.setAll(gestionContactos.listarContactos());
         limpiarCampos();
     }
 
     @FXML
     private void eliminarContacto(ActionEvent event) throws Exception {
-        // Obtener el contacto seleccionado en la tabla
         Contacto contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
         if (contactoSeleccionado != null) {
             gestionContactos.eliminarContacto(contactoSeleccionado.getId());
-            listaContactos.setAll(gestionContactos.listarContactos()); // Actualizar la tabla
+            listaContactos.setAll(gestionContactos.listarContactos());
         } else {
             System.out.println("Por favor seleccione un contacto para eliminar.");
         }
@@ -69,17 +66,16 @@ public class ContactoControlador {
 
     @FXML
     private void editarContacto(ActionEvent event) throws Exception {
-        // Obtener el contacto seleccionado en la tabla
         Contacto contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
         if (contactoSeleccionado != null) {
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
             String telefono = txtTelefono.getText();
             String correoElectronico = txtCorreo.getText();
-            LocalDate cumpleanos = LocalDate.now(); // Por ahora se usará la fecha actual como ejemplo
+            LocalDate cumpleanos = LocalDate.now();
 
             gestionContactos.editarContacto(contactoSeleccionado.getId(), nombre, apellido, telefono, cumpleanos, correoElectronico, "");
-            listaContactos.setAll(gestionContactos.listarContactos()); // Actualizar la tabla
+            listaContactos.setAll(gestionContactos.listarContactos());
             limpiarCampos();
         } else {
             System.out.println("Por favor seleccione un contacto para editar.");

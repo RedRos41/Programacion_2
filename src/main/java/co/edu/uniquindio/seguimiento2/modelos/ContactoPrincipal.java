@@ -16,15 +16,15 @@ public class ContactoPrincipal {
 
     public void agregarContacto(String nombre, String apellido, String telefono, LocalDate cumpleaños, String correoElectronico, String fotoUrl) throws Exception {
         if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || correoElectronico.isEmpty()) {
-            throw new Exception("deje la pereza y copie todo o si no pailas, no le creo ningun contacto");
+            throw new Exception("todos los los espacios son obligatorios");
         }
 
         if (!Pattern.matches("\\d{10}", telefono)) {
-            throw new Exception("el numero no es de noruega o de republica checa, es de 10 numeritos");
+            throw new Exception("el numero de telefono debe tener 10 digitos");
         }
 
         if (!Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", correoElectronico)) {
-            throw new Exception("Ese correo esta como rarito jmm");
+            throw new Exception("correo incorrecto");
         }
 
         Contacto contacto = Contacto.builder()
@@ -54,7 +54,7 @@ public class ContactoPrincipal {
         int posContacto = obtenerContacto(id);
 
         if (posContacto == -1) {
-            throw new Exception("que va a borrar si eso no existe, brut@");
+            throw new Exception("no se encontro este contacto");
         }
 
         contactos.remove(contactos.get(posContacto));
@@ -66,19 +66,19 @@ public class ContactoPrincipal {
         int posContacto = obtenerContacto(id);
 
         if (posContacto == -1) {
-            throw new Exception("oe tont@, no existe un contacto con esa ID, busque bien ");
+            throw new Exception("no existe un contacto con esa ID ");
         }
 
         if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || correoElectronico.isEmpty()) {
-            throw new Exception("deje la pereza y copie todo o si no pailas, no le edito ningun contacto");
+            throw new Exception("todos los los espacios son obligatorios");
         }
 
         if (!Pattern.matches("\\d{10}", telefono)) {
-            throw new Exception("el numero no es de noruega o de republica checa, es de 10 numeritos");
+            throw new Exception("el numero de telefono debe tener 10 digitos");
         }
 
         if (!Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", correoElectronico)) {
-            throw new Exception("Ese correo esta como rarito jmm");
+            throw new Exception("correo incorrecto ");
         }
 
         Contacto contactoModificado = contactos.get(posContacto);
@@ -96,7 +96,7 @@ public class ContactoPrincipal {
     public List<Contacto> buscarContactosNombre(String nombre) {
         List<Contacto> contactosEncontrados = new ArrayList<>();
         for (Contacto c : contactos) {
-            if (c.getNombre().equals(nombre)) { // Corregido: Llaves agregadas
+            if (c.getNombre().equals(nombre)) {
                 contactosEncontrados.add(c);
             }
         }
@@ -106,7 +106,7 @@ public class ContactoPrincipal {
     public List<Contacto> buscarContactosTelefono(String telefono) {
         List<Contacto> contactosEncontrados = new ArrayList<>();
         for (Contacto c : contactos) {
-            if (c.getTelefono().equals(telefono)) { // Corregido: Llaves agregadas
+            if (c.getTelefono().equals(telefono)) {
                 contactosEncontrados.add(c);
             }
         }

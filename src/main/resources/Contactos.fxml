@@ -6,7 +6,6 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.seguimiento2.controladores.ContactoControlador">
   <VBox spacing="20" alignment="CENTER">
-    <!-- Tabla de Contactos -->
     <TableView fx:id="tablaContactos">
       <columns>
         <TableColumn fx:id="colNombre" text="Nombre" />
@@ -15,7 +14,6 @@
       </columns>
     </TableView>
 
-    <!-- Formulario de Contactos -->
     <GridPane hgap="10" vgap="10">
       <Label text="Nombre:" />
       <TextField fx:id="txtNombre" promptText="Ingrese el nombre" />
@@ -33,7 +31,6 @@
       <DatePicker fx:id="dateCumpleanos" />
     </GridPane>
 
-    <!-- Botones de Acción -->
     <HBox spacing="10" alignment="CENTER">
       <Button text="Agregar" onAction="#agregarContacto"/>
       <Button text="Editar" onAction="#editarContacto"/>
