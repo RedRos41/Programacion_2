@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.seguimiento2.controladores.ContactoControlador">
-  <VBox spacing="20" alignment="CENTER">
-    <TableView fx:id="tablaContactos">
-      <columns>
-        <TableColumn fx:id="colNombre" text="Nombre" />
-        <TableColumn fx:id="colApellido" text="Apellido" />
-        <TableColumn fx:id="colTelefono" text="Teléfono" />
-      </columns>
-    </TableView>
+<AnchorPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.seguimiento2.controladores.ContactoControlador">
 
-    <GridPane hgap="10" vgap="10">
-      <Label text="Nombre:" />
-      <TextField fx:id="txtNombre" promptText="Ingrese el nombre" />
+  <Label layoutX="27.0" layoutY="35.0" text="Nombre:" />
+  <TextField fx:id="txtNombre" layoutX="120.0" layoutY="30.0" minWidth="270.0" />
 
-      <Label text="Apellido:" />
-      <TextField fx:id="txtApellido" promptText="Ingrese el apellido" />
+  <Label layoutX="27.0" layoutY="85.0" text="Apellido:" />
+  <TextField fx:id="txtApellido" layoutX="120.0" layoutY="80.0" minWidth="270.0" />
 
-      <Label text="Teléfono:" />
-      <TextField fx:id="txtTelefono" promptText="Ingrese el teléfono" />
+  <Label layoutX="27.0" layoutY="135.0" text="Teléfono:" />
+  <TextField fx:id="txtTelefono" layoutX="120.0" layoutY="130.0" minWidth="270.0" />
 
-      <Label text="Correo:" />
-      <TextField fx:id="txtCorreo" promptText="Ingrese el correo electrónico" />
+  <Label layoutX="27.0" layoutY="185.0" text="Correo:" />
+  <TextField fx:id="txtCorreo" layoutX="120.0" layoutY="180.0" minWidth="270.0" />
 
-      <Label text="Cumpleaños:" />
-      <DatePicker fx:id="dateCumpleanos" />
-    </GridPane>
+  <Label layoutX="27.0" layoutY="235.0" text="Cumpleaños:" />
+  <DatePicker fx:id="dateCumpleanos" layoutX="120.0" layoutY="230.0" minWidth="270.0" />
 
-    <HBox spacing="10" alignment="CENTER">
-      <Button text="Agregar" onAction="#agregarContacto"/>
-      <Button text="Editar" onAction="#editarContacto"/>
-      <Button text="Eliminar" onAction="#eliminarContacto"/>
-    </HBox>
-  </VBox>
+  <Button layoutX="27.0" layoutY="300.0" onAction="#agregarContacto" prefHeight="32.0" prefWidth="115.0" text="Agregar" />
+  <Button layoutX="151.0" layoutY="300.0" onAction="#editarContacto" prefHeight="32.0" prefWidth="115.0" text="Editar" />
+  <Button layoutX="275.0" layoutY="300.0" onAction="#eliminarContacto" prefHeight="32.0" prefWidth="115.0" text="Eliminar" />
+
+  <TableView fx:id="tablaContactos" layoutX="430.0" layoutY="30.0" prefHeight="310.0" prefWidth="540.0">
+    <columns>
+      <TableColumn fx:id="colNombre" prefWidth="180.0" text="Nombre" />
+      <TableColumn fx:id="colApellido" prefWidth="180.0" text="Apellido" />
+      <TableColumn fx:id="colTelefono" prefWidth="180.0" text="Teléfono" />
+    </columns>
+  </TableView>
 </AnchorPane>
-
