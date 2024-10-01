@@ -15,18 +15,7 @@ public class ContactoPrincipal {
     }
 
     public void agregarContacto(String nombre, String apellido, String telefono, LocalDate cumpleaños, String correoElectronico, String fotoUrl) throws Exception {
-        if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || correoElectronico.isEmpty()) {
-            throw new Exception("todos los los espacios son obligatorios");
-        }
-
-        if (!Pattern.matches("\\d{10}", telefono)) {
-            throw new Exception("el numero de telefono debe tener 10 digitos");
-        }
-
-        if (!Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", correoElectronico)) {
-            throw new Exception("correo incorrecto");
-        }
-
+        validarCampos(nombre, apellido, telefono, correoElectronico);
         Contacto contacto = Contacto.builder()
                 .id(UUID.randomUUID().toString())
                 .nombre(nombre)
@@ -34,69 +23,43 @@ public class ContactoPrincipal {
                 .telefono(telefono)
                 .cumpleaños(cumpleaños)
                 .correoElectronico(correoElectronico)
-                .fotoUrl(fotoUrl)
+                .fotoUrl(fotoUrl) // Agregar la URL de la foto al contacto
                 .build();
-
         contactos.add(contacto);
     }
 
-    public int obtenerContacto(String id) {
-
-        for (int i = 0; i < contactos.size(); i++) {
-            if (contactos.get(i).getId().equals(id)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public void eliminarContacto(String id) throws Exception {
-        int posContacto = obtenerContacto(id);
-
-        if (posContacto == -1) {
-            throw new Exception("no se encontro este contacto");
+        Contacto contacto = buscarContactoPorId(id);
+        if (contacto != null) {
+            contactos.remove(contacto);
+        } else {
+            throw new Exception("No se encontró el contacto.");
         }
-
-        contactos.remove(contactos.get(posContacto));
-
     }
 
     public void editarContacto(String id, String nombre, String apellido, String telefono, LocalDate cumpleaños, String correoElectronico, String fotoUrl) throws Exception {
-
-        int posContacto = obtenerContacto(id);
-
-        if (posContacto == -1) {
-            throw new Exception("no existe un contacto con esa ID ");
+        Contacto contacto = buscarContactoPorId(id);
+        if (contacto != null) {
+            validarCampos(nombre, apellido, telefono, correoElectronico);
+            contacto.setNombre(nombre);
+            contacto.setApellido(apellido);
+            contacto.setTelefono(telefono);
+            contacto.setCumpleaños(cumpleaños);
+            contacto.setCorreoElectronico(correoElectronico);
+            contacto.setFotoUrl(fotoUrl); // Actualizar la URL de la foto
+        } else {
+            throw new Exception("No se encontró el contacto.");
         }
+    }
 
-        if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || correoElectronico.isEmpty()) {
-            throw new Exception("todos los los espacios son obligatorios");
-        }
-
-        if (!Pattern.matches("\\d{10}", telefono)) {
-            throw new Exception("el numero de telefono debe tener 10 digitos");
-        }
-
-        if (!Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", correoElectronico)) {
-            throw new Exception("correo incorrecto ");
-        }
-
-        Contacto contactoModificado = contactos.get(posContacto);
-        contactoModificado.setNombre(nombre);
-        contactoModificado.setApellido(apellido);
-        contactoModificado.setTelefono(telefono);
-        contactoModificado.setCumpleaños(cumpleaños);
-        contactoModificado.setCorreoElectronico(correoElectronico);
-        contactoModificado.setFotoUrl(fotoUrl);
-
-        contactos.set(posContacto, contactoModificado);
-
+    public List<Contacto> listarContactos() {
+        return contactos;
     }
 
     public List<Contacto> buscarContactosNombre(String nombre) {
         List<Contacto> contactosEncontrados = new ArrayList<>();
         for (Contacto c : contactos) {
-            if (c.getNombre().equals(nombre)) {
+            if (c.getNombre().equalsIgnoreCase(nombre)) {
                 contactosEncontrados.add(c);
             }
         }
@@ -113,9 +76,33 @@ public class ContactoPrincipal {
         return contactosEncontrados;
     }
 
-    public List<Contacto> listarContactos() {
-        return contactos;
+    private void validarCampos(String nombre, String apellido, String telefono, String correoElectronico) throws Exception {
+        if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || correoElectronico.isEmpty()) {
+            throw new Exception("Todos los campos son obligatorios.");
+        }
+        if (!Pattern.matches("\\d{10}", telefono)) {
+            throw new Exception("El número de teléfono debe tener 10 dígitos.");
+        }
+        if (!Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", correoElectronico)) {
+            throw new Exception("Correo electrónico incorrecto.");
+        }
+    }
+
+    private Contacto buscarContactoPorId(String id) {
+        return contactos.stream().filter(c -> c.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    public boolean contactoDuplicado(String nombre, String apellido, String telefono) {
+        for (Contacto c : contactos) {
+            if (c.getNombre().equalsIgnoreCase(nombre) &&
+                    c.getApellido().equalsIgnoreCase(apellido) &&
+                    c.getTelefono().equals(telefono)) {
+                return true; // Contacto duplicado encontrado
+            }
+        }
+        return false;
     }
 
 }
+
 
