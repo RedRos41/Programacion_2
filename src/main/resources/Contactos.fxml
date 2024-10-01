@@ -5,32 +5,50 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.seguimiento2.controladores.ContactoControlador">
-  <VBox spacing="20" alignment="CENTER">
-    <TableView fx:id="tablaContactos">
+  <VBox spacing="20" alignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" AnchorPane.bottomAnchor="10.0">
+
+    <!-- Sección de búsqueda -->
+    <HBox spacing="10" alignment="CENTER">
+      <ComboBox fx:id="comboBuscar" promptText="Buscar por"/>
+      <TextField fx:id="txtBuscar" promptText="Ingrese el criterio de búsqueda"/>
+      <Button text="Buscar" onAction="#buscarContacto"/>
+      <Button text="Ver Todos" onAction="#verTodosContactos"/>
+    </HBox>
+
+    <!-- Tabla de contactos -->
+    <TableView fx:id="tablaContactos" VBox.vgrow="ALWAYS" onMouseClicked="#seleccionarContacto">
       <columns>
         <TableColumn fx:id="colNombre" text="Nombre" />
         <TableColumn fx:id="colApellido" text="Apellido" />
         <TableColumn fx:id="colTelefono" text="Teléfono" />
+        <TableColumn fx:id="colCorreoElectronico" text="Correo Electrónico" />
+        <TableColumn fx:id="colCumpleaños" text="Cumpleaños" />
+        <TableColumn fx:id="colFotoUrl" text="Foto URL" />
       </columns>
     </TableView>
 
+    <!-- Sección de formulario -->
     <GridPane hgap="10" vgap="10">
       <Label text="Nombre:" />
-      <TextField fx:id="txtNombre" promptText="Ingrese el nombre" />
+      <TextField fx:id="txtNombre" promptText="Ingrese el nombre" GridPane.columnIndex="1" />
 
-      <Label text="Apellido:" />
-      <TextField fx:id="txtApellido" promptText="Ingrese el apellido" />
+      <Label text="Apellido:" GridPane.rowIndex="1" />
+      <TextField fx:id="txtApellido" promptText="Ingrese el apellido" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-      <Label text="Teléfono:" />
-      <TextField fx:id="txtTelefono" promptText="Ingrese el teléfono" />
+      <Label text="Teléfono:" GridPane.rowIndex="2" />
+      <TextField fx:id="txtTelefono" promptText="Ingrese el teléfono" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-      <Label text="Correo:" />
-      <TextField fx:id="txtCorreo" promptText="Ingrese el correo electrónico" />
+      <Label text="Correo:" GridPane.rowIndex="3" />
+      <TextField fx:id="txtCorreo" promptText="Ingrese el correo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-      <Label text="Cumpleaños:" />
-      <DatePicker fx:id="dateCumpleanos" />
+      <Label text="Cumpleaños:" GridPane.rowIndex="4" />
+      <DatePicker fx:id="dateCumpleanos" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+      <Label text="Foto URL:" GridPane.rowIndex="5" />
+      <TextField fx:id="txtFotoUrl" promptText="Ingrese la URL de la foto" GridPane.columnIndex="1" GridPane.rowIndex="5" />
     </GridPane>
 
+    <!-- Botones de acciones -->
     <HBox spacing="10" alignment="CENTER">
       <Button text="Agregar" onAction="#agregarContacto"/>
       <Button text="Editar" onAction="#editarContacto"/>
@@ -38,4 +56,3 @@
     </HBox>
   </VBox>
 </AnchorPane>
-

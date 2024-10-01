@@ -1,7 +1,6 @@
 package co.edu.uniquindio.seguimiento2.modelos;
 
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Getter

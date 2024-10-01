@@ -69,7 +69,7 @@ public class ContactoPrincipal {
     public List<Contacto> buscarContactosTelefono(String telefono) {
         List<Contacto> contactosEncontrados = new ArrayList<>();
         for (Contacto c : contactos) {
-            if (c.getTelefono().equals(telefono)) {
+            if (c.getTelefono().equalsIgnoreCase(telefono)) { // Comparar ignorando mayúsculas/minúsculas
                 contactosEncontrados.add(c);
             }
         }
@@ -102,7 +102,4 @@ public class ContactoPrincipal {
         }
         return false;
     }
-
 }
-
-

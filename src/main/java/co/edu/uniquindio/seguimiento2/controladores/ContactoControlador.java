@@ -2,149 +2,160 @@ package co.edu.uniquindio.seguimiento2.controladores;
 
 import co.edu.uniquindio.seguimiento2.modelos.Contacto;
 import co.edu.uniquindio.seguimiento2.modelos.ContactoPrincipal;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
-public class ContactoControlador implements Initializable {
+public class ContactoControlador {
+
+    @FXML private TableView<Contacto> tablaContactos;
+    @FXML private TableColumn<Contacto, String> colNombre;
+    @FXML private TableColumn<Contacto, String> colApellido;
+    @FXML private TableColumn<Contacto, String> colTelefono;
+    @FXML private TableColumn<Contacto, String> colCorreoElectronico;
+    @FXML private TableColumn<Contacto, LocalDate> colCumpleaños;
+    @FXML private TableColumn<Contacto, String> colFotoUrl;
+
+    @FXML private TextField txtNombre, txtApellido, txtTelefono, txtCorreo, txtFotoUrl;
+    @FXML private DatePicker dateCumpleanos;
+    @FXML private ComboBox<String> comboBuscar;
+    @FXML private TextField txtBuscar;
+
+    private ObservableList<Contacto> listaContactos;
+    private ContactoPrincipal gestionContactos;
 
     @FXML
-    private TextField txtNombre, txtApellido, txtTelefono, txtCorreo, txtUrlFoto, txtBuscar;
-    @FXML
-    private DatePicker dateCumpleanos;
-    @FXML
-    private TableView<Contacto> tablaContactos;
-    @FXML
-    private TableColumn<Contacto, String> colNombre, colApellido, colTelefono;
-    @FXML
-    private ComboBox<String> comboBuscarPor;
-
-    private final ContactoPrincipal contactoPrincipal;
-    private Contacto contactoSeleccionado;
-    private ObservableList<Contacto> contactosObservable;
-
-    public ContactoControlador() {
-        contactoPrincipal = new ContactoPrincipal();
+    public void initialize() {
+        gestionContactos = new ContactoPrincipal();
+        listaContactos = FXCollections.observableArrayList(gestionContactos.listarContactos());
+        tablaContactos.setItems(listaContactos);
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colApellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
+        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        colCorreoElectronico.setCellValueFactory(new PropertyValueFactory<>("correoElectronico"));
+        colCumpleaños.setCellValueFactory(new PropertyValueFactory<>("cumpleaños"));
+        colFotoUrl.setCellValueFactory(new PropertyValueFactory<>("fotoUrl"));
+        comboBuscar.setItems(FXCollections.observableArrayList("Nombre", "Teléfono"));
+        comboBuscar.getSelectionModel().selectFirst();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-        colApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
-        colTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
-
-        contactosObservable = FXCollections.observableArrayList();
-        cargarContactos();
-
-
-        comboBuscarPor.setItems(FXCollections.observableArrayList("Nombre", "Teléfono"));
-        comboBuscarPor.setValue("Nombre");
-
-        tablaContactos.setOnMouseClicked(e -> {
-            contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
-            if (contactoSeleccionado != null) {
-                txtNombre.setText(contactoSeleccionado.getNombre());
-                txtApellido.setText(contactoSeleccionado.getApellido());
-                txtTelefono.setText(contactoSeleccionado.getTelefono());
-                txtCorreo.setText(contactoSeleccionado.getCorreoElectronico());
-                txtUrlFoto.setText(contactoSeleccionado.getFotoUrl());
-                dateCumpleanos.setValue(contactoSeleccionado.getCumpleaños());
-            }
-        });
-    }
-
-    public void agregarContacto(ActionEvent e) {
+    @FXML
+    private void agregarContacto() {
         try {
-            contactoPrincipal.agregarContacto(
-                    txtNombre.getText(),
-                    txtApellido.getText(),
-                    txtTelefono.getText(),
-                    dateCumpleanos.getValue(),
-                    txtCorreo.getText(),
-                    txtUrlFoto.getText()
-            );
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            String telefono = txtTelefono.getText();
+            String correoElectronico = txtCorreo.getText();
+            LocalDate cumpleanos = dateCumpleanos.getValue();
+            String fotoUrl = txtFotoUrl.getText();
+
+            if (gestionContactos.contactoDuplicado(nombre, apellido, telefono)) {
+                mostrarMensaje("Error", "El contacto ya existe en la lista.", Alert.AlertType.WARNING);
+                return;
+            }
+
+            gestionContactos.agregarContacto(nombre, apellido, telefono, cumpleanos, correoElectronico, fotoUrl);
+            actualizarListaContactos();
             limpiarCampos();
-            actualizarContactos();
-            mostrarAlerta("Contacto agregado correctamente", Alert.AlertType.INFORMATION);
-        } catch (Exception ex) {
-            mostrarAlerta(ex.getMessage(), Alert.AlertType.ERROR);
+            mostrarMensaje("Contacto agregado", "El contacto ha sido agregado correctamente.", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            mostrarMensaje("Error al agregar contacto", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-    public void eliminarContacto(ActionEvent e) {
-        if (contactoSeleccionado != null) {
-            try {
-                contactoPrincipal.eliminarContacto(contactoSeleccionado.getId());
-                limpiarCampos();
-                actualizarContactos();
-                mostrarAlerta("Contacto eliminado correctamente", Alert.AlertType.INFORMATION);
-            } catch (Exception ex) {
-                mostrarAlerta(ex.getMessage(), Alert.AlertType.ERROR);
+    @FXML
+    private void eliminarContacto() {
+        try {
+            Contacto contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
+            if (contactoSeleccionado != null) {
+                gestionContactos.eliminarContacto(contactoSeleccionado.getId());
+                actualizarListaContactos();
+                mostrarMensaje("Contacto eliminado", "El contacto ha sido eliminado correctamente.", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarMensaje("Seleccionar contacto", "Por favor seleccione un contacto para eliminar.", Alert.AlertType.WARNING);
             }
-        } else {
-            mostrarAlerta("Debe seleccionar un contacto de la tabla", Alert.AlertType.WARNING);
+        } catch (Exception e) {
+            mostrarMensaje("Error al eliminar contacto", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-    public void editarContacto(ActionEvent e) {
-        if (contactoSeleccionado != null) {
-            try {
-                contactoPrincipal.editarContacto(
-                        contactoSeleccionado.getId(),
-                        txtNombre.getText(),
-                        txtApellido.getText(),
-                        txtTelefono.getText(),
-                        dateCumpleanos.getValue(),
-                        txtCorreo.getText(),
-                        txtUrlFoto.getText()
-                );
+    @FXML
+    private void editarContacto() {
+        try {
+            Contacto contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
+            if (contactoSeleccionado != null) {
+                String nombre = txtNombre.getText();
+                String apellido = txtApellido.getText();
+                String telefono = txtTelefono.getText();
+                String correoElectronico = txtCorreo.getText();
+                LocalDate cumpleanos = dateCumpleanos.getValue();
+                String fotoUrl = txtFotoUrl.getText();
+
+                if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || correoElectronico.isEmpty()) {
+                    mostrarMensaje("Error de validación", "Por favor, llene todos los campos obligatorios.", Alert.AlertType.WARNING);
+                    return;
+                }
+
+                gestionContactos.editarContacto(contactoSeleccionado.getId(), nombre, apellido, telefono, cumpleanos, correoElectronico, fotoUrl);
+                actualizarListaContactos();
                 limpiarCampos();
-                actualizarContactos();
-                mostrarAlerta("Contacto editado correctamente", Alert.AlertType.INFORMATION);
-            } catch (Exception ex) {
-                mostrarAlerta(ex.getMessage(), Alert.AlertType.ERROR);
+                mostrarMensaje("Contacto editado", "El contacto ha sido editado correctamente.", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarMensaje("Seleccionar contacto", "Por favor seleccione un contacto para editar.", Alert.AlertType.WARNING);
             }
-        } else {
-            mostrarAlerta("Debe seleccionar un contacto de la tabla", Alert.AlertType.WARNING);
+        } catch (Exception e) {
+            mostrarMensaje("Error al editar contacto", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-    public void buscarContacto(ActionEvent e) {
-        String textoBusqueda = txtBuscar.getText().toLowerCase();
-        String criterioBusqueda = comboBuscarPor.getValue();
 
-        List<Contacto> contactosFiltrados;
+    @FXML
+    private void seleccionarContacto() {
+        Contacto contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
+        if (contactoSeleccionado != null) {
+            txtNombre.setText(contactoSeleccionado.getNombre());
+            txtApellido.setText(contactoSeleccionado.getApellido());
+            txtTelefono.setText(contactoSeleccionado.getTelefono());
+            txtCorreo.setText(contactoSeleccionado.getCorreoElectronico());
+            dateCumpleanos.setValue(contactoSeleccionado.getCumpleaños());
+            txtFotoUrl.setText(contactoSeleccionado.getFotoUrl());
+        }
+    }
 
-        if (criterioBusqueda.equals("Nombre")) {
-            contactosFiltrados = contactoPrincipal.listarContactos().stream()
-                    .filter(c -> c.getNombre().toLowerCase().contains(textoBusqueda))
-                    .collect(Collectors.toList());
-        } else {
-            contactosFiltrados = contactoPrincipal.listarContactos().stream()
-                    .filter(c -> c.getTelefono().contains(textoBusqueda))
-                    .collect(Collectors.toList());
+    @FXML
+    private void buscarContacto() {
+        String criterio = comboBuscar.getSelectionModel().getSelectedItem();
+        String textoBusqueda = txtBuscar.getText();
+
+        if (textoBusqueda.isEmpty()) {
+            actualizarListaContactos();
+            return;
         }
 
-        contactosObservable.setAll(contactosFiltrados);
-        tablaContactos.setItems(contactosObservable);
+        List<Contacto> resultadosBusqueda;
+        if (criterio.equals("Nombre")) {
+            resultadosBusqueda = gestionContactos.buscarContactosNombre(textoBusqueda);
+        } else if (criterio.equals("Teléfono")) {
+            resultadosBusqueda = gestionContactos.buscarContactosTelefono(textoBusqueda);
+        } else {
+            resultadosBusqueda = new ArrayList<>();
+        }
+
+        listaContactos.setAll(resultadosBusqueda);
     }
 
-    private void cargarContactos() {
-        contactosObservable.setAll(contactoPrincipal.listarContactos());
-        tablaContactos.setItems(contactosObservable);
+    @FXML
+    private void verTodosContactos() {
+        actualizarListaContactos();
     }
 
-    private void actualizarContactos() {
-        contactosObservable.setAll(contactoPrincipal.listarContactos());
+    private void actualizarListaContactos() {
+        listaContactos.setAll(gestionContactos.listarContactos());
     }
 
     private void limpiarCampos() {
@@ -152,15 +163,15 @@ public class ContactoControlador implements Initializable {
         txtApellido.clear();
         txtTelefono.clear();
         txtCorreo.clear();
-        txtUrlFoto.clear();
         dateCumpleanos.setValue(null);
+        txtFotoUrl.clear();
     }
 
-    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle("Información");
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.show();
+    private void mostrarMensaje(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

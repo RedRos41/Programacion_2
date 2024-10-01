@@ -11,9 +11,7 @@ public class ContactosApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Contactos.fxml"));
-
         Scene scene = new Scene(root);
-
         primaryStage.setTitle("Gestor de Contactos");
         primaryStage.setScene(scene);
         primaryStage.show();
