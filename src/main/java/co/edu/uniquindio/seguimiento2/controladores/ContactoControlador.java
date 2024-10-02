@@ -3,11 +3,14 @@ package co.edu.uniquindio.seguimiento2.controladores;
 import co.edu.uniquindio.seguimiento2.modelos.Contacto;
 import co.edu.uniquindio.seguimiento2.modelos.ContactoPrincipal;
 import javafx.collections.FXCollections;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.util.Callback;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class ContactoControlador {
     @FXML private DatePicker dateCumpleanos;
     @FXML private ComboBox<String> comboBuscar;
     @FXML private TextField txtBuscar;
+    @FXML private ImageView imageViewFoto;
 
     private ObservableList<Contacto> listaContactos;
     private ContactoPrincipal gestionContactos;
@@ -41,6 +45,31 @@ public class ContactoControlador {
         colCorreoElectronico.setCellValueFactory(new PropertyValueFactory<>("correoElectronico"));
         colCumpleaños.setCellValueFactory(new PropertyValueFactory<>("cumpleaños"));
         colFotoUrl.setCellValueFactory(new PropertyValueFactory<>("fotoUrl"));
+        colFotoUrl.setCellFactory(new Callback<TableColumn<Contacto, String>, TableCell<Contacto, String>>() {
+            @Override
+            public TableCell<Contacto, String> call(TableColumn<Contacto, String> param) {
+                return new TableCell<Contacto, String>() {
+                    private final ImageView imageView = new ImageView();
+                    {
+                        imageView.setFitHeight(50);
+                        imageView.setFitWidth(50);
+                    }
+
+                    @Override
+                    protected void updateItem(String fotoUrl, boolean empty) {
+                        super.updateItem(fotoUrl, empty);
+                        if (empty || fotoUrl == null || fotoUrl.isEmpty()) {
+                            setGraphic(null);
+                        } else {
+                            Image image = new Image(fotoUrl, true);
+                            imageView.setImage(image);
+                            setGraphic(imageView);
+                        }
+                    }
+                };
+            }
+        });
+
         comboBuscar.setItems(FXCollections.observableArrayList("Nombre", "Teléfono"));
         comboBuscar.getSelectionModel().selectFirst();
     }
@@ -124,7 +153,11 @@ public class ContactoControlador {
             txtCorreo.setText(contactoSeleccionado.getCorreoElectronico());
             dateCumpleanos.setValue(contactoSeleccionado.getCumpleaños());
             txtFotoUrl.setText(contactoSeleccionado.getFotoUrl());
+
+            mostrarImagen();
         }
+
+
     }
 
     @FXML
@@ -154,6 +187,21 @@ public class ContactoControlador {
         actualizarListaContactos();
     }
 
+    @FXML
+    private void mostrarImagen() {
+        String fotoUrl = txtFotoUrl.getText();
+        if (fotoUrl != null && !fotoUrl.isEmpty()) {
+            try {
+                Image imagen = new Image(fotoUrl, true);
+                imageViewFoto.setImage(imagen);
+            } catch (Exception e) {
+                imageViewFoto.setImage(null);
+            }
+        } else {
+            imageViewFoto.setImage(null);
+        }
+    }
+
     private void actualizarListaContactos() {
         listaContactos.setAll(gestionContactos.listarContactos());
     }
@@ -164,7 +212,7 @@ public class ContactoControlador {
         txtTelefono.clear();
         txtCorreo.clear();
         dateCumpleanos.setValue(null);
-        txtFotoUrl.clear();
+        imageViewFoto.setImage(null);
     }
 
     private void mostrarMensaje(String titulo, String mensaje, Alert.AlertType tipo) {

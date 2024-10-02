@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -47,6 +48,8 @@
       <Label text="Foto URL:" GridPane.rowIndex="5" />
       <TextField fx:id="txtFotoUrl" promptText="Ingrese la URL de la foto" GridPane.columnIndex="1" GridPane.rowIndex="5" />
     </GridPane>
+
+    <ImageView fx:id="imageViewFoto" fitHeight="100" fitWidth="100" preserveRatio="true" />
 
     <!-- Botones de acciones -->
     <HBox spacing="10" alignment="CENTER">
