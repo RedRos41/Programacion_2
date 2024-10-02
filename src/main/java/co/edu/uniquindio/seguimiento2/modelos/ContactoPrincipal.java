@@ -23,7 +23,7 @@ public class ContactoPrincipal {
                 .telefono(telefono)
                 .cumpleaños(cumpleaños)
                 .correoElectronico(correoElectronico)
-                .fotoUrl(fotoUrl) // Agregar la URL de la foto al contacto
+                .fotoUrl(fotoUrl)
                 .build();
         contactos.add(contacto);
     }
@@ -46,7 +46,7 @@ public class ContactoPrincipal {
             contacto.setTelefono(telefono);
             contacto.setCumpleaños(cumpleaños);
             contacto.setCorreoElectronico(correoElectronico);
-            contacto.setFotoUrl(fotoUrl); // Actualizar la URL de la foto
+            contacto.setFotoUrl(fotoUrl);
         } else {
             throw new Exception("No se encontró el contacto.");
         }
@@ -69,7 +69,7 @@ public class ContactoPrincipal {
     public List<Contacto> buscarContactosTelefono(String telefono) {
         List<Contacto> contactosEncontrados = new ArrayList<>();
         for (Contacto c : contactos) {
-            if (c.getTelefono().equalsIgnoreCase(telefono)) { // Comparar ignorando mayúsculas/minúsculas
+            if (c.getTelefono().equalsIgnoreCase(telefono)) {
                 contactosEncontrados.add(c);
             }
         }
@@ -97,7 +97,7 @@ public class ContactoPrincipal {
             if (c.getNombre().equalsIgnoreCase(nombre) &&
                     c.getApellido().equalsIgnoreCase(apellido) &&
                     c.getTelefono().equals(telefono)) {
-                return true; // Contacto duplicado encontrado
+                return true;
             }
         }
         return false;

@@ -157,7 +157,6 @@ public class ContactoControlador {
             mostrarImagen();
         }
 
-
     }
 
     @FXML

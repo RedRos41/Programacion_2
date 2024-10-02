@@ -17,5 +17,5 @@ public class Contacto {
     private String telefono;
     private LocalDate cumpleaños;
     private String correoElectronico;
-    private String fotoUrl; // Atributo para la URL de la foto de perfil
+    private String fotoUrl;
 }
