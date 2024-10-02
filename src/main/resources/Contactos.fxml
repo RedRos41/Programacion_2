@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.seguimiento2.controladores.ContactoControlador">
-  <VBox spacing="20" alignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" AnchorPane.bottomAnchor="10.0">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="co.edu.uniquindio.seguimiento2.controladores.ContactoControlador">
+  <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
 
     <!-- Sección de búsqueda -->
-    <HBox spacing="10" alignment="CENTER">
-      <ComboBox fx:id="comboBuscar" promptText="Buscar por"/>
-      <TextField fx:id="txtBuscar" promptText="Ingrese el criterio de búsqueda"/>
-      <Button text="Buscar" onAction="#buscarContacto"/>
-      <Button text="Ver Todos" onAction="#verTodosContactos"/>
+    <HBox alignment="CENTER" spacing="10">
+      <ComboBox fx:id="comboBuscar" promptText="Buscar por" />
+      <TextField fx:id="txtBuscar" promptText="Ingrese el criterio de búsqueda" />
+      <Button onAction="#buscarContacto" text="Buscar" />
+      <Button onAction="#verTodosContactos" text="Ver Todos" />
     </HBox>
 
     <!-- Tabla de contactos -->
-    <TableView fx:id="tablaContactos" VBox.vgrow="ALWAYS" onMouseClicked="#seleccionarContacto">
+    <TableView fx:id="tablaContactos" onMouseClicked="#seleccionarContacto" prefHeight="198.0" prefWidth="486.0" style="-fx-border-color: Gray;" VBox.vgrow="ALWAYS">
       <columns>
         <TableColumn fx:id="colNombre" text="Nombre" />
         <TableColumn fx:id="colApellido" text="Apellido" />
@@ -31,31 +41,43 @@
     <!-- Sección de formulario -->
     <GridPane hgap="10" vgap="10">
       <Label text="Nombre:" />
-      <TextField fx:id="txtNombre" promptText="Ingrese el nombre" GridPane.columnIndex="1" />
+      <TextField fx:id="txtNombre" promptText="Ingrese el nombre" style="-fx-border-color: Gray;" GridPane.columnIndex="1" />
 
       <Label text="Apellido:" GridPane.rowIndex="1" />
-      <TextField fx:id="txtApellido" promptText="Ingrese el apellido" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="txtApellido" promptText="Ingrese el apellido" style="-fx-border-color: Gray;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
       <Label text="Teléfono:" GridPane.rowIndex="2" />
-      <TextField fx:id="txtTelefono" promptText="Ingrese el teléfono" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="txtTelefono" promptText="Ingrese el teléfono" style="-fx-border-color: Gray;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
       <Label text="Correo:" GridPane.rowIndex="3" />
-      <TextField fx:id="txtCorreo" promptText="Ingrese el correo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="txtCorreo" promptText="Ingrese el correo" style="-fx-border-color: Gray;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
       <Label text="Cumpleaños:" GridPane.rowIndex="4" />
-      <DatePicker fx:id="dateCumpleanos" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <DatePicker fx:id="dateCumpleanos" style="-fx-border-color: Gray;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
       <Label text="Foto URL:" GridPane.rowIndex="5" />
-      <TextField fx:id="txtFotoUrl" promptText="Ingrese la URL de la foto" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <TextField fx:id="txtFotoUrl" promptText="Ingrese la URL de la foto" style="-fx-border-color: Gray;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
     </GridPane>
 
-    <ImageView fx:id="imageViewFoto" fitHeight="100" fitWidth="100" preserveRatio="true" />
+       <ImageView fx:id="imageViewFoto" fitHeight="100" fitWidth="100" preserveRatio="true" />
 
     <!-- Botones de acciones -->
-    <HBox spacing="10" alignment="CENTER">
-      <Button text="Agregar" onAction="#agregarContacto"/>
-      <Button text="Editar" onAction="#editarContacto"/>
-      <Button text="Eliminar" onAction="#eliminarContacto"/>
+    <HBox alignment="CENTER" spacing="10">
+      <Button onAction="#agregarContacto" style="-fx-border-color: Green;" text="Agregar" />
+      <Button onAction="#editarContacto" style="-fx-border-color: Blue;" text="Editar" />
+      <Button onAction="#eliminarContacto" style="-fx-border-color: Red;" text="Eliminar" />
     </HBox>
   </VBox>
 </AnchorPane>
