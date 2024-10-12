@@ -1,0 +1,116 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class Usuario {
+    - cedula: String
+    - nombreCompleto: String
+    - telefono: String
+    - email: String
+    - contrasena: String
+    + iniciarSesion(email: String, contrasena: String): void
+    + cambiarContrasena(codigo: String, nuevaContrasena: String): void
+}
+
+class Cliente extends Usuario {
+    - billetera: Billetera
+    + registrarCliente(cliente: Cliente): void
+    + editarCliente(cliente: Cliente): void
+    + eliminarCliente(cliente: Cliente): void
+    + recargarBilletera(valor: double): void
+    + buscarAlojamiento(nombre: String, tipo: String, ciudad: String, precioMin: double, precioMax: double): List<Alojamiento>
+    + realizarReserva(alojamiento: Alojamiento, fechaInicio: Date, fechaFin: Date, numHuespedes: int): Reserva
+    + recargarBilletera(valor: double): void
+    + cancelarReserva(reserva: Reserva): void
+    + agregarResena(alojamiento: Alojamiento, comentario: String, valoracion: int): void
+    + listarReservas(): List<Reserva>
+}
+
+class Administrador extends Usuario {
+    + crearAlojamiento(alojamiento: Alojamiento): void
+    + modificarAlojamiento(alojamiento: Alojamiento): void
+    + informacionAlojamiento(alojamiento: Alojamiento): void
+    + listarAlojamiento(alojamiento: Alojamiento): void
+    + eliminarAlojamiento(alojamiento: Alojamiento): void
+    + crearOfertas(alojamiento: Alojamiento, oferta: Oferta): void
+    + obtenerEstadisticas(alojamiento: Alojamiento): Estadisticas
+    + listarAlojamientosPopulares(ciudad: String): List<Alojamiento>
+    + listarTiposAlojamientoRentables(): List<Alojamiento>
+
+}
+
+class Alojamiento {
+    - nombre: String
+    - ciudad: String
+    - descripcion: String
+    - imagen: String
+    - precioPorNoche: double
+    - capacidadMaxima: int
+    - servicios: List<String>
+}
+
+class Casa extends Alojamiento {
+    - costoAseoMantenimiento: double
+}
+
+class Apartamento extends Alojamiento {
+    - costoAseoMantenimiento: double
+}
+
+class Hotel extends Alojamiento {
+    + habitaciones: List<Habitacion>
+}
+
+class Habitacion {
+    - numero: String
+    - precio: double
+    - capacidad: int
+    - imagen: String
+    - descripcion: String
+}
+
+class Billetera {
+    - saldo: double
+    + recargar(valor: double): void
+    + pagar(valor: double): boolean
+}
+
+class Reserva {
+    - cliente: Cliente
+    - alojamiento: Alojamiento
+    - fechaInicio: Date
+    - fechaFin: Date
+    - numHuespedes: int
+    + generarFactura(): Factura
+}
+
+class Factura {
+    - subtotal: double
+    - total: double
+    - fecha: Date
+    - codigo: UUID
+    + generarQR(): void
+}
+
+class Oferta {
+    - descripcion: String
+    - descuento: double
+    - fechaInicio: Date
+    - fechaFin: Date
+}
+
+class Estadisticas {
+    - ocupacionPorcentual: double
+    - gananciasTotales: double
+}
+
+Cliente "1" --> "1" Billetera
+Administrador "1" --> "many" Alojamiento
+Cliente "1" --> "many" Reserva
+Alojamiento "1" --> "many" Oferta
+Alojamiento "1" --> "many" Reseña
+Alojamiento "1" --> "many" Reserva
+Reserva "1" --> "1" Factura
+Factura "1" --> "1" QR
+Hotel "1" --> "many" Habitacion
+
+@enduml
