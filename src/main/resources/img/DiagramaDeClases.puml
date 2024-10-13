@@ -6,9 +6,9 @@ class Usuario {
     - nombreCompleto: String
     - telefono: String
     - email: String
-    - contrasena: String
+    - contraseña: String
     + iniciarSesion(email: String, contrasena: String): void
-    + cambiarContrasena(codigo: String, nuevaContrasena: String): void
+    + cambiarContraseña(codigo: String, nuevaContraseña: String): void
 }
 
 class Cliente extends Usuario {
@@ -21,7 +21,7 @@ class Cliente extends Usuario {
     + realizarReserva(alojamiento: Alojamiento, fechaInicio: Date, fechaFin: Date, numHuespedes: int): Reserva
     + recargarBilletera(valor: double): void
     + cancelarReserva(reserva: Reserva): void
-    + agregarResena(alojamiento: Alojamiento, comentario: String, valoracion: int): void
+    + agregarReseña(alojamiento: Alojamiento, reseña: String, valoracion: float): void
     + listarReservas(): List<Reserva>
 }
 
@@ -45,7 +45,7 @@ class Alojamiento {
     - imagen: String
     - precioPorNoche: double
     - capacidadMaxima: int
-    - servicios: List<String>
+    - servicio: List<String>
 }
 
 class Casa extends Alojamiento {

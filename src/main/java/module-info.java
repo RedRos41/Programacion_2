@@ -10,7 +10,10 @@ module co.edu.uniquindio.proyectofinal {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires static lombok;
 
     opens co.edu.uniquindio.proyectofinal to javafx.fxml;
     exports co.edu.uniquindio.proyectofinal;
+    exports co.edu.uniquindio.proyectofinal.controladores;
+    opens co.edu.uniquindio.proyectofinal.controladores to javafx.fxml;
 }

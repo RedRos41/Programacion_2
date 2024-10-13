@@ -1,9 +1,12 @@
-package co.edu.uniquindio.proyectofinal;
+package co.edu.uniquindio.proyectofinal.controladores;
+
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+
+public class UsuarioController {
+
     @FXML
     private Label welcomeText;
 
@@ -11,4 +14,5 @@ public class HelloController {
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
+
 }
