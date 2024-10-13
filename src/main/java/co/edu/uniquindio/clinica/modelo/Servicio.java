@@ -1,19 +1,15 @@
 package co.edu.uniquindio.clinica.modelo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
-
+@AllArgsConstructor
 public class Servicio {
 
-    @EqualsAndHashCode.Include
     private String id;
-
-    private double precio;
     private String nombre;
+    private double precio;
 }

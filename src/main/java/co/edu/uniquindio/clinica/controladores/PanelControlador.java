@@ -1,14 +1,16 @@
 package co.edu.uniquindio.clinica.controladores;
 
-
+import co.edu.uniquindio.clinica.modelo.Cita;
 import co.edu.uniquindio.clinica.modelo.Clinica;
+import co.edu.uniquindio.clinica.modelo.Paciente;
+import co.edu.uniquindio.clinica.modelo.Servicio;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
-
 
 public class PanelControlador {
 
@@ -17,43 +19,40 @@ public class PanelControlador {
 
     private final Clinica clinica;
 
-
     public PanelControlador() {
-        this.clinica = new Clinica(); // Se crea una única instancia de la clase Clinica
-    }
+        // Inicialización de las listas de pacientes, servicios y citas
+        ObservableList<Paciente> pacientes = FXCollections.observableArrayList();
+        ObservableList<Servicio> servicios = FXCollections.observableArrayList();
+        ObservableList<Cita> citas = FXCollections.observableArrayList();
 
+        // Inicializa la clínica con las listas vacías
+        this.clinica = new Clinica(pacientes, servicios, citas);
+    }
 
     public void mostrarRegistroPaciente(ActionEvent actionEvent) {
         Parent node = cargarPanel("/registroPaciente.fxml");
-
-        // Se reemplaza el contenido del panel principal
         panelPrincipal.getChildren().setAll(node);
     }
-
 
     public void mostrarListaPacientes(ActionEvent actionEvent) {
         Parent node = cargarPanel("/listaPacientes.fxml");
-
-        // Se reemplaza el contenido del panel principal
         panelPrincipal.getChildren().setAll(node);
     }
 
-
     public void mostrarRegistroCita(ActionEvent actionEvent) {
-        //Completar
+        Parent node = cargarPanel("/registroCita.fxml");
+        panelPrincipal.getChildren().setAll(node);
     }
-
 
     public void mostrarListaCitas(ActionEvent actionEvent) {
-        //Completar
+        Parent node = cargarPanel("/listaCitas.fxml");
+        panelPrincipal.getChildren().setAll(node);
     }
-
 
     private Parent cargarPanel(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent node = loader.load();
-            return node;
+            return loader.load();
         } catch (Exception e) {
             e.printStackTrace();
         }
