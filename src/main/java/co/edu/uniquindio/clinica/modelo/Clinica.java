@@ -1,5 +1,8 @@
 package co.edu.uniquindio.clinica.modelo;
 
+import co.edu.uniquindio.clinica.modelo.factory.Suscripcion;
+import co.edu.uniquindio.clinica.modelo.factory.SuscripcionBasica;
+import co.edu.uniquindio.clinica.modelo.factory.SuscripcionPremium;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

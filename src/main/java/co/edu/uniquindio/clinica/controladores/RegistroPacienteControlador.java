@@ -22,7 +22,6 @@ public class RegistroPacienteControlador {
     public void inicializar(Clinica clinica) {
         this.clinica = clinica;
     }
-
     public void registrarCita() {
         try {
             String pacienteId = txtPacienteId.getText();
@@ -33,7 +32,7 @@ public class RegistroPacienteControlador {
             Servicio servicio = clinica.buscarServicioPorId(servicioId);
 
             if (paciente != null && servicio != null) {
-                Cita cita = new Cita(paciente, servicio, fecha);
+                Cita cita = new Cita();
                 clinica.registrarCita(cita);
             } else {
                 System.out.println("Paciente o Servicio no encontrados");
