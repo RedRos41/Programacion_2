@@ -2,7 +2,6 @@ package co.edu.uniquindio.proyectofinal.modelos;
 
 
 import lombok.*;
-import java.util.UUID;
 
 
 @Getter
@@ -14,7 +13,7 @@ import java.util.UUID;
 public class Usuario {
 
     @EqualsAndHashCode.Include
-    protected UUID cedula;
+    protected int cedula;
 
     protected String nombreCompleto, email, contraseña;
     protected int telefono;

@@ -1,9 +1,9 @@
 package co.edu.uniquindio.proyectofinal.modelos;
 
 
-public class UsuarioPrincipal {
+public class  UsuarioPrincipal {
 
-    public void iniciarSesion (String email, String contraseña) throws Exception {
+    public void iniciarSesion (String correoElectronico, String contraseña) throws Exception {
 
 
 

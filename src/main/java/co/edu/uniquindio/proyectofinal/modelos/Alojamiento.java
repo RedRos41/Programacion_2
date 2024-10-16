@@ -12,9 +12,9 @@ import java.util.List;
 public class Alojamiento {
 
     private String nombreAlojamiento, descripcionAlojamiento;
-    private List<Ciudad> ciudadAlojamiento;
+    private List<Ciudad> ciudades;
     private String imagenAlojamiento;
     private double precioPorNocheAlojamiento;
     private int capacidadMaximaAlojamiento;
-    private List<Servicio> servicioAlojamiento;
+    private List<Servicio> servicios;
 }

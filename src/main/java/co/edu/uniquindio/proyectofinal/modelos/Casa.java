@@ -8,8 +8,8 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class Casa extends CostoAdicional{
+public class Casa {
 
-
+    protected double AseoCasa, MantenimientoCasa;
 
 }

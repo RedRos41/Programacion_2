@@ -2,17 +2,18 @@
 'https://plantuml.com/sequence-diagram
 
 class Usuario {
-    - cedula: String
+    - cedula: int
     - nombreCompleto: String
-    - telefono: String
+    - telefono: int
     - email: String
     - contraseña: String
-    + iniciarSesion(email: String, contrasena: String): void
+    + iniciarSesion(correoElectronico: String, contraseña: String): void
     + cambiarContraseña(codigo: String, nuevaContraseña: String): void
 }
 
 class Cliente extends Usuario {
-    - billetera: Billetera
+    - billeteraCliente: Billetera
+    - reservas: List<Reserva>
     + registrarCliente(cliente: Cliente): void
     + editarCliente(cliente: Cliente): void
     + eliminarCliente(cliente: Cliente): void
@@ -26,6 +27,11 @@ class Cliente extends Usuario {
 }
 
 class Administrador extends Usuario {
+    - alojamientos: List<Alojamiento>
+    - clientes: List<Cliente>
+    - estadisticas: List<Estadistica>
+    - ofertas: List<Oferta>
+    - reseñas: List<Reseña>
     + crearAlojamiento(alojamiento: Alojamiento): void
     + modificarAlojamiento(alojamiento: Alojamiento): void
     + informacionAlojamiento(alojamiento: Alojamiento): void
@@ -39,21 +45,23 @@ class Administrador extends Usuario {
 }
 
 class Alojamiento {
-    - nombre: String
-    - ciudad: String
-    - descripcion: String
-    - imagen: String
-    - precioPorNoche: double
-    - capacidadMaxima: int
-    - servicio: List<String>
+    - nombreAlojamiento: String
+    - ciudades: List<Ciudad>
+    - descripcionAlojamiento: String
+    - imagenAlojamiento: String
+    - precioPorNocheAlojamiento: double
+    - capacidadMaximaAlojamiento: int
+    - servicios: List<Servicio>
 }
 
 class Casa extends Alojamiento {
-    - costoAseoMantenimiento: double
+    - AseoCasa: double
+    - MantenimientoCasa: double
 }
 
 class Apartamento extends Alojamiento {
-    - costoAseoMantenimiento: double
+    - AseoApartamento: double
+    - MantenimientoApartamento: double
 }
 
 class Hotel extends Alojamiento {
@@ -61,44 +69,44 @@ class Hotel extends Alojamiento {
 }
 
 class Habitacion {
-    - numero: String
-    - precio: double
-    - capacidad: int
-    - imagen: String
-    - descripcion: String
+    - numeroHabitacion: UUID
+    - precioHabitacion: double
+    - capacidadHabitacion: int
+    - imagenHabitacion: String
+    - descripcionHabitacion: String
 }
 
 class Billetera {
-    - saldo: double
+    - saldoBilletera: double
     + recargar(valor: double): void
     + pagar(valor: double): boolean
 }
 
 class Reserva {
-    - cliente: Cliente
-    - alojamiento: Alojamiento
-    - fechaInicio: Date
-    - fechaFin: Date
-    - numHuespedes: int
+    - clienteReserva: Cliente
+    - alojamientoReserva: Alojamiento
+    - fechaInicioReserva: Date
+    - fechaFinReserva: Date
+    - numHuespedesReserva: int
     + generarFactura(): Factura
 }
 
 class Factura {
-    - subtotal: double
-    - total: double
-    - fecha: Date
-    - codigo: UUID
+    - subTotalFactura: double
+    - totalFactura: double
+    - fechaFactura: Date
+    - codigoFactura: UUID
     + generarQR(): void
 }
 
 class Oferta {
-    - descripcion: String
-    - descuento: double
-    - fechaInicio: Date
-    - fechaFin: Date
+    - descripcionOferta: String
+    - descuentoOferta: float
+    - fechaInicioOferta: Date
+    - fechaFinOferta: Date
 }
 
-class Estadisticas {
+class Estadistica {
     - ocupacionPorcentual: double
     - gananciasTotales: double
 }

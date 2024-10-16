@@ -11,6 +11,6 @@ import java.util.List;
 @ToString
 public class Hotel {
 
-    private List<Habitacion> habitacionHotel;
+    private List<Habitacion> habitaciones;
 
 }

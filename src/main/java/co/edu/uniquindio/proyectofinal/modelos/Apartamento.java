@@ -8,8 +8,8 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class Apartamento extends CostoAdicional{
+public class Apartamento {
 
-
+    protected double AseoApartamento, MantenimientoApartamento;
 
 }

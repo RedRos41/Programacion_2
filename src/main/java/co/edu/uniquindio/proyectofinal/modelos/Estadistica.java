@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class Estadisticas {
+public class Estadistica {
 
     private double ocupacionPorcentual, gananciasTotales;
 

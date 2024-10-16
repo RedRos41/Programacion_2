@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 public class Reseña {
 
-    private String reseña;
-    private float valoracion;
+    private String cometarioReseña;
+    private float calificacionReseña;
 
 }
