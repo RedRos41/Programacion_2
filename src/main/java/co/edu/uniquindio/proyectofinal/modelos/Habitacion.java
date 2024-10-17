@@ -2,7 +2,6 @@ package co.edu.uniquindio.proyectofinal.modelos;
 
 
 import lombok.*;
-import java.util.UUID;
 
 
 @Getter
@@ -11,7 +10,7 @@ import java.util.UUID;
 @ToString
 public class Habitacion {
 
-    private UUID numeroHabitacion;
+    private int numeroHabitacion;
     private int  capacidadHabitacion;
     private double precioHabitacion;
     private String imagenHabitacion, descripcionHabitacion;

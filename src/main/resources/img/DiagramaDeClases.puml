@@ -20,7 +20,6 @@ class Cliente extends Usuario {
     + recargarBilletera(valor: double): void
     + buscarAlojamiento(nombre: String, tipo: String, ciudad: String, precioMin: double, precioMax: double): List<Alojamiento>
     + realizarReserva(alojamiento: Alojamiento, fechaInicio: Date, fechaFin: Date, numHuespedes: int): Reserva
-    + recargarBilletera(valor: double): void
     + cancelarReserva(reserva: Reserva): void
     + agregarReseña(alojamiento: Alojamiento, reseña: String, valoracion: float): void
     + listarReservas(): List<Reserva>
@@ -38,6 +37,7 @@ class Administrador extends Usuario {
     + listarAlojamiento(alojamiento: Alojamiento): void
     + eliminarAlojamiento(alojamiento: Alojamiento): void
     + crearOfertas(alojamiento: Alojamiento, oferta: Oferta): void
+    + gestionarOfertas(alojamiento: Alojamiento, oferta: Oferta): void
     + obtenerEstadisticas(alojamiento: Alojamiento): Estadisticas
     + listarAlojamientosPopulares(ciudad: String): List<Alojamiento>
     + listarTiposAlojamientoRentables(): List<Alojamiento>
@@ -69,7 +69,7 @@ class Hotel extends Alojamiento {
 }
 
 class Habitacion {
-    - numeroHabitacion: UUID
+    - numeroHabitacion: int
     - precioHabitacion: double
     - capacidadHabitacion: int
     - imagenHabitacion: String
@@ -109,6 +109,11 @@ class Oferta {
 class Estadistica {
     - ocupacionPorcentual: double
     - gananciasTotales: double
+}
+
+class Reseña {
+    - cometarioReseña: String
+    - calificacionReseña: float
 }
 
 Cliente "1" --> "1" Billetera
