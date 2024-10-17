@@ -19,7 +19,4 @@ public class Cita {
     private LocalDate fecha;
     private Factura factura;
 
-    public Cita() {
-
-    }
 }

@@ -1,44 +1,79 @@
 package co.edu.uniquindio.clinica.controladores;
 
-import co.edu.uniquindio.clinica.modelo.Cita;
-import co.edu.uniquindio.clinica.modelo.Clinica;
 import co.edu.uniquindio.clinica.modelo.Paciente;
-import co.edu.uniquindio.clinica.modelo.Servicio;
+import co.edu.uniquindio.clinica.modelo.Clinica;
+import co.edu.uniquindio.clinica.modelo.factory.SuscripcionFactory;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-
-import java.time.LocalDate;
+import javafx.scene.control.ComboBox;
 
 public class RegistroPacienteControlador {
 
     @FXML
-    private TextField txtPacienteId, txtServicioId;
+    private TextField txtNombre;
+
     @FXML
-    private DatePicker dateFecha;
+    private TextField txtCedula;
 
-    private Clinica clinica;
+    @FXML
+    private TextField txtTelefono;
 
-    public void inicializar(Clinica clinica) {
+    @FXML
+    private TextField txtEmail;
+
+    @FXML
+    private ComboBox<String> comboSuscripcion;
+
+    private final Clinica clinica;
+    private ListaPacientesControlador listaPacientesControlador;
+
+    public RegistroPacienteControlador(Clinica clinica, ListaPacientesControlador listaPacientesControlador) {
         this.clinica = clinica;
+        this.listaPacientesControlador = listaPacientesControlador;
     }
-    public void registrarCita() {
+
+    @FXML
+    public void initialize() {
+        comboSuscripcion.getItems().addAll("Basica", "Premium");
+    }
+
+    @FXML
+    public void registrarPaciente(ActionEvent event) {
         try {
-            String pacienteId = txtPacienteId.getText();
-            String servicioId = txtServicioId.getText();
-            LocalDate fecha = dateFecha.getValue();
-
-            Paciente paciente = clinica.buscarPacientePorId(pacienteId);
-            Servicio servicio = clinica.buscarServicioPorId(servicioId);
-
-            if (paciente != null && servicio != null) {
-                Cita cita = new Cita();
-                clinica.registrarCita(cita);
-            } else {
-                System.out.println("Paciente o Servicio no encontrados");
+            if (txtNombre.getText().isEmpty() || txtCedula.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEmail.getText().isEmpty() || comboSuscripcion.getValue() == null) {
+                mostrarAlerta("Error", "Todos los campos son obligatorios", Alert.AlertType.ERROR);
+                return;
             }
+
+            clinica.registrarPaciente(
+                    txtTelefono.getText(),
+                    txtNombre.getText(),
+                    txtCedula.getText(),
+                    txtEmail.getText()
+            );
+
+            listaPacientesControlador.actualizarListaPacientes();
+            mostrarAlerta("Éxito", "Paciente registrado correctamente", Alert.AlertType.INFORMATION);
+            limpiarFormulario();
         } catch (Exception e) {
-            e.printStackTrace();
+            mostrarAlerta("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    private void limpiarFormulario() {
+        txtNombre.clear();
+        txtCedula.clear();
+        txtTelefono.clear();
+        txtEmail.clear();
+        comboSuscripcion.setValue(null);
     }
 }

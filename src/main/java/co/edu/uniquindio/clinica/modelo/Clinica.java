@@ -3,99 +3,100 @@ package co.edu.uniquindio.clinica.modelo;
 import co.edu.uniquindio.clinica.modelo.factory.Suscripcion;
 import co.edu.uniquindio.clinica.modelo.factory.SuscripcionBasica;
 import co.edu.uniquindio.clinica.modelo.factory.SuscripcionPremium;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class Clinica {
 
-    private final ObservableList<Paciente> pacientes;
-    private final ObservableList<Servicio> servicios;
-    private final ObservableList<Cita> citas;
+    private List<Paciente> pacientes;
+    private List<Cita> citas;
+    private List<Servicio> servicios;
 
-    // Constructor que acepta listas
-    public Clinica(ObservableList<Paciente> pacientes, ObservableList<Servicio> servicios, ObservableList<Cita> citas) {
-        this.pacientes = pacientes;
-        this.servicios = servicios;
-        this.citas = citas;
-    }
-
-    // Constructor sin argumentos que inicializa listas vacías
     public Clinica() {
-        this.pacientes = FXCollections.observableArrayList();
-        this.servicios = FXCollections.observableArrayList();
-        this.citas = FXCollections.observableArrayList();
+        pacientes = new ArrayList<>();
+        citas = new ArrayList<>();
+        servicios = new ArrayList<>();
     }
 
-    // Método para registrar pacientes
-    public void registrarPaciente(String telefono, String nombre, String cedula, String email, String tipoSuscripcion) throws Exception {
+    // Método para registrar un paciente
+    public void registrarPaciente(String telefono, String nombre, String cedula, String email) throws Exception {
         if (nombre.isEmpty() || cedula.isEmpty() || telefono.isEmpty() || email.isEmpty()) {
             throw new Exception("Todos los campos son obligatorios.");
         }
 
-        Suscripcion suscripcion = tipoSuscripcion.equals("Básica") ? new SuscripcionBasica() : new SuscripcionPremium();
-
         Paciente paciente = Paciente.builder()
-                .id(java.util.UUID.randomUUID().toString())
+                .id(UUID.randomUUID().toString())
                 .telefono(telefono)
                 .nombre(nombre)
                 .cedula(cedula)
                 .email(email)
-                .suscripcion(suscripcion)
                 .build();
-
         pacientes.add(paciente);
     }
 
-    // Método para registrar servicios
-    public void registrarServicio(double precio, String nombre) {
-        Servicio servicio = Servicio.builder()
-                .id(java.util.UUID.randomUUID().toString())
-                .precio(precio)
-                .nombre(nombre)
-                .build();
-
-        servicios.add(servicio);
-    }
-
-    // Método para registrar una cita
-    public void registrarCita(Cita cita) throws Exception {
-        for (Cita c : citas) {
-            if (c.getFecha().equals(cita.getFecha())) {
-                throw new Exception("Ya hay una cita registrada para este horario.");
-            }
-        }
-        citas.add(cita);
-    }
-
-    // Métodos de acceso (getters) para obtener las listas
-    public ObservableList<Paciente> getPacientes() {
+    // Método para listar los pacientes registrados
+    public List<Paciente> listarPacientes() {
         return pacientes;
     }
 
-    public ObservableList<Servicio> getServicios() {
+    // Método para registrar un servicio
+    public void registrarServicio(double precio, String nombre) {
+        Servicio servicio = Servicio.builder()
+                .id(UUID.randomUUID().toString())
+                .precio(precio)
+                .nombre(nombre)
+                .build();
+        servicios.add(servicio);
+    }
+
+    // Método para obtener los servicios disponibles
+    public List<Servicio> getServiciosDisponibles() {
         return servicios;
     }
 
-    public ObservableList<Cita> getCitas() {
+    // Método para registrar una cita (validando si no hay un cruce de horario)
+    public void registrarCita(Paciente paciente, Servicio servicio, LocalDate fecha) throws Exception {
+        if (paciente == null) {
+            throw new Exception("El paciente no puede ser nulo.");
+        }
+
+        if (servicio == null) {
+            throw new Exception("El servicio no puede ser nulo.");
+        }
+
+        for (Cita c : citas) {
+            if (c.getFecha().equals(fecha) && c.getPaciente().equals(paciente)) {
+                throw new Exception("Ya existe una cita registrada para ese paciente en el mismo horario.");
+            }
+        }
+
+        Factura factura = generarFactura(paciente, servicio);
+        Cita nuevaCita = Cita.builder()
+                .id(UUID.randomUUID().toString())
+                .paciente(paciente)
+                .servicio(servicio)
+                .fecha(fecha)
+                .factura(factura)
+                .build();
+        citas.add(nuevaCita);
+    }
+
+    // Método para listar las citas
+    public List<Cita> listarCitas() {
         return citas;
     }
 
-    // Métodos para buscar un paciente o servicio por ID
-    public Paciente buscarPacientePorId(String id) {
-        for (Paciente p : pacientes) {
-            if (p.getId().equals(id)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    public Servicio buscarServicioPorId(String id) {
-        for (Servicio s : servicios) {
-            if (s.getId().equals(id)) {
-                return s;
-            }
-        }
-        return null;
+    // Método para generar una factura
+    public Factura generarFactura(Paciente paciente, Servicio servicio) {
+        double total = paciente.getSuscripcion().calcularPrecio(servicio);
+        return Factura.builder()
+                .id(UUID.randomUUID().toString())
+                .paciente(paciente)
+                .servicio(servicio)
+                .total(total)
+                .build();
     }
 }

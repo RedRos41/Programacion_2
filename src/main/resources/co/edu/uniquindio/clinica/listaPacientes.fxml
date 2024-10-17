@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.clinica.controladores.ListaPacientesControlador"
       spacing="20.0"
-      fx:controller="co.edu.uniquindio.clinica.controladores.ListaPacientesControlador">
-
-    <Label text="Lista de Pacientes" textFill="#0f0f0f">
-        <font>
-            <Font size="20.0"/>
-        </font>
-    </Label>
+      style="-fx-padding: 20px">
 
     <TableView fx:id="tablaPacientes" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn text="Identificación"/>
-            <TableColumn text="Nombre"/>
-            <TableColumn text="Teléfono"/>
-            <TableColumn text="Correo"/>
-            <TableColumn text="Suscripción"/>
+            <TableColumn fx:id="colId" text="ID" />
+            <TableColumn fx:id="colNombre" text="Nombre" />
+            <TableColumn fx:id="colCedula" text="Cédula" />
+            <TableColumn fx:id="colTelefono" text="Teléfono" />
+            <TableColumn fx:id="colEmail" text="Correo Electrónico" />
         </columns>
-        <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
-        </columnResizePolicy>
     </TableView>
 
 </VBox>
