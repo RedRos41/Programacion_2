@@ -13,9 +13,9 @@ import lombok.*;
 public class Usuario {
 
     @EqualsAndHashCode.Include
-    protected int cedula;
+    protected long cedula;
 
     protected String nombreCompleto, email, contraseña;
-    protected int telefono;
+    protected long telefono;
 
 }

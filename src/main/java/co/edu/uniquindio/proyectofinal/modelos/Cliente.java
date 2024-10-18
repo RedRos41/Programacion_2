@@ -12,6 +12,5 @@ import java.util.List;
 public class Cliente extends Usuario {
 
     private Billetera billeteraCliente;
-    private List<Reserva> reservas;
 
 }

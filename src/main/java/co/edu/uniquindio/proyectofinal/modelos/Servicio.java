@@ -10,6 +10,4 @@ import lombok.*;
 @ToString
 public class Servicio {
 
-
-
 }

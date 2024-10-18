@@ -17,4 +17,5 @@ public class Alojamiento {
     private double precioPorNocheAlojamiento;
     private int capacidadMaximaAlojamiento;
     private List<Servicio> servicios;
+
 }
