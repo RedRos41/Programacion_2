@@ -4,6 +4,8 @@ import co.edu.uniquindio.clinica.modelo.factory.Suscripcion;
 import co.edu.uniquindio.clinica.modelo.factory.SuscripcionBasica;
 import co.edu.uniquindio.clinica.modelo.factory.SuscripcionFactory;
 import co.edu.uniquindio.clinica.modelo.factory.SuscripcionPremium;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,12 +18,12 @@ public class Clinica {
 
     private static Clinica INSTANCIA;
 
-    private List<Paciente> pacientes;
+    private ObservableList<Paciente> pacientes;
     private List<Cita> citas;
     private List<Servicio> servicios;
 
     private Clinica() {
-        this.pacientes = new ArrayList<>();
+        this.pacientes = FXCollections.observableArrayList();
         this.citas = new ArrayList<>();
         this.servicios = new ArrayList<>();
     }
@@ -44,13 +46,13 @@ public class Clinica {
                 .nombre(nombre)
                 .cedula(cedula)
                 .email(email)
-                .suscripcion(SuscripcionFactory.crearSuscripcion(""))
+                .suscripcion(SuscripcionFactory.crearSuscripcion(tipoSuscripcion))
                 .build();
 
         pacientes.add(paciente);
     }
 
-    public List<Paciente> getPacientes() {
+    public ObservableList<Paciente>  getPacientes() {
         return pacientes;
     }
 
@@ -90,3 +92,4 @@ public class Clinica {
     }
 
 }
+

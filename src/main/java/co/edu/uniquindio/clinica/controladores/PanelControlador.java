@@ -38,15 +38,24 @@ public class PanelControlador {
         cargarPanel("/listaCitas.fxml");
     }
 
+
     private Parent cargarPanel(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent node = loader.load();
 
-
+            // Obtener el controlador del archivo FXML cargado
             AbstractControlador controlador = loader.getController();
-            controlador.inicializarClinica(clinica);
 
+            // Asegurarse de que la instancia de Clinica se inicializa en el controlador
+            if (controlador != null) {
+                controlador.inicializarClinica(clinica);  // Pasar la instancia de Clinica
+
+                // Si el controlador es ListaPacientesControlador, inicializar la lista de pacientes
+                if (controlador instanceof ListaPacientesControlador) {
+                    ((ListaPacientesControlador) controlador).inicializarListaPacientes();
+                }
+            }
 
             panelPrincipal.getChildren().setAll(node);
 
@@ -61,5 +70,5 @@ public class PanelControlador {
 
 
 
-
 }
+

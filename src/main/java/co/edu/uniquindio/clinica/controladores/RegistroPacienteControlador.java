@@ -34,6 +34,10 @@ public class RegistroPacienteControlador extends AbstractControlador {
     @FXML
     public void registrarPaciente(ActionEvent event) {
         try {
+            if (txtCedula.getText().isEmpty() || txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEmail.getText().isEmpty()) {
+                mostrarAlerta("Error", "Por favor, complete todos los campos.", Alert.AlertType.ERROR);
+                return;
+            }
             getClinica().registrarPaciente(
                     txtCedula.getText(),
                     txtNombre.getText(),

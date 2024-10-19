@@ -31,6 +31,10 @@ public class RegistroCitaControlador extends AbstractControlador {
     @FXML
     public void registrarCita() {
         try {
+            if (comboPaciente.getValue() == null || comboServicio.getValue() == null || fechaCita.getValue() == null) {
+                mostrarAlerta("Error", "Por favor, complete todos los campos.", Alert.AlertType.ERROR);
+                return;
+            }
             Cita nuevaCita = Cita.builder()
                     .idCita(UUID.randomUUID().toString())
                     .paciente(comboPaciente.getValue())

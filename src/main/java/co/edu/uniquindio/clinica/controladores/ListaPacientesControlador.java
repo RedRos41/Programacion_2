@@ -1,7 +1,6 @@
 package co.edu.uniquindio.clinica.controladores;
 
 import co.edu.uniquindio.clinica.modelo.Paciente;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,27 +31,24 @@ public class ListaPacientesControlador extends AbstractControlador implements In
     @FXML
     private TableColumn<Paciente, String> columnaSuscripcion;
 
-    private ObservableList<Paciente> listaPacientesObservable;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Inicializa las columnas de la tabla
+        // Configurar columnas de la tabla pero no inicializar los datos hasta que Clinica esté disponible
         columnaIdentificacion.setCellValueFactory(new PropertyValueFactory<>("cedula"));
         columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-        columnaCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-        columnaSuscripcion.setCellValueFactory(new PropertyValueFactory<>("tipoSuscripcion"));
-
-        // Inicializa la tabla con los pacientes de la clínica
-        inicializarListaPacientes();
+        columnaCorreo.setCellValueFactory(new PropertyValueFactory<>("email"));
+        columnaSuscripcion.setCellValueFactory(new PropertyValueFactory<>("suscripcion"));
     }
 
     public void inicializarListaPacientes() {
+        // Este método se puede invocar después de que la instancia de Clinica se haya establecido
         if (getClinica() != null) {
-            listaPacientesObservable = FXCollections.observableArrayList(getClinica().getPacientes());
-            tablaPacientes.setItems(listaPacientesObservable);
+            ObservableList<Paciente> pacientes = getClinica().getPacientes();
+            tablaPacientes.setItems(pacientes);
         } else {
             System.out.println("Error: La instancia de Clinica no ha sido inicializada.");
         }
     }
 }
+
