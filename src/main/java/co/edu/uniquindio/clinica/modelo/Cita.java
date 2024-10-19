@@ -12,11 +12,15 @@ import java.time.LocalDate;
 
 public class Cita {
     @EqualsAndHashCode.Include
-    private String id;
+    private String idCita;
 
     private Paciente paciente;
     private Servicio servicio;
     private LocalDate fecha;
     private Factura factura;
+
+    public String getIdCita() {
+        return idCita;
+    }
 
 }

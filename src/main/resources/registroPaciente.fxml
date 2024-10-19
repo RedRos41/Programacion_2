@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="10.0" alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+<VBox spacing="10.0" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.clinica.controladores.RegistroPacienteControlador">
+
     <TextField fx:id="txtNombre" promptText="Nombre"/>
     <TextField fx:id="txtCedula" promptText="Cédula"/>
     <TextField fx:id="txtTelefono" promptText="Teléfono"/>
     <TextField fx:id="txtEmail" promptText="Correo Electrónico"/>
-    <ComboBox fx:id="comboSuscripcion"/>
+    <ComboBox fx:id="comboSuscripcion" promptText="Suscripción"/>
     <Button text="Registrar" onAction="#registrarPaciente"/>
 </VBox>

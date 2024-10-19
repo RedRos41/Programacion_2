@@ -9,7 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 
-public class RegistroPacienteControlador {
+public class RegistroPacienteControlador extends AbstractControlador {
 
     @FXML
     private TextField txtNombre;
@@ -26,14 +26,6 @@ public class RegistroPacienteControlador {
     @FXML
     private ComboBox<String> comboSuscripcion;
 
-    private final Clinica clinica;
-    private ListaPacientesControlador listaPacientesControlador;
-
-    public RegistroPacienteControlador(Clinica clinica, ListaPacientesControlador listaPacientesControlador) {
-        this.clinica = clinica;
-        this.listaPacientesControlador = listaPacientesControlador;
-    }
-
     @FXML
     public void initialize() {
         comboSuscripcion.getItems().addAll("Basica", "Premium");
@@ -42,21 +34,14 @@ public class RegistroPacienteControlador {
     @FXML
     public void registrarPaciente(ActionEvent event) {
         try {
-            if (txtNombre.getText().isEmpty() || txtCedula.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEmail.getText().isEmpty() || comboSuscripcion.getValue() == null) {
-                mostrarAlerta("Error", "Todos los campos son obligatorios", Alert.AlertType.ERROR);
-                return;
-            }
-
-            clinica.registrarPaciente(
-                    txtTelefono.getText(),
-                    txtNombre.getText(),
+            getClinica().registrarPaciente(
                     txtCedula.getText(),
-                    txtEmail.getText()
+                    txtNombre.getText(),
+                    txtTelefono.getText(),
+                    txtEmail.getText(),
+                    comboSuscripcion.getValue()
             );
-
-            listaPacientesControlador.actualizarListaPacientes();
             mostrarAlerta("Éxito", "Paciente registrado correctamente", Alert.AlertType.INFORMATION);
-            limpiarFormulario();
         } catch (Exception e) {
             mostrarAlerta("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -67,13 +52,5 @@ public class RegistroPacienteControlador {
         alerta.setTitle(titulo);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
-    }
-
-    private void limpiarFormulario() {
-        txtNombre.clear();
-        txtCedula.clear();
-        txtTelefono.clear();
-        txtEmail.clear();
-        comboSuscripcion.setValue(null);
     }
 }

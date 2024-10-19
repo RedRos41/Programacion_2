@@ -1,54 +1,58 @@
 package co.edu.uniquindio.clinica.controladores;
 
-import co.edu.uniquindio.clinica.modelo.Clinica;
 import co.edu.uniquindio.clinica.modelo.Paciente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ListaPacientesControlador {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ListaPacientesControlador extends AbstractControlador implements Initializable {
 
     @FXML
     private TableView<Paciente> tablaPacientes;
 
     @FXML
-    private TableColumn<Paciente, String> colId;
+    private TableColumn<Paciente, String> columnaIdentificacion;
 
     @FXML
-    private TableColumn<Paciente, String> colNombre;
+    private TableColumn<Paciente, String> columnaNombre;
 
     @FXML
-    private TableColumn<Paciente, String> colCedula;
+    private TableColumn<Paciente, String> columnaTelefono;
 
     @FXML
-    private TableColumn<Paciente, String> colTelefono;
+    private TableColumn<Paciente, String> columnaCorreo;
 
     @FXML
-    private TableColumn<Paciente, String> colEmail;
+    private TableColumn<Paciente, String> columnaSuscripcion;
 
-    private ObservableList<Paciente> listaPacientes;
-    private final Clinica clinica;
+    private ObservableList<Paciente> listaPacientesObservable;
 
-    public ListaPacientesControlador(Clinica clinica) {
-        this.clinica = clinica;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Inicializa las columnas de la tabla
+        columnaIdentificacion.setCellValueFactory(new PropertyValueFactory<>("cedula"));
+        columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        columnaCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+        columnaSuscripcion.setCellValueFactory(new PropertyValueFactory<>("tipoSuscripcion"));
+
+        // Inicializa la tabla con los pacientes de la clínica
+        inicializarListaPacientes();
     }
 
-    @FXML
-    public void initialize() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colCedula.setCellValueFactory(new PropertyValueFactory<>("cedula"));
-        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-
-        listaPacientes = FXCollections.observableArrayList(clinica.listarPacientes());
-        tablaPacientes.setItems(listaPacientes);
-    }
-
-    public void actualizarListaPacientes() {
-        listaPacientes.setAll(clinica.listarPacientes());
+    public void inicializarListaPacientes() {
+        if (getClinica() != null) {
+            listaPacientesObservable = FXCollections.observableArrayList(getClinica().getPacientes());
+            tablaPacientes.setItems(listaPacientesObservable);
+        } else {
+            System.out.println("Error: La instancia de Clinica no ha sido inicializada.");
+        }
     }
 }
