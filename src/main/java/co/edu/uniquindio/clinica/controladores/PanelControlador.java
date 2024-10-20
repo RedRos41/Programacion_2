@@ -18,6 +18,7 @@ public class PanelControlador {
         this.clinica = Clinica.getInstancia();
     }
 
+
     public void mostrarRegistroPaciente(ActionEvent actionEvent) {
         Parent node = cargarPanel("/registroPaciente.fxml");
         if (node != null) {
@@ -25,14 +26,21 @@ public class PanelControlador {
         }
     }
 
-
     public void mostrarListaPacientes(ActionEvent actionEvent) {
         cargarPanel("/listaPacientes.fxml");
     }
 
     public void mostrarRegistroCita(ActionEvent actionEvent) {
-        cargarPanel("/registroCita.fxml");
+        Parent node = cargarPanel("/registroCita.fxml");
+        if (node != null) {
+            panelPrincipal.getChildren().setAll(node);
+        } else {
+            System.out.println("Error al cargar el panel de registro de cita.");
+        }
+
+
     }
+
 
     public void mostrarListaCitas(ActionEvent actionEvent) {
         cargarPanel("/listaCitas.fxml");
@@ -61,14 +69,11 @@ public class PanelControlador {
 
             return node;
         } catch (Exception e) {
+            System.out.println("Error al cargar el archivo FXML: " + fxmlFile);
             e.printStackTrace();
             return null;
         }
     }
-
-
-
-
 
 }
 

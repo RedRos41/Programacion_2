@@ -40,6 +40,12 @@ public class Clinica {
             throw new Exception("Todos los campos son obligatorios.");
         }
 
+        for (Paciente p : pacientes) {
+            if (p.getCedula().equals(cedula)) {
+                throw new Exception("Ya existe un paciente registrado con esta cédula.");
+            }
+        }
+
         Paciente paciente = Paciente.builder()
                 .id(UUID.randomUUID().toString())
                 .telefono(telefono)
@@ -50,23 +56,36 @@ public class Clinica {
                 .build();
 
         pacientes.add(paciente);
+        System.out.println("Paciente registrado: " + paciente.getNombre());
     }
 
     public ObservableList<Paciente>  getPacientes() {
         return pacientes;
     }
 
-    public void registrarCita(Cita cita) throws Exception {
-        for (Cita c : citas) {
-            if (c.getFecha().equals(cita.getFecha()) && c.getPaciente().equals(cita.getPaciente())) {
-                throw new Exception("Ya existe una cita para el paciente en esa fecha.");
+    public void registrarCita(Cita nuevaCita) throws Exception {
+        // Validar si ya hay una cita en la misma fecha para el paciente
+        for (Cita citaExistente : citas) {
+            if (citaExistente.getFecha().equals(nuevaCita.getFecha()) &&
+                    citaExistente.getPaciente().equals(nuevaCita.getPaciente())) {
+                throw new Exception("El paciente ya tiene una cita programada en esta fecha.");
             }
         }
-        citas.add(cita);
+        citas.add(nuevaCita);
     }
 
     public List<Cita> listarCitas() {
         return citas;
+    }
+
+    public boolean cancelarCita(String idCita) {
+        for (Cita cita : citas) {
+            if (cita.getIdCita().equals(idCita)) {
+                citas.remove(cita);
+                return true;
+            }
+        }
+        return false;
     }
 
     public void registrarServicio(Servicio servicio) {
@@ -77,19 +96,6 @@ public class Clinica {
         return servicios;
     }
 
-    public boolean cancelarCita(String idCita) {
-        return citas.removeIf(cita -> cita.getIdCita() == idCita);
-    }
-
-
-    public boolean validarDisponibilidadCita(Cita nuevaCita) {
-        for (Cita citaExistente : citas) {
-            if (citaExistente.getFecha().equals(nuevaCita.getFecha())) {
-                return false; // Cita en conflicto
-            }
-        }
-        return true;
-    }
 
 }
 
