@@ -1,9 +1,9 @@
 package co.edu.uniquindio.clinica.modelo.factory;
 
-public class SuscripcionPremium implements Suscripcion {
+public class SuscripcionVip implements Suscripcion {
 
     @Override
     public double calcularPrecio(double precioBase) {
-        return precioBase * 0.5;
+        return 0;
     }
 }

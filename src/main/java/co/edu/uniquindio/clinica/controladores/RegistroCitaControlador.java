@@ -4,7 +4,6 @@ import co.edu.uniquindio.clinica.modelo.Cita;
 import co.edu.uniquindio.clinica.modelo.Paciente;
 import co.edu.uniquindio.clinica.modelo.Servicio;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -40,12 +39,12 @@ public class RegistroCitaControlador extends AbstractControlador {
                     comboPaciente.setConverter(new StringConverter<Paciente>() {
                         @Override
                         public String toString(Paciente paciente) {
-                            return paciente.getNombre();  // Mostrar solo el nombre en el ComboBox
+                            return paciente.getNombre();
                         }
 
                         @Override
                         public Paciente fromString(String string) {
-                            return null;  // No necesitamos implementar esto
+                            return null;
                         }
                     });
                 } else {
@@ -59,12 +58,12 @@ public class RegistroCitaControlador extends AbstractControlador {
                     comboServicio.setConverter(new StringConverter<Servicio>() {
                         @Override
                         public String toString(Servicio servicio) {
-                            return servicio.getNombre();  // Mostrar solo el nombre del servicio en el ComboBox
+                            return servicio.getNombre();
                         }
 
                         @Override
                         public Servicio fromString(String string) {
-                            return null;  // No necesitamos implementar esto
+                            return null;
                         }
                     });
                 } else {
@@ -79,16 +78,14 @@ public class RegistroCitaControlador extends AbstractControlador {
     @FXML
     public void registrarCita() {
         try {
-            if (comboPaciente.getValue() == null || comboServicio.getValue() == null || fechaCita.getValue() == null) {
+            if (comboPaciente.getValue() == null || comboServicio.getValue() == null || fechaCita.getValue() == null || horaCita.getText().isEmpty()) {
                 mostrarAlerta("Error", "Por favor, complete todos los campos.", Alert.AlertType.ERROR);
                 return;
             }
 
-
             LocalDate fecha = fechaCita.getValue();
             LocalTime hora = LocalTime.parse(horaCita.getText());
             LocalDateTime fechaHora = LocalDateTime.of(fecha, hora);
-
 
             Cita nuevaCita = Cita.builder()
                     .idCita(UUID.randomUUID().toString())
@@ -100,9 +97,20 @@ public class RegistroCitaControlador extends AbstractControlador {
             // Registrar la cita en la clínica
             getClinica().registrarCita(nuevaCita);
             mostrarAlerta("Éxito", "Cita registrada correctamente", Alert.AlertType.INFORMATION);
+
+            // Limpiar los campos del formulario
+            limpiarFormularioCita();
+
         } catch (Exception e) {
             mostrarAlerta("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    private void limpiarFormularioCita() {
+        comboPaciente.setValue(null);
+        comboServicio.setValue(null);
+        fechaCita.setValue(null);
+        horaCita.clear();
     }
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {

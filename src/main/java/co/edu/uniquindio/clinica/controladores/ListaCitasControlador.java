@@ -2,6 +2,7 @@ package co.edu.uniquindio.clinica.controladores;
 
 import co.edu.uniquindio.clinica.modelo.Cita;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.converter.LocalDateTimeStringConverter;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ListaCitasControlador extends AbstractControlador {
@@ -29,6 +31,12 @@ public class ListaCitasControlador extends AbstractControlador {
     private TableColumn<Cita, String> colFechaHora;
 
     @FXML
+    private TableColumn<Cita, Double> colTotal;
+
+    @FXML
+    private TableColumn<Cita, String> colFechaFactura;
+
+    @FXML
     private Button eliminarCitaButton;
 
     private ObservableList<Cita> citasList;
@@ -39,17 +47,28 @@ public class ListaCitasControlador extends AbstractControlador {
             if (getClinica() != null) {
                 citasList = FXCollections.observableArrayList(getClinica().listarCitas());
 
-                // Configurar las columnas de la tabla
                 colPaciente.setCellValueFactory(cita -> new javafx.beans.property.SimpleStringProperty(cita.getValue().getPaciente().getNombre()));
                 colServicio.setCellValueFactory(cita -> new javafx.beans.property.SimpleStringProperty(cita.getValue().getServicio().getNombre()));
 
-                // Configurar la columna para mostrar fecha y hora formateada
                 colFechaHora.setCellValueFactory(cita -> {
                     LocalDateTimeStringConverter converter = new LocalDateTimeStringConverter(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"), null);
                     return new javafx.beans.property.SimpleStringProperty(converter.toString(cita.getValue().getFechaHora()));
                 });
 
-                // Asignar los datos a la tabla
+                // Total factura
+                colTotal.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFactura().getTotal()));
+
+                // Formatear fecha de factura
+                colFechaFactura.setCellValueFactory(cellData -> {
+                    LocalDateTime fechaFactura = cellData.getValue().getFactura().getFechaFactura();
+                    if (fechaFactura != null) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        return new javafx.beans.property.SimpleStringProperty(fechaFactura.format(formatter));
+                    } else {
+                        return new javafx.beans.property.SimpleStringProperty("No disponible");
+                    }
+                });
+
                 tablaCitas.setItems(citasList);
             } else {
                 System.out.println("Error: No se pudo inicializar la instancia de la clínica.");
@@ -69,7 +88,7 @@ public class ListaCitasControlador extends AbstractControlador {
         try {
             boolean resultado = getClinica().cancelarCita(citaSeleccionada.getIdCita());
             if (resultado) {
-                citasList.remove(citaSeleccionada);  // Eliminar de la tabla
+                citasList.remove(citaSeleccionada);
                 mostrarAlerta("Éxito", "Cita eliminada correctamente.", Alert.AlertType.INFORMATION);
             } else {
                 mostrarAlerta("Error", "No se pudo eliminar la cita.", Alert.AlertType.ERROR);

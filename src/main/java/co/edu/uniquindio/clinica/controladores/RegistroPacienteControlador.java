@@ -1,8 +1,5 @@
 package co.edu.uniquindio.clinica.controladores;
 
-import co.edu.uniquindio.clinica.modelo.Paciente;
-import co.edu.uniquindio.clinica.modelo.Clinica;
-import co.edu.uniquindio.clinica.modelo.factory.SuscripcionFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,7 +25,7 @@ public class RegistroPacienteControlador extends AbstractControlador {
 
     @FXML
     public void initialize() {
-        comboSuscripcion.getItems().addAll("Basica", "Premium");
+        comboSuscripcion.getItems().addAll("Basica", "Premium", "vip");
     }
 
     @FXML
@@ -38,6 +35,7 @@ public class RegistroPacienteControlador extends AbstractControlador {
                 mostrarAlerta("Error", "Por favor, complete todos los campos.", Alert.AlertType.ERROR);
                 return;
             }
+
             getClinica().registrarPaciente(
                     txtCedula.getText(),
                     txtNombre.getText(),
@@ -46,9 +44,20 @@ public class RegistroPacienteControlador extends AbstractControlador {
                     comboSuscripcion.getValue()
             );
             mostrarAlerta("Éxito", "Paciente registrado correctamente", Alert.AlertType.INFORMATION);
+
+            // Limpiar los campos del formulario
+            limpiarFormularioPaciente();
         } catch (Exception e) {
             mostrarAlerta("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    private void limpiarFormularioPaciente() {
+        txtCedula.clear();
+        txtNombre.clear();
+        txtTelefono.clear();
+        txtEmail.clear();
+        comboSuscripcion.setValue(null);
     }
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {

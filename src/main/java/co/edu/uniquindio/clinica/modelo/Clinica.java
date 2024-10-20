@@ -87,15 +87,25 @@ public class Clinica {
         return pacientes;
     }
 
+
     public void registrarCita(Cita nuevaCita) throws Exception {
         for (Cita citaExistente : citas) {
             if (citaExistente.getFechaHora().equals(nuevaCita.getFechaHora()) &&
                     citaExistente.getPaciente().equals(nuevaCita.getPaciente())) {
-                throw new Exception("El paciente ya tiene una cita programada en esta fecha .");
+                throw new Exception("El paciente ya tiene una cita programada en esta fecha y hora.");
             }
         }
-        citas.add(nuevaCita);
+
+        // Calcular el total de acuerdo con la suscripción del paciente
+        double total = nuevaCita.getPaciente().getSuscripcion().calcularPrecio(nuevaCita.getServicio().getPrecio());
+
+        // Crear la factura asociada a la cita
+        Factura factura = new Factura(nuevaCita.getPaciente(), nuevaCita.getServicio(), total);
+        nuevaCita.setFactura(factura);  // Asociar la factura con la cita
+
+        citas.add(nuevaCita);  // Registrar la cita con la factura
     }
+
 
     public List<Cita> listarCitas() {
         return citas;

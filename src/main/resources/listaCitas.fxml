@@ -23,6 +23,9 @@
             <TableColumn text="Paciente" fx:id="colPaciente"/>
             <TableColumn text="Servicio" fx:id="colServicio"/>
             <TableColumn text="Fecha y Hora" fx:id="colFechaHora"/>
+            <TableColumn text="Total Factura" fx:id="colTotal" />
+            <TableColumn text="Fecha Factura" fx:id="colFechaFactura" />
+
         </columns>
         <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
