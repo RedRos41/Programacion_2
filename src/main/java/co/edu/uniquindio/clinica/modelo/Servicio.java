@@ -11,7 +11,7 @@ import lombok.*;
 
 public class Servicio {
     @EqualsAndHashCode.Include
-    private String id;
+    private String idServicio;
 
     private double precio;
     private String nombre;

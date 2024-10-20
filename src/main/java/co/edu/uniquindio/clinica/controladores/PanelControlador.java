@@ -41,6 +41,14 @@ public class PanelControlador {
 
     }
 
+    public void mostrarRegistroServicio(ActionEvent actionEvent) {
+        Parent node = cargarPanel("/registroServicio.fxml");
+        if (node != null) {
+            panelPrincipal.getChildren().setAll(node);
+        }
+    }
+
+
 
     public void mostrarListaCitas(ActionEvent actionEvent) {
         cargarPanel("/listaCitas.fxml");

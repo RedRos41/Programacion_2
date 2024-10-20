@@ -20,12 +20,14 @@ public class Clinica {
 
     private ObservableList<Paciente> pacientes;
     private List<Cita> citas;
-    private List<Servicio> servicios;
+    private ObservableList<Servicio> servicios;
 
     private Clinica() {
         this.pacientes = FXCollections.observableArrayList();
         this.citas = new ArrayList<>();
-        this.servicios = new ArrayList<>();
+        this.servicios = FXCollections.observableArrayList();
+
+        serviciosBasicos();
     }
 
     public static Clinica getInstancia() {
@@ -34,6 +36,28 @@ public class Clinica {
         }
         return INSTANCIA;
     }
+
+
+    private void serviciosBasicos() {
+
+        Servicio nuevoServicio1 = Servicio.builder()
+                .idServicio(UUID.randomUUID().toString())
+                .nombre("Consulta General")
+                .precio(40.000)
+                .build();
+
+        Servicio nuevoServicio2 = Servicio.builder()
+                .idServicio(UUID.randomUUID().toString())
+                .nombre("Examen de Laboratorio")
+                .precio(75.000)
+                .build();
+
+        // Agregar los servicios a la lista
+        servicios.add(nuevoServicio1);
+        servicios.add(nuevoServicio2);
+    }
+
+
 
     public void registrarPaciente(String telefono, String nombre, String cedula, String email, String tipoSuscripcion) throws Exception {
         if (nombre.isEmpty() || cedula.isEmpty() || telefono.isEmpty() || email.isEmpty()) {
@@ -64,11 +88,10 @@ public class Clinica {
     }
 
     public void registrarCita(Cita nuevaCita) throws Exception {
-        // Validar si ya hay una cita en la misma fecha para el paciente
         for (Cita citaExistente : citas) {
             if (citaExistente.getFecha().equals(nuevaCita.getFecha()) &&
                     citaExistente.getPaciente().equals(nuevaCita.getPaciente())) {
-                throw new Exception("El paciente ya tiene una cita programada en esta fecha.");
+                throw new Exception("El paciente ya tiene una cita programada en esta fecha .");
             }
         }
         citas.add(nuevaCita);
@@ -88,12 +111,12 @@ public class Clinica {
         return false;
     }
 
-    public void registrarServicio(Servicio servicio) {
-        servicios.add(servicio);
+    public ObservableList<Servicio> listarServicios() {
+        return servicios;
     }
 
-    public List<Servicio> listarServicios() {
-        return servicios;
+    public void registrarServicio(Servicio servicio) {
+        servicios.add(servicio);
     }
 
 

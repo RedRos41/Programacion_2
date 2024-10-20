@@ -29,6 +29,8 @@
         <Button text="Listar pacientes" minWidth="200.0" onAction="#mostrarListaPacientes"/>
         <Button text="Crear cita" minWidth="200.0" onAction="#mostrarRegistroCita"/>
         <Button text="Listar citas" minWidth="200.0" onAction="#mostrarListaCitas"/>
+        <Button text="registrar servicios" minWidth="200.0" onAction="#mostrarRegistroServicio"/>
+
     </VBox>
 
     <StackPane fx:id="panelPrincipal" HBox.hgrow="ALWAYS" />
