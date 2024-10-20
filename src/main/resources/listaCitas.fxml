@@ -22,7 +22,7 @@
         <columns>
             <TableColumn text="Paciente" fx:id="colPaciente"/>
             <TableColumn text="Servicio" fx:id="colServicio"/>
-            <TableColumn text="Fecha" fx:id="colFecha"/>
+            <TableColumn text="Fecha y Hora" fx:id="colFechaHora"/>
         </columns>
         <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

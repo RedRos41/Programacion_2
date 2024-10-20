@@ -4,14 +4,15 @@ import co.edu.uniquindio.clinica.modelo.Cita;
 import co.edu.uniquindio.clinica.modelo.Paciente;
 import co.edu.uniquindio.clinica.modelo.Servicio;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.*;
 import javafx.util.StringConverter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public class RegistroCitaControlador extends AbstractControlador {
@@ -24,6 +25,9 @@ public class RegistroCitaControlador extends AbstractControlador {
 
     @FXML
     private DatePicker fechaCita;
+
+    @FXML
+    private TextField horaCita;
 
     @FXML
     public void initialize() {
@@ -80,12 +84,17 @@ public class RegistroCitaControlador extends AbstractControlador {
                 return;
             }
 
-            // Crear una nueva cita con el paciente, servicio y fecha seleccionados
+
+            LocalDate fecha = fechaCita.getValue();
+            LocalTime hora = LocalTime.parse(horaCita.getText());
+            LocalDateTime fechaHora = LocalDateTime.of(fecha, hora);
+
+
             Cita nuevaCita = Cita.builder()
                     .idCita(UUID.randomUUID().toString())
                     .paciente(comboPaciente.getValue())
                     .servicio(comboServicio.getValue())
-                    .fecha(fechaCita.getValue())
+                    .fechaHora(fechaHora)
                     .build();
 
             // Registrar la cita en la clínica

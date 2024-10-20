@@ -10,6 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.converter.LocalDateTimeStringConverter;
+
+import java.time.format.DateTimeFormatter;
 
 public class ListaCitasControlador extends AbstractControlador {
 
@@ -23,7 +26,7 @@ public class ListaCitasControlador extends AbstractControlador {
     private TableColumn<Cita, String> colServicio;
 
     @FXML
-    private TableColumn<Cita, String> colFecha;
+    private TableColumn<Cita, String> colFechaHora;
 
     @FXML
     private Button eliminarCitaButton;
@@ -37,9 +40,14 @@ public class ListaCitasControlador extends AbstractControlador {
                 citasList = FXCollections.observableArrayList(getClinica().listarCitas());
 
                 // Configurar las columnas de la tabla
-                colPaciente.setCellValueFactory(new PropertyValueFactory<>("paciente"));
-                colServicio.setCellValueFactory(new PropertyValueFactory<>("servicio"));
-                colFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+                colPaciente.setCellValueFactory(cita -> new javafx.beans.property.SimpleStringProperty(cita.getValue().getPaciente().getNombre()));
+                colServicio.setCellValueFactory(cita -> new javafx.beans.property.SimpleStringProperty(cita.getValue().getServicio().getNombre()));
+
+                // Configurar la columna para mostrar fecha y hora formateada
+                colFechaHora.setCellValueFactory(cita -> {
+                    LocalDateTimeStringConverter converter = new LocalDateTimeStringConverter(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"), null);
+                    return new javafx.beans.property.SimpleStringProperty(converter.toString(cita.getValue().getFechaHora()));
+                });
 
                 // Asignar los datos a la tabla
                 tablaCitas.setItems(citasList);

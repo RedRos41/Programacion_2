@@ -89,7 +89,7 @@ public class Clinica {
 
     public void registrarCita(Cita nuevaCita) throws Exception {
         for (Cita citaExistente : citas) {
-            if (citaExistente.getFecha().equals(nuevaCita.getFecha()) &&
+            if (citaExistente.getFechaHora().equals(nuevaCita.getFechaHora()) &&
                     citaExistente.getPaciente().equals(nuevaCita.getPaciente())) {
                 throw new Exception("El paciente ya tiene una cita programada en esta fecha .");
             }

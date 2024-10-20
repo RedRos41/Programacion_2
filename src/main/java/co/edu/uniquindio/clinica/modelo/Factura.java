@@ -11,7 +11,6 @@ public class Factura {
 
     @EqualsAndHashCode.Include
     private String id;
-
     private Paciente paciente;
     private Servicio servicio;
     private double total;

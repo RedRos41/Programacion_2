@@ -5,11 +5,13 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TextField?>
 <VBox spacing="10.0" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
       fx:controller="co.edu.uniquindio.clinica.controladores.RegistroCitaControlador">
 
     <ComboBox fx:id="comboPaciente" promptText="Seleccionar Paciente"/>
     <ComboBox fx:id="comboServicio" promptText="Seleccionar Servicio"/>
     <DatePicker fx:id="fechaCita" promptText="Fecha de la Cita"/>
+    <TextField fx:id="horaCita" promptText="Seleccionar Hora en formato HH:mm"/>
     <Button text="Registrar Cita" onAction="#registrarCita"/>
 </VBox>

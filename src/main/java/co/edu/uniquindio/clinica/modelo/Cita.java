@@ -17,11 +17,7 @@ public class Cita {
 
     private Paciente paciente;
     private Servicio servicio;
-    private LocalDate fecha;
+    private LocalDateTime fechaHora;
     private Factura factura;
-
-    public String getIdCita() {
-        return idCita;
-    }
 
 }
