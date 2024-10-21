@@ -3,6 +3,7 @@ package co.edu.uniquindio.clinica.controladores;
 import co.edu.uniquindio.clinica.modelo.Cita;
 import co.edu.uniquindio.clinica.modelo.Paciente;
 import co.edu.uniquindio.clinica.modelo.Servicio;
+import co.edu.uniquindio.clinica.utils.EnvioEmail;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,12 +32,14 @@ public class RegistroCitaControlador extends AbstractControlador {
     @FXML
     public void initialize() {
         Platform.runLater(() -> {
-            // Inicializar la lista de pacientes
+
             if (getClinica() != null) {
                 ObservableList<Paciente> listaPacientes = getClinica().getPacientes();
+
                 if (listaPacientes != null && !listaPacientes.isEmpty()) {
                     comboPaciente.setItems(listaPacientes);
                     comboPaciente.setConverter(new StringConverter<Paciente>() {
+
                         @Override
                         public String toString(Paciente paciente) {
                             return paciente.getNombre();
@@ -47,11 +50,7 @@ public class RegistroCitaControlador extends AbstractControlador {
                             return null;
                         }
                     });
-                } else {
-                    System.out.println("La lista de pacientes está vacía.");
                 }
-
-                // Inicializar la lista de servicios
                 ObservableList<Servicio> listaServicios = getClinica().listarServicios();
                 if (listaServicios != null && !listaServicios.isEmpty()) {
                     comboServicio.setItems(listaServicios);
@@ -66,11 +65,7 @@ public class RegistroCitaControlador extends AbstractControlador {
                             return null;
                         }
                     });
-                } else {
-                    System.out.println("La lista de servicios está vacía.");
                 }
-            } else {
-                System.out.println("Error: No se pudo inicializar la instancia de la clínica.");
             }
         });
     }
@@ -98,8 +93,15 @@ public class RegistroCitaControlador extends AbstractControlador {
             getClinica().registrarCita(nuevaCita);
             mostrarAlerta("Éxito", "Cita registrada correctamente", Alert.AlertType.INFORMATION);
 
-            // Limpiar los campos del formulario
+            // Enviar notificación por correo
+            EnvioEmail.enviarNotificacion(
+                    nuevaCita.getPaciente().getEmail(),
+                    "Cita Registrada",
+                    "Su cita ha sido registrada para el " + fechaHora.toString());
+
+
             limpiarFormularioCita();
+
 
         } catch (Exception e) {
             mostrarAlerta("Error", e.getMessage(), Alert.AlertType.ERROR);

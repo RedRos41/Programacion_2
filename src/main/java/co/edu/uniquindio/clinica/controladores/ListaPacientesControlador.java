@@ -42,12 +42,10 @@ public class ListaPacientesControlador extends AbstractControlador implements In
     }
 
     public void inicializarListaPacientes() {
-        // Este método se puede invocar después de que la instancia de Clinica se haya establecido
+
         if (getClinica() != null) {
             ObservableList<Paciente> pacientes = getClinica().getPacientes();
             tablaPacientes.setItems(pacientes);
-        } else {
-            System.out.println("Error: La instancia de Clinica no ha sido inicializada.");
         }
     }
 }

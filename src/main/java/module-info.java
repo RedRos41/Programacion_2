@@ -11,6 +11,8 @@ module co.edu.uniquindio.clinica {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires org.simplejavamail.core;
+    requires org.simplejavamail;
 
     opens co.edu.uniquindio.clinica.modelo to javafx.base, javafx.fxml;
 

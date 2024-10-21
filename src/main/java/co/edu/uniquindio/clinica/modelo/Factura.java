@@ -25,6 +25,6 @@ public class Factura {
         this.paciente = paciente;
         this.servicio = servicio;
         this.total = total;
-        this.fechaFactura = LocalDateTime.now(); // Fecha de creación de la factura
+        this.fechaFactura = LocalDateTime.now();
     }
 }

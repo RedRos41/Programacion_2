@@ -22,6 +22,7 @@ public class Clinica {
     private List<Cita> citas;
     private ObservableList<Servicio> servicios;
 
+
     private Clinica() {
         this.pacientes = FXCollections.observableArrayList();
         this.citas = new ArrayList<>();
@@ -37,22 +38,20 @@ public class Clinica {
         return INSTANCIA;
     }
 
-
     private void serviciosBasicos() {
 
         Servicio nuevoServicio1 = Servicio.builder()
                 .idServicio(UUID.randomUUID().toString())
                 .nombre("Consulta General")
-                .precio(40.000)
+                .precio(40000)
                 .build();
 
         Servicio nuevoServicio2 = Servicio.builder()
                 .idServicio(UUID.randomUUID().toString())
                 .nombre("Examen de Laboratorio")
-                .precio(75.000)
+                .precio(75000)
                 .build();
 
-        // Agregar los servicios a la lista
         servicios.add(nuevoServicio1);
         servicios.add(nuevoServicio2);
     }
@@ -63,7 +62,6 @@ public class Clinica {
         if (nombre.isEmpty() || cedula.isEmpty() || telefono.isEmpty() || email.isEmpty()) {
             throw new Exception("Todos los campos son obligatorios.");
         }
-
         for (Paciente p : pacientes) {
             if (p.getCedula().equals(cedula)) {
                 throw new Exception("Ya existe un paciente registrado con esta cédula.");
@@ -80,7 +78,6 @@ public class Clinica {
                 .build();
 
         pacientes.add(paciente);
-        System.out.println("Paciente registrado: " + paciente.getNombre());
     }
 
     public ObservableList<Paciente>  getPacientes() {
@@ -96,14 +93,12 @@ public class Clinica {
             }
         }
 
-        // Calcular el total de acuerdo con la suscripción del paciente
         double total = nuevaCita.getPaciente().getSuscripcion().calcularPrecio(nuevaCita.getServicio().getPrecio());
 
-        // Crear la factura asociada a la cita
         Factura factura = new Factura(nuevaCita.getPaciente(), nuevaCita.getServicio(), total);
-        nuevaCita.setFactura(factura);  // Asociar la factura con la cita
+        nuevaCita.setFactura(factura);
 
-        citas.add(nuevaCita);  // Registrar la cita con la factura
+        citas.add(nuevaCita);
     }
 
 

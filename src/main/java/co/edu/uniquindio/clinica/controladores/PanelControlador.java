@@ -18,7 +18,6 @@ public class PanelControlador {
         this.clinica = Clinica.getInstancia();
     }
 
-
     public void mostrarRegistroPaciente(ActionEvent actionEvent) {
         Parent node = cargarPanel("/registroPaciente.fxml");
         if (node != null) {
@@ -34,13 +33,9 @@ public class PanelControlador {
         Parent node = cargarPanel("/registroCita.fxml");
         if (node != null) {
             panelPrincipal.getChildren().setAll(node);
-        } else {
-            System.out.println("Error al cargar el panel de registro de cita.");
         }
 
-
     }
-
     public void mostrarRegistroServicio(ActionEvent actionEvent) {
         Parent node = cargarPanel("/registroServicio.fxml");
         if (node != null) {
@@ -48,12 +43,9 @@ public class PanelControlador {
         }
     }
 
-
-
     public void mostrarListaCitas(ActionEvent actionEvent) {
         cargarPanel("/listaCitas.fxml");
     }
-
 
     private Parent cargarPanel(String fxmlFile) {
         try {
