@@ -11,7 +11,7 @@
       spacing="20.0"
       fx:controller="co.edu.uniquindio.clinica.controladores.ListaPacientesControlador">
 
-    <Label text="Lista de Pacientes" textFill="#0f0f0f">
+    <Label text="Lista de Pacientes." textFill="#0f0f0f">
         <font>
             <Font size="20.0"/>
         </font>

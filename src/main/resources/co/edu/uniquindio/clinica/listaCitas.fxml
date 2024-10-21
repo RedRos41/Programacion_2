@@ -12,7 +12,7 @@
       fx:controller="co.edu.uniquindio.clinica.controladores.ListaCitasControlador"
       spacing="20.0">
 
-    <Label text="Lista de Citas">
+    <Label text="Lista de Citas.">
         <font>
             <Font size="20.0"/>
         </font>

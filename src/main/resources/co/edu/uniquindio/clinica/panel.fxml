@@ -16,7 +16,7 @@
     <VBox minWidth="200.0" alignment="BASELINE_CENTER" spacing="20.0">
         <HBox alignment="CENTER" spacing="10.0">
             <ImageView fitWidth="50.0" preserveRatio="true">
-                <Image url="@img/clinica.png"/>
+                <Image url="@img/Clinica.png"/>
             </ImageView>
             <Label text="Panel de la clínica">
                 <font>

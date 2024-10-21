@@ -19,32 +19,32 @@ public class PanelControlador {
     }
 
     public void mostrarRegistroPaciente(ActionEvent actionEvent) {
-        Parent node = cargarPanel("/registroPaciente.fxml");
+        Parent node = cargarPanel("/co/edu/uniquindio/clinica/registroPaciente.fxml");
         if (node != null) {
             panelPrincipal.getChildren().setAll(node);
         }
     }
 
     public void mostrarListaPacientes(ActionEvent actionEvent) {
-        cargarPanel("/listaPacientes.fxml");
+        cargarPanel("/co/edu/uniquindio/clinica/listaPacientes.fxml");
     }
 
     public void mostrarRegistroCita(ActionEvent actionEvent) {
-        Parent node = cargarPanel("/registroCita.fxml");
+        Parent node = cargarPanel("/co/edu/uniquindio/clinica/registroCita.fxml");
         if (node != null) {
             panelPrincipal.getChildren().setAll(node);
         }
 
     }
     public void mostrarRegistroServicio(ActionEvent actionEvent) {
-        Parent node = cargarPanel("/registroServicio.fxml");
+        Parent node = cargarPanel("/co/edu/uniquindio/clinica/registroServicio.fxml");
         if (node != null) {
             panelPrincipal.getChildren().setAll(node);
         }
     }
 
     public void mostrarListaCitas(ActionEvent actionEvent) {
-        cargarPanel("/listaCitas.fxml");
+        cargarPanel("/co/edu/uniquindio/clinica/listaCitas.fxml");
     }
 
     private Parent cargarPanel(String fxmlFile) {
