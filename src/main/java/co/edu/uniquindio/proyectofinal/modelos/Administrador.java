@@ -2,11 +2,12 @@ package co.edu.uniquindio.proyectofinal.modelos;
 
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @ToString
 public class Administrador extends Usuario {
 

@@ -7,13 +7,19 @@ class Usuario {
     - telefono: long
     - email: String
     - contraseña: String
-    + registrarUsuario(cedula: long, nombreCompleto: String, email: String, contraseña: String, telefono: long): void
+    + registrarUsuario(tipoUsuario: TipoUsuario, cedula: long, nombreCompleto: String, email: String, contraseña: String, telefono: long): void
     + editarUsuario(cedula: long, nombreCompleto: String, email: String, telefono: long): void
     + eliminarUsuario(cedula: long): void
     + iniciarSesion(email: String, contraseña: String): void
     + cambiarContraseña(codigo: String, nuevaContraseña: String): void
+    + buscarAdministrador(): boolean
     + buscarUsuario(cedula: long): int
     + listarUsuarios(): List<Usuario>
+}
+
+enum TipoUsuario {
+    ADMINISTRADOR
+    CLIENTE
 }
 
 class Cliente extends Usuario {

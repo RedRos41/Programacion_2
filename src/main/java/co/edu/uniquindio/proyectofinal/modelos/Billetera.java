@@ -2,11 +2,13 @@ package co.edu.uniquindio.proyectofinal.modelos;
 
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 @Getter
 @Setter
-@Builder
+@AllArgsConstructor
+@SuperBuilder
 @ToString
 public class Billetera {
 

@@ -2,12 +2,13 @@ package co.edu.uniquindio.proyectofinal.modelos;
 
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class Usuario {

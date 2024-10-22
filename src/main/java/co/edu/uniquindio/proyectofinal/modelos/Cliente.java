@@ -2,12 +2,12 @@ package co.edu.uniquindio.proyectofinal.modelos;
 
 
 import lombok.*;
-import java.util.List;
+import lombok.experimental.SuperBuilder;
 
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @ToString
 public class Cliente extends Usuario {
 

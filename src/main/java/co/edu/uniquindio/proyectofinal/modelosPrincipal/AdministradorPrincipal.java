@@ -1,9 +1,9 @@
 package co.edu.uniquindio.proyectofinal.modelosPrincipal;
 
 
-import co.edu.uniquindio.proyectofinal.modelos.Administrador;
 import java.util.List;
 import java.util.ArrayList;
+import co.edu.uniquindio.proyectofinal.modelos.Administrador;
 
 
 public class AdministradorPrincipal {
