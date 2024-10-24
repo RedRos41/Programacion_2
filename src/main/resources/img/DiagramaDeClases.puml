@@ -7,13 +7,20 @@ class Usuario {
     - telefono: long
     - email: String
     - contraseña: String
+    - codigoActivacion: String
+    - codigoContraseña: String
     + registrarUsuario(tipoUsuario: TipoUsuario, cedula: long, nombreCompleto: String, email: String, contraseña: String, telefono: long): void
     + editarUsuario(cedula: long, nombreCompleto: String, email: String, telefono: long): void
     + eliminarUsuario(cedula: long): void
-    + iniciarSesion(email: String, contraseña: String): void
-    + cambiarContraseña(codigo: String, nuevaContraseña: String): void
-    + buscarAdministrador(): boolean
-    + buscarUsuario(cedula: long): int
+    + solicitarCambioContraseña(email: String): void
+    + cambiarContraseña(email: String, codigoContraseña: String, nuevaContraseña: String): void
+    - buscarUsuarioPorEmail(email: String): Usuario
+    - crearUsuario(tipoUsuario: TipoUsuario, cedula: long, nombreCompleto: String, email: String, contraseña: String, telefono: long): Usuario
+    + iniciarSesion(codigoActivacion: String, email: String, contraseña: String): Usuario
+    - numeroValido(numero: long): boolean
+    - buscarAdministrador(): boolean
+    - buscarUsuario(cedula: long): int
+    - generarCodigo(): String
     + listarUsuarios(): List<Usuario>
 }
 

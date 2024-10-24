@@ -4,6 +4,7 @@ package co.edu.uniquindio.proyectofinal.modelosPrincipal;
 import java.util.List;
 import java.util.ArrayList;
 import co.edu.uniquindio.proyectofinal.modelos.*;
+import co.edu.uniquindio.proyectofinal.utils.EnvioEmail;
 
 
 public class UsuarioPrincipal {
@@ -19,64 +20,94 @@ public class UsuarioPrincipal {
 
     public void registrarUsuario(TipoUsuario tipoUsuario, long cedula, String nombreCompleto, String email, String contraseña, long telefono) throws Exception {
 
-        if (nombreCompleto.isEmpty() || email.isEmpty() || contraseña.isEmpty())
+        if (nombreCompleto.isBlank() || email.isBlank() || contraseña.isBlank()) {
+
             throw new Exception("Este campo no puede estar vacio.");
 
-        if (cedula < 1000000000L || cedula > 9999999999L || telefono < 1000000000L || telefono > 9999999999L)
-            throw new Exception("Este campo debe tener exactamente 10 digitos.");
-
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"))
-            throw new Exception("Este campo debe tener el formato del correo electrónico.");
-
-        if (buscarUsuario(cedula) != -1)
-            throw new Exception("Ya existe un usuario con la cédula proporcionada.");
-
-        Usuario usuario;
-
-        if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
-            if (buscarAdministrador()) {
-                throw new Exception("Ya existe un administrador registrado.");
-            }
-            usuario = Administrador.builder()
-                    .cedula(cedula)
-                    .nombreCompleto(nombreCompleto)
-                    .email(email)
-                    .contraseña(contraseña)
-                    .telefono(telefono)
-                    .build();
-        } else if (tipoUsuario == TipoUsuario.CLIENTE) {
-            usuario = Cliente.builder()
-                    .cedula(cedula)
-                    .nombreCompleto(nombreCompleto)
-                    .email(email)
-                    .contraseña(contraseña)
-                    .telefono(telefono)
-                    .billeteraCliente(new Billetera(0.0))
-                    .build();
-        } else {
-            throw new Exception("Tipo de usuario no válido.");
         }
 
+        if (numeroValido(cedula) || numeroValido(telefono)) {
+
+            throw new Exception("Este campo debe tener exactamente 10 digitos.");
+
+        }
+
+        if (!nombreCompleto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+
+            throw new Exception("El nombre no puede contener números ni caracteres especiales.");
+
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
+            throw new Exception("Este campo debe tener el formato del correo electrónico.");
+
+        }
+
+        if (contraseña.length() < 8) {
+
+            throw new Exception("La contraseña debe tener al menos 8 caracteres.");
+
+        }
+
+        if (buscarUsuario(cedula) != -1) {
+
+            throw new Exception("Ya existe un usuario con la cédula proporcionada.");
+
+        }
+
+        if (tipoUsuario == TipoUsuario.ADMINISTRADOR && buscarAdministrador()) {
+
+            throw new Exception("Ya existe un administrador registrado.");
+
+        }
+
+        Usuario usuario = crearUsuario(tipoUsuario, cedula, nombreCompleto, email, contraseña, telefono);
+
         usuarios.add(usuario);
+
+        String codigoActivacion = generarCodigo();
+
+        usuario.setCodigoActivacion(codigoActivacion);
+
+        EnvioEmail.enviarCorreo(email, "Código de Activación", "Su código de activación es: " + codigoActivacion);
 
     }
 
 
     public void editarUsuario(long cedula, String nombreCompleto, String email, long telefono) throws Exception {
 
-        if(nombreCompleto.isEmpty() || email.isEmpty())
+        if (nombreCompleto.isBlank() || email.isBlank()) {
+
             throw new Exception("Este campo no puede estar vacio.");
 
-        if(cedula < 1000000000L || cedula > 9999999999L || telefono < 1000000000L || telefono > 9999999999L)
+        }
+
+        if (numeroValido(cedula) || numeroValido(telefono)) {
+
             throw new Exception("Este campo debe tener exactamente 10 digitos.");
 
-        if(!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"))
+        }
+
+        if (!nombreCompleto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+
+            throw new Exception("El nombre no puede contener números ni caracteres especiales.");
+
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
             throw new Exception("Este campo debe tener el formato del correo electrónico.");
+
+        }
 
         int idUsuario = buscarUsuario(cedula);
 
-        if(idUsuario == -1)
+        if (idUsuario == -1) {
+
             throw new Exception("No existe un usuario con la cedula proporcionada.");
+
+        }
 
         Usuario editarUsuario = usuarios.get(idUsuario);
         editarUsuario.setCedula(cedula);
@@ -91,34 +122,188 @@ public class UsuarioPrincipal {
 
     public void eliminarUsuario(long cedula) throws Exception {
 
-        if(cedula < 1000000000L || cedula > 9999999999L)
+        if (numeroValido(cedula)) {
+
             throw new Exception("Este campo debe tener exactamente 10 digitos.");
+
+        }
 
         int idUsuario = buscarUsuario(cedula);
 
-        if(idUsuario == -1)
+        if (idUsuario == -1) {
+
             throw new Exception("No existe un usuario con la cedula proporcionada.");
+
+        }
 
         usuarios.remove(usuarios.get(idUsuario));
 
     }
 
 
-    public void iniciarSesion(String email, String contraseña) throws Exception {
+    public void solicitarCambioContraseña(String email) throws Exception {
+
+        if (email.isBlank()) {
+
+            throw new Exception("Este campo no puede estar vacio.");
+
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
+            throw new Exception("Este campo debe tener el formato del correo electrónico.");
+
+        }
+
+        Usuario usuario = buscarUsuarioPorEmail(email);
+
+        if (usuario == null) {
+
+            throw new Exception("No existe un usuario con el email proporcionado.");
+
+        }
+
+        String codigoContraseña = generarCodigo();
+
+        usuario.setCodigoContraseña(codigoContraseña);
+
+        EnvioEmail.enviarCorreo(email, "Código de cambio de Contraseña", "Su código de cambio de contraseña es: " + codigoContraseña);
 
     }
 
 
-    public void cambiarContraseña(String codigo, String nuevaContraseña) throws Exception {
+    public void cambiarContraseña(String email, String codigoContraseña, String nuevaContraseña) throws Exception {
+
+        if (email.isBlank()) {
+
+            throw new Exception("Este campo no puede estar vacio.");
+
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
+            throw new Exception("Este campo debe tener el formato del correo electrónico.");
+
+        }
+
+        Usuario usuario = buscarUsuarioPorEmail(email);
+
+        if (usuario == null) {
+
+            throw new Exception("No existe un usuario con el email proporcionado.");
+
+        }
+
+        if (usuario.getCodigoContraseña() == null || usuario.getCodigoContraseña().isBlank() || !usuario.getCodigoContraseña().equals(codigoContraseña)) {
+
+            throw new Exception("El código de cambio de contraseña es incorrecto.");
+
+        }
+
+        if (nuevaContraseña.isBlank()) {
+
+            throw new Exception("Este campo no puede estar vacio.");
+
+        }
+        if (nuevaContraseña.length() < 8) {
+
+            throw new Exception("La nueva contraseña debe tener al menos 8 caracteres.");
+
+        }
+
+        if (usuario.getContraseña().equals(nuevaContraseña)) {
+
+            throw new Exception("La nueva contraseña no puede ser igual a la contraseña actual.");
+
+        }
+
+        usuario.setContraseña(nuevaContraseña);
+
+        usuario.setCodigoContraseña(null);
+
+    }
+
+
+    private Usuario buscarUsuarioPorEmail(String email) {
+
+        for (Usuario usuario : usuarios) {
+
+            if (usuario.getEmail().equals(email)) {
+
+                return usuario;
+
+            }
+
+        }
+        return null;
+
+    }
+
+
+    private Usuario crearUsuario(TipoUsuario tipoUsuario, long cedula, String nombreCompleto, String email, String contraseña, long telefono) throws Exception {
+
+        return switch (tipoUsuario) {
+
+            case ADMINISTRADOR -> Administrador.builder()
+                    .cedula(cedula)
+                    .nombreCompleto(nombreCompleto)
+                    .email(email)
+                    .contraseña(contraseña)
+                    .telefono(telefono)
+                    .build();
+
+            case CLIENTE -> Cliente.builder()
+                    .cedula(cedula)
+                    .nombreCompleto(nombreCompleto)
+                    .email(email)
+                    .contraseña(contraseña)
+                    .telefono(telefono)
+                    .billeteraCliente(new Billetera(0.0))
+                    .build();
+
+            default -> throw new Exception("Tipo de usuario no válido.");
+
+        };
+
+    }
+
+
+    public Usuario iniciarSesion(String codigoActivacion, String email, String contraseña) throws Exception {
+
+        for (Usuario usuario : usuarios) {
+
+            if (usuario.getCodigoActivacion().equals(codigoActivacion)) {
+
+                if (usuario.getEmail().equals(email) && usuario.getContraseña().equals(contraseña)) {
+
+                    return usuario;
+
+                } else {
+
+                    throw new Exception("Las credenciales son incorrectas.");
+
+                }
+
+            }
+
+        }
+        throw new Exception("El código de activación es incorrecto.");
+
+    }
+
+
+    private boolean numeroValido(long numero) {
+
+        return numero < 1000000000L || numero > 9999999999L;
 
     }
 
 
     private boolean buscarAdministrador() {
 
-        for(Usuario usuario : usuarios) {
+        for (Usuario usuario : usuarios) {
 
-            if(usuario instanceof Administrador) {
+            if (usuario instanceof Administrador) {
 
                 return true;
 
@@ -132,9 +317,9 @@ public class UsuarioPrincipal {
 
     private int buscarUsuario(long cedula) {
 
-        for(int i = 0; i < usuarios.size(); i++) {
+        for (int i = 0; i < usuarios.size(); i++) {
 
-            if(usuarios.get(i).getCedula() == cedula) {
+            if (usuarios.get(i).getCedula() == cedula) {
 
                 return i;
 
@@ -142,6 +327,15 @@ public class UsuarioPrincipal {
 
         }
         return -1;
+
+    }
+
+
+    private String generarCodigo() {
+
+        int codigo = (int) (Math.random() * 900000) + 100000;
+
+        return String.valueOf(codigo);
 
     }
 

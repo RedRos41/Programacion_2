@@ -16,7 +16,7 @@ public class Usuario {
     @EqualsAndHashCode.Include
     protected long cedula;
 
-    protected String nombreCompleto, email, contraseña;
+    protected String nombreCompleto, email, contraseña, codigoActivacion, codigoContraseña;
     protected long telefono;
 
 }
