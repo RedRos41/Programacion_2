@@ -13,8 +13,9 @@ class Usuario {
     + editarUsuario(cedula: long, nombreCompleto: String, email: String, telefono: long): void
     + eliminarUsuario(cedula: long): void
     + solicitarCambioContraseña(email: String): void
-    + cambiarContraseña(email: String, codigoContraseña: String, nuevaContraseña: String): void
+    + cambiarContraseña(codigoContraseña: String, nuevaContraseña: String): void
     - buscarUsuarioPorEmail(email: String): Usuario
+    - buscarUsuarioPorCodigoContraseña(codigoContraseña: String): Usuario
     - crearUsuario(tipoUsuario: TipoUsuario, cedula: long, nombreCompleto: String, email: String, contraseña: String, telefono: long): Usuario
     + iniciarSesion(codigoActivacion: String, email: String, contraseña: String): Usuario
     - numeroValido(numero: long): boolean

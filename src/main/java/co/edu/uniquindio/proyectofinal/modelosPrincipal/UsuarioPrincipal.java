@@ -40,7 +40,7 @@ public class UsuarioPrincipal {
 
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
 
-            throw new Exception("Este campo debe tener el formato del correo electrónico.");
+            throw new Exception("Este campo debe tener el formato del correo electronico.");
 
         }
 
@@ -70,7 +70,15 @@ public class UsuarioPrincipal {
 
         usuario.setCodigoActivacion(codigoActivacion);
 
-        EnvioEmail.enviarCorreo(email, "Código de Activación", "Su código de activación es: " + codigoActivacion);
+        try {
+
+            EnvioEmail.enviarCorreo(email, "Código de Activación", "Su código de activación es: " + codigoActivacion);
+
+        }catch (Exception e) {
+
+            throw new Exception("Error al enviar el correo de activacion. Por favor, intente nuevamente.");
+
+        }
 
     }
 
@@ -97,7 +105,7 @@ public class UsuarioPrincipal {
 
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
 
-            throw new Exception("Este campo debe tener el formato del correo electrónico.");
+            throw new Exception("Este campo debe tener el formato del correo electronico.");
 
         }
 
@@ -167,36 +175,26 @@ public class UsuarioPrincipal {
 
         usuario.setCodigoContraseña(codigoContraseña);
 
-        EnvioEmail.enviarCorreo(email, "Código de cambio de Contraseña", "Su código de cambio de contraseña es: " + codigoContraseña);
+        try {
+
+            EnvioEmail.enviarCorreo(email, "Código de cambio de Contraseña", "Su código de cambio de contraseña es: " + codigoContraseña);
+
+        }catch (Exception e) {
+
+            throw new Exception("Error al enviar el correo de cambio de contraseña. Por favor, intente nuevamente.");
+
+        }
 
     }
 
 
-    public void cambiarContraseña(String email, String codigoContraseña, String nuevaContraseña) throws Exception {
+    public void cambiarContraseña(String codigoContraseña, String nuevaContraseña) throws Exception {
 
-        if (email.isBlank()) {
-
-            throw new Exception("Este campo no puede estar vacio.");
-
-        }
-
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
-
-            throw new Exception("Este campo debe tener el formato del correo electrónico.");
-
-        }
-
-        Usuario usuario = buscarUsuarioPorEmail(email);
+        Usuario usuario = buscarUsuarioPorCodigoContraseña(codigoContraseña);
 
         if (usuario == null) {
 
-            throw new Exception("No existe un usuario con el email proporcionado.");
-
-        }
-
-        if (usuario.getCodigoContraseña() == null || usuario.getCodigoContraseña().isBlank() || !usuario.getCodigoContraseña().equals(codigoContraseña)) {
-
-            throw new Exception("El código de cambio de contraseña es incorrecto.");
+            throw new Exception("El código de cambio de contraseña proporcionado es incorrecto.");
 
         }
 
@@ -207,7 +205,7 @@ public class UsuarioPrincipal {
         }
         if (nuevaContraseña.length() < 8) {
 
-            throw new Exception("La nueva contraseña debe tener al menos 8 caracteres.");
+            throw new Exception("La contraseña debe tener al menos 8 caracteres.");
 
         }
 
@@ -229,6 +227,21 @@ public class UsuarioPrincipal {
         for (Usuario usuario : usuarios) {
 
             if (usuario.getEmail().equals(email)) {
+
+                return usuario;
+
+            }
+
+        }
+        return null;
+
+    }
+
+    private Usuario buscarUsuarioPorCodigoContraseña(String codigoContraseña) {
+
+        for (Usuario usuario : usuarios) {
+
+            if (usuario.getCodigoContraseña().equals(codigoContraseña)) {
 
                 return usuario;
 
@@ -261,7 +274,7 @@ public class UsuarioPrincipal {
                     .billeteraCliente(new Billetera(0.0))
                     .build();
 
-            default -> throw new Exception("Tipo de usuario no válido.");
+            default -> throw new Exception("Tipo de usuario no valido.");
 
         };
 
@@ -287,7 +300,7 @@ public class UsuarioPrincipal {
             }
 
         }
-        throw new Exception("El código de activación es incorrecto.");
+        throw new Exception("El codigo de activación proporcionado es incorrecto.");
 
     }
 
