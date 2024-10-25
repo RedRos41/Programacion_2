@@ -1,17 +1,26 @@
-package co.edu.uniquindio.proyectofinal.modelosPrincipal;
+package co.edu.uniquindio.proyectofinal.modelos;
 
 
-import java.util.List;
-import java.util.ArrayList;
-import co.edu.uniquindio.proyectofinal.modelos.*;
 import co.edu.uniquindio.proyectofinal.utils.EnvioEmail;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class UsuarioPrincipal {
+@Getter
+@Setter
+@Builder
+@ToString
+public class Empresa {
 
     private final List<Usuario> usuarios;
 
-    public UsuarioPrincipal() {
+
+    public Empresa() {
 
         usuarios = new ArrayList<>();
 

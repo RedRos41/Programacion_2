@@ -1,19 +1,19 @@
 package co.edu.uniquindio.proyectofinal;
 
 
-import org.junit.jupiter.api.Test;
+import co.edu.uniquindio.proyectofinal.modelos.Empresa;
 import org.junit.jupiter.api.BeforeEach;
-import co.edu.uniquindio.proyectofinal.modelosPrincipal.UsuarioPrincipal;
+import org.junit.jupiter.api.Test;
 
 
 public class UsuarioTest {
 
-    private UsuarioPrincipal usuarioPrincipal;
+    private Empresa empresa;
 
     @BeforeEach
     void setUp() {
 
-        this.usuarioPrincipal = new UsuarioPrincipal();
+        this.empresa = new Empresa();
 
     }
 

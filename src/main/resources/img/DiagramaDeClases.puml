@@ -9,20 +9,6 @@ class Usuario {
     - contraseña: String
     - codigoActivacion: String
     - codigoContraseña: String
-    + registrarUsuario(tipoUsuario: TipoUsuario, cedula: long, nombreCompleto: String, email: String, contraseña: String, telefono: long): void
-    + editarUsuario(cedula: long, nombreCompleto: String, email: String, telefono: long): void
-    + eliminarUsuario(cedula: long): void
-    + solicitarCambioContraseña(email: String): void
-    + cambiarContraseña(codigoContraseña: String, nuevaContraseña: String): void
-    - buscarUsuarioPorEmail(email: String): Usuario
-    - buscarUsuarioPorCodigoContraseña(codigoContraseña: String): Usuario
-    - crearUsuario(tipoUsuario: TipoUsuario, cedula: long, nombreCompleto: String, email: String, contraseña: String, telefono: long): Usuario
-    + iniciarSesion(codigoActivacion: String, email: String, contraseña: String): Usuario
-    - numeroValido(numero: long): boolean
-    - buscarAdministrador(): boolean
-    - buscarUsuario(cedula: long): int
-    - generarCodigo(): String
-    + listarUsuarios(): List<Usuario>
 }
 
 enum TipoUsuario {
@@ -32,11 +18,9 @@ enum TipoUsuario {
 
 class Cliente extends Usuario {
     - billeteraCliente: Billetera
-    + listarClientes(): List<Cliente>
 }
 
 class Administrador extends Usuario {
-    + listarAdministradores(): List<Administrador>
 }
 
 class Alojamiento {
