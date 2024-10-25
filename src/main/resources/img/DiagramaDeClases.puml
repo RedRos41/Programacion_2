@@ -9,6 +9,7 @@ class Usuario {
     - contraseña: String
     - codigoActivacion: String
     - codigoContraseña: String
+    - activado: boolean
 }
 
 enum TipoUsuario {

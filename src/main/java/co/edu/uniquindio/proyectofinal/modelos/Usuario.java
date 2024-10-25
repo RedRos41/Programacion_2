@@ -20,5 +20,6 @@ public class Usuario {
 
     protected String nombreCompleto, email, contraseña, codigoActivacion, codigoContraseña;
     protected long telefono;
+    protected boolean activado;
 
 }

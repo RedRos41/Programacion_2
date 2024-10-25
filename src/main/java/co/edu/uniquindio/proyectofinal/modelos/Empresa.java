@@ -29,33 +29,15 @@ public class Empresa {
 
     public void registrarUsuario(TipoUsuario tipoUsuario, long cedula, String nombreCompleto, String email, String contraseña, long telefono) throws Exception {
 
-        if (nombreCompleto.isBlank() || email.isBlank() || contraseña.isBlank()) {
+        if (tipoUsuario == TipoUsuario.ADMINISTRADOR && buscarAdministrador()) {
 
-            throw new Exception("Este campo no puede estar vacio.");
-
-        }
-
-        if (numeroValido(cedula) || numeroValido(telefono)) {
-
-            throw new Exception("Este campo debe tener exactamente 10 digitos.");
+            throw new Exception("Ya existe un administrador registrado.");
 
         }
 
-        if (!nombreCompleto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+        if (numeroValido(cedula)) {
 
-            throw new Exception("El nombre no puede contener números ni caracteres especiales.");
-
-        }
-
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
-
-            throw new Exception("Este campo debe tener el formato del correo electronico.");
-
-        }
-
-        if (contraseña.length() < 8) {
-
-            throw new Exception("La contraseña debe tener al menos 8 caracteres.");
+            throw new Exception("La cedula debe tener exactamente 10 digitos numericos.");
 
         }
 
@@ -65,9 +47,45 @@ public class Empresa {
 
         }
 
-        if (tipoUsuario == TipoUsuario.ADMINISTRADOR && buscarAdministrador()) {
+        if (nombreCompleto.isBlank()) {
 
-            throw new Exception("Ya existe un administrador registrado.");
+            throw new Exception("El nombre no puede estar vacio.");
+
+        }
+
+        if (!nombreCompleto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+
+            throw new Exception("El nombre solo puede contener letras.");
+
+        }
+
+        if (email.isBlank()) {
+
+            throw new Exception("El email no puede estar vacio.");
+
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
+            throw new Exception("El email debe tener el formato de correo electronico.");
+
+        }
+
+        if (contraseña.isBlank()) {
+
+            throw new Exception("La contraseña no puede estar vacia.");
+
+        }
+
+        if (contraseña.length() < 8) {
+
+            throw new Exception("La contraseña debe tener al menos 8 caracteres.");
+
+        }
+
+        if (numeroValido(telefono)) {
+
+            throw new Exception("El telefono debe tener exactamente 10 digitos numericos.");
 
         }
 
@@ -94,27 +112,9 @@ public class Empresa {
 
     public void editarUsuario(long cedula, String nombreCompleto, String email, long telefono) throws Exception {
 
-        if (nombreCompleto.isBlank() || email.isBlank()) {
+        if (numeroValido(cedula)) {
 
-            throw new Exception("Este campo no puede estar vacio.");
-
-        }
-
-        if (numeroValido(cedula) || numeroValido(telefono)) {
-
-            throw new Exception("Este campo debe tener exactamente 10 digitos.");
-
-        }
-
-        if (!nombreCompleto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
-
-            throw new Exception("El nombre no puede contener números ni caracteres especiales.");
-
-        }
-
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
-
-            throw new Exception("Este campo debe tener el formato del correo electronico.");
+            throw new Exception("La cedula debe tener exactamente 10 digitos numericos.");
 
         }
 
@@ -123,6 +123,36 @@ public class Empresa {
         if (idUsuario == -1) {
 
             throw new Exception("No existe un usuario con la cedula proporcionada.");
+
+        }
+
+        if (nombreCompleto.isBlank()) {
+
+            throw new Exception("El nombre no puede estar vacio.");
+
+        }
+
+        if (!nombreCompleto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+
+            throw new Exception("El nombre solo puede contener letras.");
+
+        }
+
+        if (email.isBlank()) {
+
+            throw new Exception("El email no puede estar vacio.");
+
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
+            throw new Exception("El email debe tener el formato de correo electronico.");
+
+        }
+
+        if (numeroValido(telefono)) {
+
+            throw new Exception("El telefono debe tener exactamente 10 digitos numericos.");
 
         }
 
@@ -141,7 +171,7 @@ public class Empresa {
 
         if (numeroValido(cedula)) {
 
-            throw new Exception("Este campo debe tener exactamente 10 digitos.");
+            throw new Exception("La cedula debe tener exactamente 10 digitos numericos.");
 
         }
 
@@ -162,13 +192,13 @@ public class Empresa {
 
         if (email.isBlank()) {
 
-            throw new Exception("Este campo no puede estar vacio.");
+            throw new Exception("El email no puede estar vacio.");
 
         }
 
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
 
-            throw new Exception("Este campo debe tener el formato del correo electrónico.");
+            throw new Exception("El email debe tener el formato de correo electronico.");
 
         }
 
@@ -199,17 +229,29 @@ public class Empresa {
 
     public void cambiarContraseña(String codigoContraseña, String nuevaContraseña) throws Exception {
 
+        if (codigoContraseña.isBlank()) {
+
+            throw new Exception("El codigo de cambio de contraseña no puede estar vacio.");
+
+        }
+
+        if (codigoContraseña.length() != 6 || !codigoContraseña.matches("\\d{6}")) {
+
+            throw new Exception("El codigo de cambio de contraseña debe tener exactamente 6 digitos numericos.");
+
+        }
+
         Usuario usuario = buscarUsuarioPorCodigoContraseña(codigoContraseña);
 
         if (usuario == null) {
 
-            throw new Exception("El código de cambio de contraseña proporcionado es incorrecto.");
+            throw new Exception("El codigo de cambio de contraseña proporcionado es incorrecto.");
 
         }
 
         if (nuevaContraseña.isBlank()) {
 
-            throw new Exception("Este campo no puede estar vacio.");
+            throw new Exception("La contraseña no puede estar vacio.");
 
         }
         if (nuevaContraseña.length() < 8) {
@@ -290,26 +332,90 @@ public class Empresa {
     }
 
 
-    public Usuario iniciarSesion(String codigoActivacion, String email, String contraseña) throws Exception {
+    public Usuario iniciarSesion(String email, String codigoActivacion, String contraseña) throws Exception {
 
-        for (Usuario usuario : usuarios) {
+        if (email.isBlank()) {
 
-            if (usuario.getCodigoActivacion().equals(codigoActivacion)) {
+            throw new Exception("El email no puede estar vacio.");
 
-                if (usuario.getEmail().equals(email) && usuario.getContraseña().equals(contraseña)) {
+        }
 
-                    return usuario;
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
 
-                } else {
+            throw new Exception("El email debe tener el formato de correo electronico.");
 
-                    throw new Exception("Las credenciales son incorrectas.");
+        }
 
-                }
+        Usuario usuario = buscarUsuarioPorEmail(email);
+
+        if (usuario == null) {
+
+            throw new Exception("No existe un usuario con el email proporcionado.");
+
+        }
+
+        if (usuario.isActivado()) {
+
+            if (contraseña.isBlank()) {
+
+                throw new Exception("La contraseña no puede estar vacia.");
 
             }
 
+            if (contraseña.length() < 8) {
+
+                throw new Exception("La contraseña debe tener al menos 8 caracteres.");
+
+            }
+
+            if (!usuario.getContraseña().equals(contraseña)) {
+
+                throw new Exception("La contraseña es incorrecta.");
+
+            }
+
+        } else {
+
+            if (codigoActivacion.isBlank()) {
+
+                throw new Exception("El codigo de activacion no puede estar vacio.");
+
+            }
+
+            if (codigoActivacion.length() != 6 || !codigoActivacion.matches("\\d{6}")) {
+
+                throw new Exception("El codigo de activacion debe tener exactamente 6 digitos numericos.");
+
+            }
+
+            if (!usuario.getCodigoActivacion().equals(codigoActivacion)) {
+
+                throw new Exception("El codigo de activacion es incorrecto.");
+
+            }
+
+            if (contraseña.isBlank()) {
+
+                throw new Exception("La contraseña no puede estar vacia.");
+
+            }
+
+            if (contraseña.length() < 8) {
+
+                throw new Exception("La contraseña debe tener al menos 8 caracteres.");
+
+            }
+
+            if (!usuario.getContraseña().equals(contraseña)) {
+
+                throw new Exception("La contraseña es incorrecta.");
+
+            }
+
+            usuario.setActivado(true);
+
         }
-        throw new Exception("El codigo de activación proporcionado es incorrecto.");
+        return usuario;
 
     }
 
