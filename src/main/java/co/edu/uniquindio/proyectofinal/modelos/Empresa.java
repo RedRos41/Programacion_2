@@ -18,11 +18,15 @@ import java.util.List;
 public class Empresa {
 
     private final List<Usuario> usuarios;
+    private final List<Alojamiento> alojamientos;
+    private final List<Alojamiento> buscarAlojamientos;
 
 
     public Empresa() {
 
         usuarios = new ArrayList<>();
+        alojamientos = new ArrayList<>();
+        buscarAlojamientos = new ArrayList<>();
 
     }
 
@@ -273,6 +277,13 @@ public class Empresa {
     }
 
 
+    public void registrarAlojamiento(String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios) {
+
+
+
+    }
+
+
     private Usuario buscarUsuarioPorEmail(String email) {
 
         for (Usuario usuario : usuarios) {
@@ -471,6 +482,13 @@ public class Empresa {
     public List<Usuario> listarUsuarios() {
 
         return usuarios;
+
+    }
+
+
+    public List<Alojamiento> buscarAlojamiento(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, String ciudad, double precioMin, double precioMax) {
+
+        return buscarAlojamientos;
 
     }
 

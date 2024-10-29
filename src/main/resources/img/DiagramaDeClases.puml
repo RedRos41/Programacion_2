@@ -34,6 +34,12 @@ class Alojamiento {
     - servicios: List<Servicio>
 }
 
+enum TipoAlojamiento {
+    CASA
+    APARTAMENTO
+    HOTEL
+}
+
 class Casa extends Alojamiento {
     - AseoCasa: double
     - MantenimientoCasa: double
