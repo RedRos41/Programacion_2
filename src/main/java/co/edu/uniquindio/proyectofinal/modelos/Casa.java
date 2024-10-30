@@ -1,17 +1,17 @@
 package co.edu.uniquindio.proyectofinal.modelos;
 
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @ToString
-public class Casa {
+public class Casa extends Alojamiento {
 
     protected double AseoCasa, MantenimientoCasa;
 

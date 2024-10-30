@@ -1,20 +1,20 @@
 package co.edu.uniquindio.proyectofinal.modelos;
 
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @ToString
-public class Hotel {
+public class Hotel extends Alojamiento {
 
-    private List<Habitacion> habitaciones;
+    private List<Habitacion> habitacion;
 
 }

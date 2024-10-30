@@ -19,14 +19,14 @@ public class Empresa {
 
     private final List<Usuario> usuarios;
     private final List<Alojamiento> alojamientos;
-    private final List<Alojamiento> buscarAlojamientos;
+    private final List<Alojamiento> buscarAlojamiento;
 
 
     public Empresa() {
 
         usuarios = new ArrayList<>();
         alojamientos = new ArrayList<>();
-        buscarAlojamientos = new ArrayList<>();
+        buscarAlojamiento = new ArrayList<>();
 
     }
 
@@ -277,7 +277,16 @@ public class Empresa {
     }
 
 
-    public void registrarAlojamiento(String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios) {
+    public void registrarAlojamiento(TipoAlojamiento tipoAlojamiento, String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicio) throws Exception {
+
+        Alojamiento alojamiento = crearAlojamiento(tipoAlojamiento, nombreAlojamiento, ciudad, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicio);
+
+        alojamientos.add(alojamiento);
+
+    }
+
+
+    public void registrarHabitacion() throws Exception {
 
 
 
@@ -431,6 +440,57 @@ public class Empresa {
     }
 
 
+    private Alojamiento crearAlojamiento(TipoAlojamiento tipoAlojamiento, String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicio) throws Exception {
+
+        return switch (tipoAlojamiento) {
+
+            case CASA -> Casa.builder()
+                    .nombreAlojamiento(nombreAlojamiento)
+                    .ciudad(ciudad)
+                    .descripcionAlojamiento(descripcionAlojamiento)
+                    .imagenAlojamiento(imagenAlojamiento)
+                    .precioPorNocheAlojamiento(precioPorNocheAlojamiento)
+                    .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
+                    .servicio(servicio)
+                    .AseoCasa(90000)
+                    .MantenimientoCasa(120000)
+                    .build();
+
+            case APARTAMENTO -> Apartamento.builder()
+                    .nombreAlojamiento(nombreAlojamiento)
+                    .ciudad(ciudad)
+                    .descripcionAlojamiento(descripcionAlojamiento)
+                    .imagenAlojamiento(imagenAlojamiento)
+                    .precioPorNocheAlojamiento(precioPorNocheAlojamiento)
+                    .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
+                    .servicio(servicio)
+                    .AseoApartamento()
+                    .MantenimientoApartamento()
+                    .build();
+
+
+
+            default -> throw new Exception("Tipo de usuario no valido.");
+
+        };
+
+    }
+
+
+    public Alojamiento crearHotel( String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicio, List<Habitacion> habitacion){
+        return Hotel.builder()
+                .nombreAlojamiento(nombreAlojamiento)
+                .ciudad(ciudad)
+                .descripcionAlojamiento(descripcionAlojamiento)
+                .imagenAlojamiento(imagenAlojamiento)
+                .precioPorNocheAlojamiento(precioPorNocheAlojamiento)
+                .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
+                .servicio(servicio)
+                .habitacion(habitacion)
+                .build();
+    }
+
+
     private boolean numeroValido(long numero) {
 
         return numero < 1000000000L || numero > 9999999999L;
@@ -488,7 +548,7 @@ public class Empresa {
 
     public List<Alojamiento> buscarAlojamiento(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, String ciudad, double precioMin, double precioMax) {
 
-        return buscarAlojamientos;
+        return buscarAlojamiento;
 
     }
 
