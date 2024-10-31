@@ -51,7 +51,7 @@ class Apartamento extends Alojamiento {
 }
 
 class Hotel extends Alojamiento {
-    + habitaciones: List<Habitacion>
+    - habitaciones: List<Habitacion>
 }
 
 class Habitacion {

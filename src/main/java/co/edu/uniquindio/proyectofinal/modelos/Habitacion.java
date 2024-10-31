@@ -13,8 +13,7 @@ import lombok.ToString;
 @ToString
 public class Habitacion {
 
-    private int numeroHabitacion;
-    private int  capacidadHabitacion;
+    private int numeroHabitacion, capacidadHabitacion;
     private double precioHabitacion;
     private String imagenHabitacion, descripcionHabitacion;
 

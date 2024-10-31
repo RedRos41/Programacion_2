@@ -19,14 +19,14 @@ public class Empresa {
 
     private final List<Usuario> usuarios;
     private final List<Alojamiento> alojamientos;
-    private final List<Alojamiento> buscarAlojamiento;
+    private final List<Habitacion> habitaciones;
 
 
     public Empresa() {
 
         usuarios = new ArrayList<>();
         alojamientos = new ArrayList<>();
-        buscarAlojamiento = new ArrayList<>();
+        habitaciones = new ArrayList<>();
 
     }
 
@@ -277,18 +277,38 @@ public class Empresa {
     }
 
 
-    public void registrarAlojamiento(TipoAlojamiento tipoAlojamiento, String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicio) throws Exception {
+    public void registrarCasa(String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoCasa, double mantenimientoCasa) {
 
-        Alojamiento alojamiento = crearAlojamiento(tipoAlojamiento, nombreAlojamiento, ciudad, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicio);
+        Alojamiento casa = crearCasa(nombreAlojamiento, ciudad, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicios, aseoCasa, mantenimientoCasa);
 
-        alojamientos.add(alojamiento);
+        alojamientos.add(casa);
 
     }
 
 
-    public void registrarHabitacion() throws Exception {
+    public void registrarApartamento(String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoApartamento, double mantenimientoApartamento) {
+
+        Alojamiento apartamento = crearApartamento(nombreAlojamiento, ciudad, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicios, aseoApartamento, mantenimientoApartamento);
+
+        alojamientos.add(apartamento);
+
+    }
 
 
+    public void registrarHotel(String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios) {
+
+        Alojamiento hotel = crearHotel(nombreAlojamiento, ciudades, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicios);
+
+        alojamientos.add(hotel);
+
+    }
+
+
+    public void registrarHabitacion(int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
+
+        Habitacion habitacion = crearHabitacion(numeroHabitacion, capacidadHabitacion, precioHabitacion, imagenHabitacion, descripcionHabitacion);
+
+        habitaciones.add(habitacion);
 
     }
 
@@ -440,54 +460,65 @@ public class Empresa {
     }
 
 
-    private Alojamiento crearAlojamiento(TipoAlojamiento tipoAlojamiento, String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicio) throws Exception {
+    public Alojamiento crearCasa(String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoCasa, double mantenimientoCasa) {
 
-        return switch (tipoAlojamiento) {
-
-            case CASA -> Casa.builder()
-                    .nombreAlojamiento(nombreAlojamiento)
-                    .ciudad(ciudad)
-                    .descripcionAlojamiento(descripcionAlojamiento)
-                    .imagenAlojamiento(imagenAlojamiento)
-                    .precioPorNocheAlojamiento(precioPorNocheAlojamiento)
-                    .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
-                    .servicio(servicio)
-                    .AseoCasa(90000)
-                    .MantenimientoCasa(120000)
-                    .build();
-
-            case APARTAMENTO -> Apartamento.builder()
-                    .nombreAlojamiento(nombreAlojamiento)
-                    .ciudad(ciudad)
-                    .descripcionAlojamiento(descripcionAlojamiento)
-                    .imagenAlojamiento(imagenAlojamiento)
-                    .precioPorNocheAlojamiento(precioPorNocheAlojamiento)
-                    .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
-                    .servicio(servicio)
-                    .AseoApartamento()
-                    .MantenimientoApartamento()
-                    .build();
-
-
-
-            default -> throw new Exception("Tipo de usuario no valido.");
-
-        };
-
-    }
-
-
-    public Alojamiento crearHotel( String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicio, List<Habitacion> habitacion){
-        return Hotel.builder()
+        return Casa.builder()
                 .nombreAlojamiento(nombreAlojamiento)
-                .ciudad(ciudad)
+                .ciudades(ciudades)
                 .descripcionAlojamiento(descripcionAlojamiento)
                 .imagenAlojamiento(imagenAlojamiento)
                 .precioPorNocheAlojamiento(precioPorNocheAlojamiento)
                 .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
-                .servicio(servicio)
-                .habitacion(habitacion)
+                .servicios(servicios)
+                .aseoCasa(aseoCasa)
+                .mantenimientoCasa(mantenimientoCasa)
                 .build();
+
+    }
+
+
+    public Alojamiento crearApartamento(String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoApartamento, double mantenimientoApartamento) {
+
+        return Apartamento.builder()
+                .nombreAlojamiento(nombreAlojamiento)
+                .ciudades(ciudades)
+                .descripcionAlojamiento(descripcionAlojamiento)
+                .imagenAlojamiento(imagenAlojamiento)
+                .precioPorNocheAlojamiento(precioPorNocheAlojamiento)
+                .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
+                .servicios(servicios)
+                .aseoApartamento(aseoApartamento)
+                .mantenimientoApartamento(mantenimientoApartamento)
+                .build();
+
+    }
+
+
+    public Alojamiento crearHotel(String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios) {
+
+        return Hotel.builder()
+                .nombreAlojamiento(nombreAlojamiento)
+                .ciudades(ciudades)
+                .descripcionAlojamiento(descripcionAlojamiento)
+                .imagenAlojamiento(imagenAlojamiento)
+                .precioPorNocheAlojamiento(precioPorNocheAlojamiento)
+                .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
+                .servicios(servicios)
+                .build();
+
+    }
+
+
+    public Habitacion crearHabitacion(int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
+
+        return Habitacion.builder()
+                .numeroHabitacion(numeroHabitacion)
+                .capacidadHabitacion(capacidadHabitacion)
+                .precioHabitacion(precioHabitacion)
+                .imagenHabitacion(imagenHabitacion)
+                .descripcionHabitacion(descripcionHabitacion)
+                .build();
+
     }
 
 
@@ -546,9 +577,16 @@ public class Empresa {
     }
 
 
-    public List<Alojamiento> buscarAlojamiento(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, String ciudad, double precioMin, double precioMax) {
+    public List<Alojamiento> listarAlojamientos() {
 
-        return buscarAlojamiento;
+        return alojamientos;
+
+    }
+
+
+    public List<Habitacion> listarHabitaciones() {
+
+        return habitaciones;
 
     }
 

@@ -13,6 +13,6 @@ import lombok.experimental.SuperBuilder;
 @ToString
 public class Apartamento extends Alojamiento {
 
-    protected double AseoApartamento, MantenimientoApartamento;
+    protected double aseoApartamento, mantenimientoApartamento;
 
 }
