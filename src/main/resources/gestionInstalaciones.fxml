@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.reservasuq.controladores.GestionInstalacionesControlador"
+      spacing="20" style="-fx-padding: 20;">
+
+    <Label text="Gestión de Instalaciones">
+        <font>
+            <Font size="24.0"/>
+        </font>
+    </Label>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Nombre de Instalación:"/>
+        <TextField fx:id="txtNombreInstalacion" GridPane.columnIndex="1"/>
+
+        <Label text="Capacidad (Aforo):" GridPane.rowIndex="1"/>
+        <TextField fx:id="txtAforo" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Costo:" GridPane.rowIndex="2"/>
+        <TextField fx:id="txtCosto" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    </GridPane>
+
+    <Button text="Agregar Instalación" onAction="#agregarInstalacion" maxWidth="150"/>
+    <Button text="Actualizar Instalación" onAction="#actualizarInstalacion" maxWidth="150"/>
+</VBox>

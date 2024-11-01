@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.reservasuq.controladores.ReservaControlador"
+      spacing="20.0" style="-fx-padding: 20;">
+
+    <Label text="Reservar Instalación">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+
+    <GridPane hgap="10" vgap="10" alignment="center">
+        <Label text="Seleccione Instalación:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="comboInstalacion" GridPane.rowIndex="0" GridPane.columnIndex="1" promptText="Seleccione una instalación"/>
+
+        <Label text="Fecha:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="datePickerFecha" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Hora:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="comboHora" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Seleccione la hora"/>
+    </GridPane>
+
+    <Button text="Reservar" onAction="#realizarReserva" maxWidth="150" />
+</VBox>

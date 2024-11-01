@@ -14,6 +14,8 @@ module co.edu.uniquindio.reservasuq {
     requires org.simplejavamail.core;
     requires org.simplejavamail;
 
+    opens co.edu.uniquindio.reservasuq.controladores to javafx.fxml;
     opens co.edu.uniquindio.reservasuq to javafx.fxml;
+
     exports co.edu.uniquindio.reservasuq;
 }

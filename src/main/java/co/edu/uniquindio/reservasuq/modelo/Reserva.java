@@ -15,7 +15,8 @@ public class Reserva {
     private String idReserva;
     private Instalacion instalacion;
     private Persona persona;
-    private LocalDate fechaReserva;
-    private String horaReserva;
-    private LocalDateTime fechaHoraCreacion; // Para llevar el registro de cuándo se hizo la reserva
+    private LocalDateTime fechaHoraReserva;
+    private LocalDate fechaCreacion;
+    private float costo;
+
 }

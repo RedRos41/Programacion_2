@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.reservasuq.controladores.PanelAdminControlador"
+      spacing="20" style="-fx-padding: 20; -fx-alignment: center;">
+
+    <Label text="Panel de Administración" style="-fx-font-weight: bold;">
+        <font>
+            <Font size="24.0"/>
+        </font>
+    </Label>
+
+    <HBox spacing="20" alignment="center">
+        <Button text="Gestionar Instalaciones" onAction="#mostrarGestionInstalaciones" maxWidth="200"/>
+        <Button text="Ver Reservas" onAction="#mostrarReservas" maxWidth="200"/>
+    </HBox>
+
+    <Label text="Instalaciones" style="-fx-font-weight: bold; -fx-padding: 10 0 0 0;">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+    <TableView fx:id="tablaInstalaciones" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Instalación" fx:id="colInstalacion" prefWidth="150"/>
+            <TableColumn text="Capacidad" fx:id="colAforo" prefWidth="100"/>
+            <TableColumn text="Costo" fx:id="colCosto" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <Label text="Reservas" style="-fx-font-weight: bold; -fx-padding: 20 0 0 0;">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+    <TableView fx:id="tablaReservas" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Persona" fx:id="colPersonaReserva" prefWidth="150"/>
+            <TableColumn text="Instalación" fx:id="colInstalacionReserva" prefWidth="150"/>
+            <TableColumn text="Fecha y Hora" fx:id="colFechaHoraReserva" prefWidth="150"/>
+            <TableColumn text="Costo" fx:id="colCostoReserva" prefWidth="100"/>
+        </columns>
+    </TableView>
+</VBox>

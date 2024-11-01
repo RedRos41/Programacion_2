@@ -5,7 +5,6 @@ public enum TipoPersona {
     ESTUDIANTE,
     DOCENTE,
     ADMINISTRATIVO,
-    EXTERNO,
-    ADMIN
+    EXTERNO
 
 }

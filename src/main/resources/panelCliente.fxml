@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.reservasuq.controladores.PanelClienteControlador"
+      alignment="center" spacing="20.0" style="-fx-padding: 20;">
+
+    <Label text="Bienvenido, Usuario">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+
+    <TableView fx:id="tablaReservas" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Instalación" fx:id="colInstalacion"/>
+            <TableColumn text="Fecha" fx:id="colFecha"/>
+            <TableColumn text="Hora" fx:id="colHora"/>
+            <TableColumn text="Costo" fx:id="colCosto"/>
+        </columns>
+    </TableView>
+
+    <Button text="Reservar Instalación" onAction="#reservarInstalacion"/>
+    <Button text="Cerrar Sesión" onAction="#cerrarSesion"/>
+
+</VBox>
