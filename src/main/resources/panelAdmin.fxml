@@ -4,45 +4,49 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
       fx:controller="co.edu.uniquindio.reservasuq.controladores.PanelAdminControlador"
-      spacing="20" style="-fx-padding: 20; -fx-alignment: center;">
+      spacing="10" style="-fx-padding: 10;">
 
-    <Label text="Panel de Administración" style="-fx-font-weight: bold;">
+    <!-- Título principal del panel -->
+    <Label text="Panel de Administración" alignment="CENTER">
         <font>
-            <Font size="24.0"/>
+            <Font size="20.0"/>
         </font>
     </Label>
 
-    <HBox spacing="20" alignment="center">
-        <Button text="Gestionar Instalaciones" onAction="#mostrarGestionInstalaciones" maxWidth="200"/>
-        <Button text="Ver Reservas" onAction="#mostrarReservas" maxWidth="200"/>
+    <!-- Sección de Gestión de Instalaciones con acciones -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Gestionar Instalaciones" onAction="#mostrarGestionInstalaciones"/>
+        <Button text="Ver Reservas" onAction="#mostrarReservas"/>
     </HBox>
 
-    <Label text="Instalaciones" style="-fx-font-weight: bold; -fx-padding: 10 0 0 0;">
-        <font>
-            <Font size="18.0"/>
-        </font>
-    </Label>
-    <TableView fx:id="tablaInstalaciones" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn text="Instalación" fx:id="colInstalacion" prefWidth="150"/>
-            <TableColumn text="Capacidad" fx:id="colAforo" prefWidth="100"/>
-            <TableColumn text="Costo" fx:id="colCosto" prefWidth="100"/>
-        </columns>
-    </TableView>
+    <!-- Tablas colocadas una al lado de la otra -->
+    <HBox spacing="20">
+        <!-- Tabla de Instalaciones -->
+        <VBox spacing="5" style="-fx-padding: 10;">
+            <Label text="Instalaciones"/>
+            <TableView fx:id="tablaInstalaciones" prefWidth="300">
+                <columns>
+                    <TableColumn text="Instalación" fx:id="colInstalacion" prefWidth="150"/>
+                    <TableColumn text="Capacidad" fx:id="colAforo" prefWidth="75"/>
+                    <TableColumn text="Costo" fx:id="colCosto" prefWidth="75"/>
+                </columns>
+            </TableView>
+        </VBox>
 
-    <Label text="Reservas" style="-fx-font-weight: bold; -fx-padding: 20 0 0 0;">
-        <font>
-            <Font size="18.0"/>
-        </font>
-    </Label>
-    <TableView fx:id="tablaReservas" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn text="Persona" fx:id="colPersonaReserva" prefWidth="150"/>
-            <TableColumn text="Instalación" fx:id="colInstalacionReserva" prefWidth="150"/>
-            <TableColumn text="Fecha y Hora" fx:id="colFechaHoraReserva" prefWidth="150"/>
-            <TableColumn text="Costo" fx:id="colCostoReserva" prefWidth="100"/>
-        </columns>
-    </TableView>
+        <!-- Tabla de Reservas -->
+        <VBox spacing="5" style="-fx-padding: 10;">
+            <Label text="Reservas Realizadas"/>
+            <TableView fx:id="tablaReservas" prefWidth="300">
+                <columns>
+                    <TableColumn text="Persona" fx:id="colPersonaReserva" prefWidth="100"/>
+                    <TableColumn text="Instalación" fx:id="colInstalacionReserva" prefWidth="100"/>
+                    <TableColumn text="Fecha y Hora" fx:id="colFechaHoraReserva" prefWidth="100"/>
+                    <TableColumn text="Costo" fx:id="colCostoReserva" prefWidth="75"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </HBox>
 </VBox>

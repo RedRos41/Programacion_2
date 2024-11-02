@@ -1,8 +1,7 @@
 package co.edu.uniquindio.reservasuq.modelo;
 
 import co.edu.uniquindio.reservasuq.modelo.enums.TipoPersona;
-import  co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
-
+import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -61,7 +60,6 @@ public class ReservasUQ implements ServiciosReservasUQ {
                 .nombre(nombre)
                 .aforo(aforo)
                 .costo(costo)
-                .horarios(horarios)
                 .build();
 
         instalaciones.add(nuevaInstalacion);
@@ -72,11 +70,9 @@ public class ReservasUQ implements ServiciosReservasUQ {
         Instalacion instalacion = buscarInstalacionPorId(idInstalacion);
         Persona persona = buscarPersonaPorCedula(cedulaPersona);
 
-        // Convertir horaReserva a LocalTime
         LocalTime hora = LocalTime.parse(horaReserva);
         LocalDateTime fechaHoraReserva = LocalDateTime.of(diaReserva, hora);
 
-        // Validar que el horario no esté ocupado
         for (Reserva reserva : reservas) {
             if (reserva.getInstalacion().getId().equals(idInstalacion) &&
                     reserva.getFechaHoraReserva().isEqual(fechaHoraReserva)) {
@@ -84,7 +80,6 @@ public class ReservasUQ implements ServiciosReservasUQ {
             }
         }
 
-        // Crear la reserva si no hay conflictos de horario
         Reserva nuevaReserva = Reserva.builder()
                 .idReserva(UUID.randomUUID().toString())
                 .instalacion(instalacion)
@@ -97,7 +92,6 @@ public class ReservasUQ implements ServiciosReservasUQ {
         reservas.add(nuevaReserva);
         return nuevaReserva;
     }
-
 
     @Override
     public List<Reserva> listarTodasReservas() {
@@ -148,26 +142,23 @@ public class ReservasUQ implements ServiciosReservasUQ {
 
     @Override
     public List<Horario> listarHorariosDisponibles(String idInstalacion, LocalDate fecha) {
-        Instalacion instalacion = instalaciones.stream()
-                .filter(i -> i.getId().equals(idInstalacion))
-                .findFirst()
-                .orElse(null);
-
-        if (instalacion == null) {
-            return new ArrayList<>();
-        }
-
         List<LocalDateTime> horariosOcupados = reservas.stream()
                 .filter(reserva -> reserva.getInstalacion().getId().equals(idInstalacion) && reserva.getFechaHoraReserva().toLocalDate().equals(fecha))
                 .map(Reserva::getFechaHoraReserva)
                 .collect(Collectors.toList());
 
-        return instalacion.getHorarios().stream()
-                .filter(horario -> horariosOcupados.stream()
-                        .noneMatch(horaOcupada ->
-                                horaOcupada.toLocalTime().isAfter(horario.getHoraInicio()) &&
-                                        horaOcupada.toLocalTime().isBefore(horario.getHoraFin())))
-                .collect(Collectors.toList());
+        List<Horario> horariosDisponibles = new ArrayList<>();
+        LocalTime horaInicio = LocalTime.of(8, 0); // Inicio jornada
+        LocalTime horaFin = LocalTime.of(18, 0);   // Fin jornada
+
+        while (horaInicio.isBefore(horaFin)) {
+            final LocalTime inicio = horaInicio;
+            if (horariosOcupados.stream().noneMatch(horaOcupada -> horaOcupada.toLocalTime().equals(inicio))) {
+                horariosDisponibles.add(new Horario(null, inicio, inicio.plusMinutes(30)));
+            }
+            horaInicio = horaInicio.plusMinutes(30);
+        }
+        return horariosDisponibles;
     }
 
     private float calcularCosto(Instalacion instalacion, Persona persona) {
@@ -190,6 +181,4 @@ public class ReservasUQ implements ServiciosReservasUQ {
                 .findFirst()
                 .orElseThrow(() -> new Exception("Instalación no encontrada."));
     }
-
-
 }

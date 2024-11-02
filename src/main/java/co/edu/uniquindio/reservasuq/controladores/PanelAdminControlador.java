@@ -14,28 +14,21 @@ public class PanelAdminControlador {
 
     @FXML
     private TableView<Instalacion> tablaInstalaciones;
-
     @FXML
     private TableColumn<Instalacion, String> colInstalacion;
-
     @FXML
     private TableColumn<Instalacion, Integer> colAforo;
-
     @FXML
     private TableColumn<Instalacion, Float> colCosto;
 
     @FXML
     private TableView<Reserva> tablaReservas;
-
     @FXML
     private TableColumn<Reserva, String> colPersonaReserva;
-
     @FXML
     private TableColumn<Reserva, String> colInstalacionReserva;
-
     @FXML
     private TableColumn<Reserva, String> colFechaHoraReserva;
-
     @FXML
     private TableColumn<Reserva, Float> colCostoReserva;
 
@@ -52,10 +45,12 @@ public class PanelAdminControlador {
     }
 
     private void configurarColumnas() {
+        // Configurar columnas de la tabla de instalaciones
         colInstalacion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colAforo.setCellValueFactory(new PropertyValueFactory<>("aforo"));
         colCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
 
+        // Configurar columnas de la tabla de reservas
         colPersonaReserva.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPersona().getNombre()));
         colInstalacionReserva.setCellValueFactory(cellData ->
@@ -67,9 +62,11 @@ public class PanelAdminControlador {
     }
 
     private void cargarDatos() {
+        // Cargar datos en la tabla de instalaciones
         List<Instalacion> instalaciones = controladorPrincipal.listarInstalaciones();
         tablaInstalaciones.setItems(FXCollections.observableArrayList(instalaciones));
 
+        // Cargar datos en la tabla de reservas
         List<Reserva> reservas = controladorPrincipal.listarTodasReservas();
         tablaReservas.setItems(FXCollections.observableArrayList(reservas));
     }
