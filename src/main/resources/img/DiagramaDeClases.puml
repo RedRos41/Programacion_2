@@ -25,6 +25,7 @@ class Administrador extends Usuario {
 }
 
 class Alojamiento {
+    - direccionAlojamiento: int
     - nombreAlojamiento: String
     - ciudades: List<Ciudad>
     - descripcionAlojamiento: String

@@ -19,14 +19,12 @@ public class Empresa {
 
     private final List<Usuario> usuarios;
     private final List<Alojamiento> alojamientos;
-    private final List<Habitacion> habitaciones;
 
 
     public Empresa() {
 
         usuarios = new ArrayList<>();
         alojamientos = new ArrayList<>();
-        habitaciones = new ArrayList<>();
 
     }
 
@@ -166,8 +164,6 @@ public class Empresa {
         editarUsuario.setEmail(email);
         editarUsuario.setTelefono(telefono);
 
-        usuarios.set(idUsuario, editarUsuario);
-
     }
 
 
@@ -187,7 +183,7 @@ public class Empresa {
 
         }
 
-        usuarios.remove(usuarios.get(idUsuario));
+        usuarios.remove(idUsuario);
 
     }
 
@@ -277,38 +273,140 @@ public class Empresa {
     }
 
 
-    public void registrarCasa(String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoCasa, double mantenimientoCasa) {
+    public void registrarCasa(int direccionAlojamiento, String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoCasa, double mantenimientoCasa) {
 
-        Alojamiento casa = crearCasa(nombreAlojamiento, ciudad, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicios, aseoCasa, mantenimientoCasa);
+        Casa casa = crearCasa(direccionAlojamiento, nombreAlojamiento, ciudades, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicios, aseoCasa, mantenimientoCasa);
 
         alojamientos.add(casa);
 
     }
 
 
-    public void registrarApartamento(String nombreAlojamiento, List<Ciudad> ciudad, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoApartamento, double mantenimientoApartamento) {
+    public void registrarApartamento(int direccionAlojamiento, String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoApartamento, double mantenimientoApartamento) {
 
-        Alojamiento apartamento = crearApartamento(nombreAlojamiento, ciudad, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicios, aseoApartamento, mantenimientoApartamento);
+        Apartamento apartamento = crearApartamento(direccionAlojamiento, nombreAlojamiento, ciudades, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicios, aseoApartamento, mantenimientoApartamento);
 
         alojamientos.add(apartamento);
 
     }
 
 
-    public void registrarHotel(String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios) {
+    public void registrarHotel(int direccionAlojamiento, String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios) {
 
-        Alojamiento hotel = crearHotel(nombreAlojamiento, ciudades, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicios);
+        Hotel hotel = crearHotel(direccionAlojamiento, nombreAlojamiento, ciudades, descripcionAlojamiento, imagenAlojamiento, precioPorNocheAlojamiento, capacidadMaximaAlojamiento, servicios);
 
         alojamientos.add(hotel);
 
     }
 
 
-    public void registrarHabitacion(int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
+    public void registrarHabitacion(Hotel hotel, int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
 
         Habitacion habitacion = crearHabitacion(numeroHabitacion, capacidadHabitacion, precioHabitacion, imagenHabitacion, descripcionHabitacion);
 
-        habitaciones.add(habitacion);
+        hotel.getHabitaciones().add(habitacion);
+
+    }
+
+
+    public void editarCasa(int direccionAlojamiento, String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoCasa, double mantenimientoCasa) {
+
+        int idAlojamiento = buscarAlojamiento(direccionAlojamiento);
+
+        Alojamiento alojamiento = alojamientos.get(idAlojamiento);
+
+        if (alojamiento instanceof Casa editarCasa) {
+
+            editarCasa.setDireccionAlojamiento(direccionAlojamiento);
+            editarCasa.setNombreAlojamiento(nombreAlojamiento);
+            editarCasa.setCiudades(ciudades);
+            editarCasa.setDescripcionAlojamiento(descripcionAlojamiento);
+            editarCasa.setImagenAlojamiento(imagenAlojamiento);
+            editarCasa.setPrecioPorNocheAlojamiento(precioPorNocheAlojamiento);
+            editarCasa.setCapacidadMaximaAlojamiento(capacidadMaximaAlojamiento);
+            editarCasa.setServicios(servicios);
+            editarCasa.setAseoCasa(aseoCasa);
+            editarCasa.setMantenimientoCasa(mantenimientoCasa);
+
+        }
+
+    }
+
+
+    public void editarApartamento(int direccionAlojamiento, String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoCasa, double mantenimientoCasa) {
+
+        int idAlojamiento = buscarAlojamiento(direccionAlojamiento);
+
+        Alojamiento alojamiento = alojamientos.get(idAlojamiento);
+
+        if (alojamiento instanceof Apartamento editarApartamento) {
+
+            editarApartamento.setDireccionAlojamiento(direccionAlojamiento);
+            editarApartamento.setNombreAlojamiento(nombreAlojamiento);
+            editarApartamento.setCiudades(ciudades);
+            editarApartamento.setDescripcionAlojamiento(descripcionAlojamiento);
+            editarApartamento.setImagenAlojamiento(imagenAlojamiento);
+            editarApartamento.setPrecioPorNocheAlojamiento(precioPorNocheAlojamiento);
+            editarApartamento.setCapacidadMaximaAlojamiento(capacidadMaximaAlojamiento);
+            editarApartamento.setServicios(servicios);
+            editarApartamento.setAseoApartamento(aseoCasa);
+            editarApartamento.setMantenimientoApartamento(mantenimientoCasa);
+
+        }
+
+    }
+
+
+    public void editarHotel(int direccionAlojamiento, String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios) {
+
+        int idAlojamiento = buscarAlojamiento(direccionAlojamiento);
+
+        Alojamiento alojamiento = alojamientos.get(idAlojamiento);
+
+        if (alojamiento instanceof Hotel editarHotel) {
+
+            editarHotel.setDireccionAlojamiento(direccionAlojamiento);
+            editarHotel.setNombreAlojamiento(nombreAlojamiento);
+            editarHotel.setCiudades(ciudades);
+            editarHotel.setDescripcionAlojamiento(descripcionAlojamiento);
+            editarHotel.setImagenAlojamiento(imagenAlojamiento);
+            editarHotel.setPrecioPorNocheAlojamiento(precioPorNocheAlojamiento);
+            editarHotel.setCapacidadMaximaAlojamiento(capacidadMaximaAlojamiento);
+            editarHotel.setServicios(servicios);
+
+        }
+
+    }
+
+
+    public void editarHabitacion(Hotel hotel, int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
+
+        int idHabitacion = buscarHabitacion(hotel, numeroHabitacion);
+
+        Habitacion editarHabitacion = hotel.getHabitaciones().get(idHabitacion);
+        editarHabitacion.setNumeroHabitacion(numeroHabitacion);
+        editarHabitacion.setCapacidadHabitacion(capacidadHabitacion);
+        editarHabitacion.setPrecioHabitacion(precioHabitacion);
+        editarHabitacion.setImagenHabitacion(imagenHabitacion);
+        editarHabitacion.setDescripcionHabitacion(descripcionHabitacion);
+
+    }
+
+
+    public void eliminarAlojamiento(int direccionAlojamiento) {
+
+        int idAlojamiento = buscarAlojamiento(direccionAlojamiento);
+
+        alojamientos.remove(idAlojamiento);
+
+    }
+
+
+    public void eliminarHabitacion(Hotel hotel, int numeroHabitacion) {
+
+        int idHabitacion = buscarHabitacion(hotel, numeroHabitacion);
+
+        hotel.getHabitaciones().remove(idHabitacion);
 
     }
 
@@ -460,9 +558,10 @@ public class Empresa {
     }
 
 
-    public Alojamiento crearCasa(String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoCasa, double mantenimientoCasa) {
+    private Casa crearCasa(int direccionAlojamiento, String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoCasa, double mantenimientoCasa) {
 
         return Casa.builder()
+                .direccionAlojamiento(direccionAlojamiento)
                 .nombreAlojamiento(nombreAlojamiento)
                 .ciudades(ciudades)
                 .descripcionAlojamiento(descripcionAlojamiento)
@@ -477,9 +576,10 @@ public class Empresa {
     }
 
 
-    public Alojamiento crearApartamento(String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoApartamento, double mantenimientoApartamento) {
+    private Apartamento crearApartamento(int direccionAlojamiento, String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios, double aseoApartamento, double mantenimientoApartamento) {
 
         return Apartamento.builder()
+                .direccionAlojamiento(direccionAlojamiento)
                 .nombreAlojamiento(nombreAlojamiento)
                 .ciudades(ciudades)
                 .descripcionAlojamiento(descripcionAlojamiento)
@@ -494,9 +594,10 @@ public class Empresa {
     }
 
 
-    public Alojamiento crearHotel(String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios) {
+    private Hotel crearHotel(int direccionAlojamiento, String nombreAlojamiento, List<Ciudad> ciudades, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, List<Servicio> servicios) {
 
         return Hotel.builder()
+                .direccionAlojamiento(direccionAlojamiento)
                 .nombreAlojamiento(nombreAlojamiento)
                 .ciudades(ciudades)
                 .descripcionAlojamiento(descripcionAlojamiento)
@@ -504,12 +605,13 @@ public class Empresa {
                 .precioPorNocheAlojamiento(precioPorNocheAlojamiento)
                 .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
                 .servicios(servicios)
+                .habitaciones(new ArrayList<>())
                 .build();
 
     }
 
 
-    public Habitacion crearHabitacion(int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
+    private Habitacion crearHabitacion(int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
 
         return Habitacion.builder()
                 .numeroHabitacion(numeroHabitacion)
@@ -561,6 +663,40 @@ public class Empresa {
     }
 
 
+    private int buscarAlojamiento(int direccionAlojamiento) {
+
+        for (int i = 0; i < alojamientos.size(); i++) {
+
+            if (alojamientos.get(i).getDireccionAlojamiento() == direccionAlojamiento) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    private int buscarHabitacion(Hotel hotel, int numeroHabitacion) {
+
+        for (int i = 0; i < hotel.getHabitaciones().size(); i++) {
+
+            Habitacion habitacion = hotel.getHabitaciones().get(i);
+
+            if (habitacion.getNumeroHabitacion() == numeroHabitacion) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
     private String generarCodigo() {
 
         int codigo = (int) (Math.random() * 900000) + 100000;
@@ -584,9 +720,16 @@ public class Empresa {
     }
 
 
-    public List<Habitacion> listarHabitaciones() {
+    public List<Habitacion> listarHabitaciones(Hotel hotel) {
 
-        return habitaciones;
+        return hotel.getHabitaciones();
+
+    }
+
+
+    public void filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, List<Ciudad> ciudades, double precioMin, double precioMax) {
+
+
 
     }
 
