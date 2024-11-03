@@ -1,8 +1,8 @@
 package co.edu.uniquindio.reservasuq.controladores;
 
-
 import co.edu.uniquindio.reservasuq.modelo.Horario;
 import co.edu.uniquindio.reservasuq.modelo.Instalacion;
+import co.edu.uniquindio.reservasuq.modelo.enums.DiaSemana;
 import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,10 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,7 @@ public class InstalacionControlador {
     private TextField txtCosto;
 
     @FXML
-    private ComboBox<String> comboDiaSemana;
+    private ComboBox<DiaSemana> comboDiaSemana;
 
     @FXML
     private TextField txtHoraInicio;
@@ -64,7 +62,18 @@ public class InstalacionControlador {
     @FXML
     public void initialize() {
         horariosList = FXCollections.observableArrayList();
-        comboDiaSemana.getItems().addAll("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+        comboDiaSemana.setItems(FXCollections.observableArrayList(DiaSemana.values()));
+        comboDiaSemana.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(DiaSemana dia) {
+                return dia.name().charAt(0) + dia.name().substring(1).toLowerCase();
+            }
+
+            @Override
+            public DiaSemana fromString(String string) {
+                return DiaSemana.valueOf(string.toUpperCase());
+            }
+        });
 
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         colAforo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getAforo()));
@@ -76,10 +85,9 @@ public class InstalacionControlador {
     @FXML
     public void agregarHorario() {
         try {
-            DayOfWeek diaSemana = DayOfWeek.valueOf(comboDiaSemana.getValue().toUpperCase());
+            DiaSemana diaSemana = comboDiaSemana.getValue();
             LocalTime horaInicio = LocalTime.parse(txtHoraInicio.getText());
             LocalTime horaFin = LocalTime.parse(txtHoraFin.getText());
-
 
             Horario horario = new Horario(diaSemana, horaInicio, horaFin);
             horariosList.add(horario);

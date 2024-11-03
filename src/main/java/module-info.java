@@ -11,11 +11,10 @@ module co.edu.uniquindio.reservasuq {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires static lombok;
-    requires org.simplejavamail.core;
-    requires org.simplejavamail;
 
     opens co.edu.uniquindio.reservasuq.controladores to javafx.fxml;
-    opens co.edu.uniquindio.reservasuq to javafx.fxml;
+    opens co.edu.uniquindio.reservasuq.modelo to javafx.base, javafx.fxml;
 
     exports co.edu.uniquindio.reservasuq;
+    exports co.edu.uniquindio.reservasuq.controladores;
 }

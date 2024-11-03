@@ -15,7 +15,7 @@
     </Label>
 
     <HBox spacing="10">
-        <ComboBox fx:id="comboInstalacion" promptText="Seleccione una instalación" onAction="#actualizarHorarios" />
+        <ComboBox fx:id="comboInstalacion" onAction="#actualizarHorarios"/>
         <DatePicker fx:id="datePickerFecha" promptText="Seleccione una fecha" onAction="#actualizarHorarios" />
         <ComboBox fx:id="comboHorario" promptText="Seleccione un horario"/>
         <Button text="Reservar" onAction="#reservarInstalacion" />

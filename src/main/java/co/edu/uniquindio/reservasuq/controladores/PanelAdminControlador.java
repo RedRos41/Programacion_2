@@ -41,16 +41,15 @@ public class PanelAdminControlador {
     @FXML
     public void initialize() {
         configurarColumnas();
-        cargarDatos();
+        cargarDatosInstalaciones();
+        cargarDatosReservas();
     }
 
     private void configurarColumnas() {
-        // Configurar columnas de la tabla de instalaciones
         colInstalacion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colAforo.setCellValueFactory(new PropertyValueFactory<>("aforo"));
         colCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
 
-        // Configurar columnas de la tabla de reservas
         colPersonaReserva.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPersona().getNombre()));
         colInstalacionReserva.setCellValueFactory(cellData ->
@@ -61,12 +60,12 @@ public class PanelAdminControlador {
         colCostoReserva.setCellValueFactory(new PropertyValueFactory<>("costo"));
     }
 
-    private void cargarDatos() {
-        // Cargar datos en la tabla de instalaciones
+    private void cargarDatosInstalaciones() {
         List<Instalacion> instalaciones = controladorPrincipal.listarInstalaciones();
         tablaInstalaciones.setItems(FXCollections.observableArrayList(instalaciones));
+    }
 
-        // Cargar datos en la tabla de reservas
+    private void cargarDatosReservas() {
         List<Reserva> reservas = controladorPrincipal.listarTodasReservas();
         tablaReservas.setItems(FXCollections.observableArrayList(reservas));
     }

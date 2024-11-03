@@ -1,5 +1,6 @@
 package co.edu.uniquindio.reservasuq.modelo;
 
+import co.edu.uniquindio.reservasuq.modelo.enums.DiaSemana;
 import lombok.*;
 import java.time.LocalTime;
 import java.time.DayOfWeek;
@@ -10,7 +11,7 @@ import java.time.DayOfWeek;
 @NoArgsConstructor
 
 public class Horario {
-    private DayOfWeek diaSemana;
+    private DiaSemana diaSemana;
     private LocalTime horaInicio;
     private LocalTime horaFin;
 }

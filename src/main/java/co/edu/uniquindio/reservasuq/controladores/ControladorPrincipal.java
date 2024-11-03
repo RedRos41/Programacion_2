@@ -2,6 +2,8 @@ package co.edu.uniquindio.reservasuq.controladores;
 
 import co.edu.uniquindio.reservasuq.modelo.*;
 import co.edu.uniquindio.reservasuq.modelo.enums.TipoPersona;
+import co.edu.uniquindio.reservasuq.obsevador.Observador;
+import co.edu.uniquindio.reservasuq.obsevador.VentanaObservable;
 import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +14,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorPrincipal implements ServiciosReservasUQ {
@@ -68,8 +73,7 @@ public class ControladorPrincipal implements ServiciosReservasUQ {
 
     @Override
     public ObservableList<Instalacion> listarInstalaciones() {
-        List<Instalacion> listaInstalaciones = reservasUQ.listarInstalaciones();
-        return FXCollections.observableArrayList(listaInstalaciones);
+        return FXCollections.observableArrayList(reservasUQ.listarInstalaciones());
     }
 
     @Override
@@ -91,7 +95,6 @@ public class ControladorPrincipal implements ServiciosReservasUQ {
     public Instalacion buscarInstalacionPorNombre(String nombre) throws Exception {
         return reservasUQ.buscarInstalacionPorNombre(nombre);
     }
-
 
     @Override
     public List<Horario> listarHorariosDisponibles(String idInstalacion, LocalDate fecha) {
@@ -125,8 +128,28 @@ public class ControladorPrincipal implements ServiciosReservasUQ {
         }
     }
 
+    public void navegarVentanaObservable(String nombreFxml, String titulo, Observador observador) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreFxml));
+            Parent root = loader.load();
+
+            VentanaObservable ventanaObservable = loader.getController();
+            ventanaObservable.setObservador(observador);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle(titulo);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void cerrarVentana(Node node) {
         Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
     }
+
 }

@@ -23,8 +23,24 @@
 
         <Label text="Costo:" GridPane.rowIndex="2"/>
         <TextField fx:id="txtCosto" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Label text="Días de la Semana:" GridPane.rowIndex="3"/>
+        <HBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <CheckBox text="Lunes" fx:id="chkLunes"/>
+            <CheckBox text="Martes" fx:id="chkMartes"/>
+            <CheckBox text="Miércoles" fx:id="chkMiercoles"/>
+            <CheckBox text="Jueves" fx:id="chkJueves"/>
+            <CheckBox text="Viernes" fx:id="chkViernes"/>
+            <CheckBox text="Sábado" fx:id="chkSabado"/>
+            <CheckBox text="Domingo" fx:id="chkDomingo"/>
+        </HBox>
+
+        <Label text="Horario de apertura:" GridPane.rowIndex="4"/>
+        <TextField fx:id="txtHoraInicio" GridPane.columnIndex="1" GridPane.rowIndex="4" promptText="HH:mm"/>
+
+        <Label text="Horario de cierre:" GridPane.rowIndex="5"/>
+        <TextField fx:id="txtHoraFin" GridPane.columnIndex="1" GridPane.rowIndex="5" promptText="HH:mm"/>
     </GridPane>
 
     <Button text="Agregar Instalación" onAction="#agregarInstalacion" maxWidth="150"/>
-    <Button text="Actualizar Instalación" onAction="#actualizarInstalacion" maxWidth="150"/>
 </VBox>

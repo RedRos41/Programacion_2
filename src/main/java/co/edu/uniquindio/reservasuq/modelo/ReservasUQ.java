@@ -1,15 +1,13 @@
 package co.edu.uniquindio.reservasuq.modelo;
 
+import co.edu.uniquindio.reservasuq.modelo.enums.DiaSemana;
 import co.edu.uniquindio.reservasuq.modelo.enums.TipoPersona;
 import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ReservasUQ implements ServiciosReservasUQ {
@@ -22,6 +20,42 @@ public class ReservasUQ implements ServiciosReservasUQ {
         this.personas = new ArrayList<>();
         this.instalaciones = new ArrayList<>();
         this.reservas = new ArrayList<>();
+
+        // Crear instalaciones de ejemplo
+        crearInstalacionesEjemplo();
+    }
+
+    private void crearInstalacionesEjemplo() {
+        List<Horario> horariosGimnasio = new ArrayList<>();
+        horariosGimnasio.add(new Horario(DiaSemana.LUNES, LocalTime.of(8, 0), LocalTime.of(18, 0)));
+        horariosGimnasio.add(new Horario(DiaSemana.MARTES, LocalTime.of(8, 0), LocalTime.of(18, 0)));
+
+        List<Horario> horariosPiscina = new ArrayList<>();
+        horariosPiscina.add(new Horario(DiaSemana.JUEVES, LocalTime.of(8, 0), LocalTime.of(16, 0)));
+        horariosPiscina.add(new Horario(DiaSemana.VIERNES, LocalTime.of(8, 0), LocalTime.of(16, 0)));
+
+        Instalacion gimnasio = Instalacion.builder()
+                .id(UUID.randomUUID().toString())
+                .nombre("Gimnasio")
+                .aforo(70)
+                .costo(0.0f)
+                .horarios(new HashMap<>())
+                .build();
+        gimnasio.agregarHorario(DiaSemana.LUNES, LocalTime.of(8, 0), LocalTime.of(18, 0));
+        gimnasio.agregarHorario(DiaSemana.MARTES, LocalTime.of(8, 0), LocalTime.of(18, 0));
+
+        Instalacion piscina = Instalacion.builder()
+                .id(UUID.randomUUID().toString())
+                .nombre("Piscina")
+                .aforo(50)
+                .costo(5.0f)
+                .horarios(new HashMap<>())
+                .build();
+        piscina.agregarHorario(DiaSemana.JUEVES, LocalTime.of(8, 0), LocalTime.of(16, 0));
+        piscina.agregarHorario(DiaSemana.VIERNES, LocalTime.of(8, 0), LocalTime.of(16, 0));
+
+        instalaciones.add(gimnasio);
+        instalaciones.add(piscina);
     }
 
     @Override
@@ -60,7 +94,12 @@ public class ReservasUQ implements ServiciosReservasUQ {
                 .nombre(nombre)
                 .aforo(aforo)
                 .costo(costo)
+                .horarios(new HashMap<>())
                 .build();
+
+        for (Horario horario : horarios) {
+            nuevaInstalacion.agregarHorario(horario.getDiaSemana(), horario.getHoraInicio(), horario.getHoraFin());
+        }
 
         instalaciones.add(nuevaInstalacion);
     }
@@ -73,11 +112,10 @@ public class ReservasUQ implements ServiciosReservasUQ {
         LocalTime hora = LocalTime.parse(horaReserva);
         LocalDateTime fechaHoraReserva = LocalDateTime.of(diaReserva, hora);
 
-        for (Reserva reserva : reservas) {
-            if (reserva.getInstalacion().getId().equals(idInstalacion) &&
-                    reserva.getFechaHoraReserva().isEqual(fechaHoraReserva)) {
-                throw new Exception("El horario ya está ocupado para esta instalación.");
-            }
+        if (reservas.stream().anyMatch(reserva ->
+                reserva.getInstalacion().getId().equals(idInstalacion) &&
+                        reserva.getFechaHoraReserva().equals(fechaHoraReserva))) {
+            throw new Exception("El horario ya está ocupado para esta instalación.");
         }
 
         Reserva nuevaReserva = Reserva.builder()
@@ -137,26 +175,39 @@ public class ReservasUQ implements ServiciosReservasUQ {
     @Override
     public void asignarHorarioInstalacion(String idInstalacion, List<Horario> nuevosHorarios) throws Exception {
         Instalacion instalacion = buscarInstalacionPorId(idInstalacion);
-        instalacion.setHorarios(nuevosHorarios);
+        for (Horario horario : nuevosHorarios) {
+            instalacion.agregarHorario(horario.getDiaSemana(), horario.getHoraInicio(), horario.getHoraFin());
+        }
     }
 
     @Override
     public List<Horario> listarHorariosDisponibles(String idInstalacion, LocalDate fecha) {
+        Instalacion instalacion = null;
+        try {
+            instalacion = buscarInstalacionPorId(idInstalacion);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         List<LocalDateTime> horariosOcupados = reservas.stream()
                 .filter(reserva -> reserva.getInstalacion().getId().equals(idInstalacion) && reserva.getFechaHoraReserva().toLocalDate().equals(fecha))
                 .map(Reserva::getFechaHoraReserva)
                 .collect(Collectors.toList());
 
         List<Horario> horariosDisponibles = new ArrayList<>();
-        LocalTime horaInicio = LocalTime.of(8, 0); // Inicio jornada
-        LocalTime horaFin = LocalTime.of(18, 0);   // Fin jornada
+        DiaSemana diaSemana = DiaSemana.fromLocalDate(fecha);
 
-        while (horaInicio.isBefore(horaFin)) {
-            final LocalTime inicio = horaInicio;
-            if (horariosOcupados.stream().noneMatch(horaOcupada -> horaOcupada.toLocalTime().equals(inicio))) {
-                horariosDisponibles.add(new Horario(null, inicio, inicio.plusMinutes(30)));
+        for (Horario horario : instalacion.obtenerHorariosPorDia(diaSemana)) {
+            LocalTime horaInicio = horario.getHoraInicio();
+            LocalTime horaFin = horario.getHoraFin();
+
+            while (horaInicio.isBefore(horaFin)) {
+                LocalDateTime horarioPropuesto = LocalDateTime.of(fecha, horaInicio);
+                if (horariosOcupados.stream().noneMatch(hora -> hora.equals(horarioPropuesto))) {
+                    horariosDisponibles.add(new Horario(diaSemana, horaInicio, horaInicio.plusMinutes(30)));
+                }
+                horaInicio = horaInicio.plusMinutes(30);
             }
-            horaInicio = horaInicio.plusMinutes(30);
         }
         return horariosDisponibles;
     }

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.reservasuq.controladores;
 
+import co.edu.uniquindio.reservasuq.modelo.enums.DiaSemana;
 import co.edu.uniquindio.reservasuq.modelo.Horario;
 import co.edu.uniquindio.reservasuq.modelo.Instalacion;
 import co.edu.uniquindio.reservasuq.modelo.Reserva;
@@ -8,6 +9,7 @@ import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -25,7 +27,6 @@ public class PanelClienteControlador {
     private Button btnReservar;
     @FXML
     private TableView<Reserva> tablaReservas;
-
     @FXML
     private TableColumn<Reserva, String> colInstalacion;
     @FXML
@@ -59,7 +60,8 @@ public class PanelClienteControlador {
         LocalDate fechaSeleccionada = datePickerFecha.getValue();
 
         if (instalacionSeleccionada != null && fechaSeleccionada != null) {
-            List<Horario> horariosDisponibles = controladorPrincipal.listarHorariosDisponibles(instalacionSeleccionada.getId(), fechaSeleccionada);
+            DiaSemana diaSemana = DiaSemana.fromLocalDate(fechaSeleccionada);
+            List<Horario> horariosDisponibles = instalacionSeleccionada.obtenerHorariosPorDia(diaSemana);
 
             List<LocalTime> bloquesHorario = new ArrayList<>();
             for (Horario horario : horariosDisponibles) {
@@ -76,6 +78,7 @@ public class PanelClienteControlador {
         }
     }
 
+
     @FXML
     public void reservarInstalacion() {
         try {
@@ -85,6 +88,11 @@ public class PanelClienteControlador {
 
             if (instalacion == null || fecha == null || hora == null) {
                 mostrarAlerta("Seleccione todos los campos para reservar", "Error", Alert.AlertType.ERROR);
+                return;
+            }
+
+            if (!fecha.isAfter(LocalDate.now().plusDays(1))) {
+                mostrarAlerta("La reserva debe hacerse con al menos 2 días de anticipación", "Error", Alert.AlertType.ERROR);
                 return;
             }
 
