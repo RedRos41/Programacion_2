@@ -5,6 +5,7 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.CiudadAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.ServicioAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
+import co.edu.uniquindio.proyectofinal.servicios.ServicioEmpresa;
 import co.edu.uniquindio.proyectofinal.utils.EnvioEmail;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,22 +20,44 @@ import java.util.List;
 @Setter
 @Builder
 @ToString
-public class Empresa {
+public class Empresa implements ServicioEmpresa {
 
+    private static Empresa INSTANCIA;
+    private Usuario usuario;
     private final List<Usuario> usuarios;
     private final List<Alojamiento> alojamientos;
     private final List<Alojamiento> filtroAlojamiento;
 
 
-    public Empresa() {
+    private Empresa() {
 
-        usuarios = new ArrayList<>();
-        alojamientos = new ArrayList<>();
-        filtroAlojamiento = new ArrayList<>();
+        this.usuarios = new ArrayList<>();
+        this.alojamientos = new ArrayList<>();
+        this.filtroAlojamiento = new ArrayList<>();
 
     }
 
 
+    public static Empresa getInstancia() {
+
+        if(INSTANCIA == null){
+
+            INSTANCIA = new Empresa();
+
+        }
+        return INSTANCIA;
+
+    }
+
+
+    public void cerrarSesion() {
+
+        usuario = null;
+
+    }
+
+
+    @Override
     public void registrarUsuario(TipoUsuario tipoUsuario, long cedulaUsuario, String nombreUsuario, String emailUsuario, String contraseñaUsuario, long telefonoUsuario) throws Exception {
 
         if (tipoUsuario == null) {
@@ -124,6 +147,7 @@ public class Empresa {
     }
 
 
+    @Override
     public void editarUsuario(long cedulaUsuario, String nombreUsuario, String emailUsuario, long telefonoUsuario) throws Exception {
 
         if (!numeroValido(cedulaUsuario)) {
@@ -179,6 +203,7 @@ public class Empresa {
     }
 
 
+    @Override
     public void eliminarUsuario(long cedulaUsuario) throws Exception {
 
         if (!numeroValido(cedulaUsuario)) {
@@ -200,6 +225,7 @@ public class Empresa {
     }
 
 
+    @Override
     public void solicitarCambioContraseña(String emailUsuario) throws Exception {
 
         if (emailUsuario.isBlank()) {
@@ -239,6 +265,7 @@ public class Empresa {
     }
 
 
+    @Override
     public void cambiarContraseña(String codigoContraseña, String nuevaContraseña) throws Exception {
 
         if (codigoContraseña.isBlank()) {
@@ -285,6 +312,7 @@ public class Empresa {
     }
 
 
+    @Override
     public void registrarCasa(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) throws Exception {
 
         if (direccionAlojamiento <= 0) {
@@ -366,6 +394,7 @@ public class Empresa {
     }
 
 
+    @Override
     public void registrarApartamento(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoApartamento, double mantenimientoApartamento) throws Exception {
 
         if (direccionAlojamiento <= 0) {
@@ -447,6 +476,7 @@ public class Empresa {
     }
 
 
+    @Override
     public void registrarHotel(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento) throws Exception {
 
         if (direccionAlojamiento <= 0) {
@@ -516,6 +546,7 @@ public class Empresa {
     }
 
 
+    @Override
     public void registrarHabitacion(Hotel hotel, int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) throws Exception {
 
         if (hotel == null) {
@@ -561,9 +592,82 @@ public class Empresa {
     }
 
 
-    public void editarCasa(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) {
+    @Override
+    public void editarCasa(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) throws Exception {
+
+        if (direccionAlojamiento <= 0) {
+
+            throw new Exception("La direccion solo puede tener numeros positivos.");
+
+        }
 
         int idAlojamiento = buscarAlojamiento(direccionAlojamiento);
+
+        if (idAlojamiento == -1) {
+
+            throw new Exception("No existe un alojamiento con la direccion proporcionada.");
+
+        }
+
+        if (nombreAlojamiento.isBlank()) {
+
+            throw new Exception("El nombre no puede estar vacio.");
+
+        }
+
+        if (!nombreAlojamiento.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+
+            throw new Exception("El nombre solo puede contener letras.");
+
+        }
+
+        if (buscarAlojamientoPorNombre(nombreAlojamiento) != null) {
+
+            throw new Exception("Ya existe un alojamiento con el nombre proporcionado.");
+
+        }
+
+        if (ciudadAlojamiento == null) {
+
+            throw new Exception("La ciudad no puede estar vacia.");
+
+        }
+
+        if (descripcionAlojamiento.isBlank()) {
+
+            throw new Exception("La descripcion no puede estar vacio.");
+
+        }
+
+        if (precioPorNocheAlojamiento <= 0) {
+
+            throw new Exception("El precio por noche solo puede tener numeros positivos.");
+
+        }
+
+        if (capacidadMaximaAlojamiento <= 0) {
+
+            throw new Exception("La capacidad maxima solo puede tener numeros positivos.");
+
+        }
+
+        if (servicioAlojamiento == null) {
+
+            throw new Exception("El servicio no puede estar vacio.");
+
+        }
+
+        if (aseoCasa <= 0) {
+
+            throw new Exception("El aseo de la casa solo puede tener numeros positivos.");
+
+        }
+
+        if (mantenimientoCasa <= 0) {
+
+            throw new Exception("El mantenimiento de la casa solo puede tener numeros positivos.");
+
+        }
 
         Alojamiento alojamiento = alojamientos.get(idAlojamiento);
 
@@ -585,9 +689,82 @@ public class Empresa {
     }
 
 
-    public void editarApartamento(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) {
+    @Override
+    public void editarApartamento(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoApartamento, double mantenimientoApartamento) throws Exception {
+
+        if (direccionAlojamiento <= 0) {
+
+            throw new Exception("La direccion solo puede tener numeros positivos.");
+
+        }
 
         int idAlojamiento = buscarAlojamiento(direccionAlojamiento);
+
+        if (idAlojamiento == -1) {
+
+            throw new Exception("No existe un alojamiento con la direccion proporcionada.");
+
+        }
+
+        if (nombreAlojamiento.isBlank()) {
+
+            throw new Exception("El nombre no puede estar vacio.");
+
+        }
+
+        if (!nombreAlojamiento.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+
+            throw new Exception("El nombre solo puede contener letras.");
+
+        }
+
+        if (buscarAlojamientoPorNombre(nombreAlojamiento) != null) {
+
+            throw new Exception("Ya existe un alojamiento con el nombre proporcionado.");
+
+        }
+
+        if (ciudadAlojamiento == null) {
+
+            throw new Exception("La ciudad no puede estar vacia.");
+
+        }
+
+        if (descripcionAlojamiento.isBlank()) {
+
+            throw new Exception("La descripcion no puede estar vacio.");
+
+        }
+
+        if (precioPorNocheAlojamiento <= 0) {
+
+            throw new Exception("El precio por noche solo puede tener numeros positivos.");
+
+        }
+
+        if (capacidadMaximaAlojamiento <= 0) {
+
+            throw new Exception("La capacidad maxima solo puede tener numeros positivos.");
+
+        }
+
+        if (servicioAlojamiento == null) {
+
+            throw new Exception("El servicio no puede estar vacio.");
+
+        }
+
+        if (aseoApartamento <= 0) {
+
+            throw new Exception("El aseo de la casa solo puede tener numeros positivos.");
+
+        }
+
+        if (mantenimientoApartamento <= 0) {
+
+            throw new Exception("El mantenimiento de la casa solo puede tener numeros positivos.");
+
+        }
 
         Alojamiento alojamiento = alojamientos.get(idAlojamiento);
 
@@ -601,17 +778,78 @@ public class Empresa {
             editarApartamento.setPrecioPorNocheAlojamiento(precioPorNocheAlojamiento);
             editarApartamento.setCapacidadMaximaAlojamiento(capacidadMaximaAlojamiento);
             editarApartamento.setServicioAlojamiento(servicioAlojamiento);
-            editarApartamento.setAseoApartamento(aseoCasa);
-            editarApartamento.setMantenimientoApartamento(mantenimientoCasa);
+            editarApartamento.setAseoApartamento(aseoApartamento);
+            editarApartamento.setMantenimientoApartamento(mantenimientoApartamento);
 
         }
 
     }
 
 
-    public void editarHotel(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento) {
+    @Override
+    public void editarHotel(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento) throws Exception {
+
+        if (direccionAlojamiento <= 0) {
+
+            throw new Exception("La direccion solo puede tener numeros positivos.");
+
+        }
 
         int idAlojamiento = buscarAlojamiento(direccionAlojamiento);
+
+        if (idAlojamiento == -1) {
+
+            throw new Exception("No existe un alojamiento con la direccion proporcionada.");
+
+        }
+
+        if (nombreAlojamiento.isBlank()) {
+
+            throw new Exception("El nombre no puede estar vacio.");
+
+        }
+
+        if (!nombreAlojamiento.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+
+            throw new Exception("El nombre solo puede contener letras.");
+
+        }
+
+        if (buscarAlojamientoPorNombre(nombreAlojamiento) != null) {
+
+            throw new Exception("Ya existe un alojamiento con el nombre proporcionado.");
+
+        }
+
+        if (ciudadAlojamiento == null) {
+
+            throw new Exception("La ciudad no puede estar vacia.");
+
+        }
+
+        if (descripcionAlojamiento.isBlank()) {
+
+            throw new Exception("La descripcion no puede estar vacio.");
+
+        }
+
+        if (precioPorNocheAlojamiento <= 0) {
+
+            throw new Exception("El precio por noche solo puede tener numeros positivos.");
+
+        }
+
+        if (capacidadMaximaAlojamiento <= 0) {
+
+            throw new Exception("La capacidad maxima solo puede tener numeros positivos.");
+
+        }
+
+        if (servicioAlojamiento == null) {
+
+            throw new Exception("El servicio no puede estar vacio.");
+
+        }
 
         Alojamiento alojamiento = alojamientos.get(idAlojamiento);
 
@@ -631,9 +869,46 @@ public class Empresa {
     }
 
 
-    public void editarHabitacion(Hotel hotel, int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
+    @Override
+    public void editarHabitacion(Hotel hotel, int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) throws Exception {
+
+        if (hotel == null) {
+
+            throw new Exception("El hotel no puede estar vacio.");
+
+        }
+
+        if (numeroHabitacion <= 0) {
+
+            throw new Exception("El numero de la habitacion solo puede tener numeros positivos.");
+
+        }
 
         int idHabitacion = buscarHabitacion(hotel, numeroHabitacion);
+
+        if (idHabitacion == -1) {
+
+            throw new Exception("No existe una habitacion con el numero proporcionada.");
+
+        }
+
+        if (capacidadHabitacion <= 0) {
+
+            throw new Exception("La capacidad de la habitacion solo puede tener numeros positivos.");
+
+        }
+
+        if (precioHabitacion <= 0) {
+
+            throw new Exception("El precio de la habitacion solo puede tener numeros positivos.");
+
+        }
+
+        if (descripcionHabitacion.isBlank()) {
+
+            throw new Exception("La descripcion de la habitacion no puede estar vacio.");
+
+        }
 
         Habitacion editarHabitacion = hotel.getHabitaciones().get(idHabitacion);
         editarHabitacion.setNumeroHabitacion(numeroHabitacion);
@@ -645,25 +920,58 @@ public class Empresa {
     }
 
 
-    public void eliminarAlojamiento(int direccionAlojamiento) {
+    @Override
+    public void eliminarAlojamiento(int direccionAlojamiento) throws Exception {
+
+        if (direccionAlojamiento <= 0) {
+
+            throw new Exception("La direccion solo puede tener numeros positivos.");
+
+        }
 
         int idAlojamiento = buscarAlojamiento(direccionAlojamiento);
+
+        if (idAlojamiento == -1) {
+
+            throw new Exception("No existe un alojamiento con la direccion proporcionada.");
+
+        }
 
         alojamientos.remove(idAlojamiento);
 
     }
 
 
-    public void eliminarHabitacion(Hotel hotel, int numeroHabitacion) {
+    @Override
+    public void eliminarHabitacion(Hotel hotel, int numeroHabitacion) throws Exception {
+
+        if (hotel == null) {
+
+            throw new Exception("El hotel no puede estar vacio.");
+
+        }
+
+        if (numeroHabitacion <= 0) {
+
+            throw new Exception("El numero de la habitacion solo puede tener numeros positivos.");
+
+        }
 
         int idHabitacion = buscarHabitacion(hotel, numeroHabitacion);
+
+        if (idHabitacion == -1) {
+
+            throw new Exception("No existe una habitacion con el numero proporcionada.");
+
+        }
 
         hotel.getHabitaciones().remove(idHabitacion);
 
     }
 
 
-    private Usuario buscarUsuarioPorEmail(String emailUsuario) {
+    @Override
+    public Usuario buscarUsuarioPorEmail(String emailUsuario) {
 
         for (Usuario usuario : usuarios) {
 
@@ -678,7 +986,9 @@ public class Empresa {
 
     }
 
-    private Usuario buscarUsuarioPorCodigoContraseña(String codigoContraseña) {
+
+    @Override
+    public Usuario buscarUsuarioPorCodigoContraseña(String codigoContraseña) {
 
         for (Usuario usuario : usuarios) {
 
@@ -694,7 +1004,8 @@ public class Empresa {
     }
 
 
-    private Usuario crearUsuario(TipoUsuario tipoUsuario, long cedulaUsuario, String nombreUsuario, String emailUsuario, String contraseñaUsuario, long telefonoUsuario) throws Exception {
+    @Override
+    public Usuario crearUsuario(TipoUsuario tipoUsuario, long cedulaUsuario, String nombreUsuario, String emailUsuario, String contraseñaUsuario, long telefonoUsuario) throws Exception {
 
         return switch (tipoUsuario) {
 
@@ -724,6 +1035,7 @@ public class Empresa {
     }
 
 
+    @Override
     public Usuario iniciarSesion(String emailUsuario, String codigoActivacion, String contraseñaUsuario) throws Exception {
 
         if (emailUsuario.isBlank()) {
@@ -812,7 +1124,8 @@ public class Empresa {
     }
 
 
-    private Casa crearCasa(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) {
+    @Override
+    public Casa crearCasa(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) {
 
         return Casa.builder()
                 .tipoAlojamiento(TipoAlojamiento.CASA)
@@ -831,7 +1144,8 @@ public class Empresa {
     }
 
 
-    private Apartamento crearApartamento(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoApartamento, double mantenimientoApartamento) {
+    @Override
+    public Apartamento crearApartamento(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoApartamento, double mantenimientoApartamento) {
 
         return Apartamento.builder()
                 .tipoAlojamiento(TipoAlojamiento.APARTAMENTO)
@@ -850,7 +1164,8 @@ public class Empresa {
     }
 
 
-    private Hotel crearHotel(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento) {
+    @Override
+    public Hotel crearHotel(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento) {
 
         return Hotel.builder()
                 .tipoAlojamiento(TipoAlojamiento.HOTEL)
@@ -868,7 +1183,8 @@ public class Empresa {
     }
 
 
-    private Habitacion crearHabitacion(int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
+    @Override
+    public Habitacion crearHabitacion(int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) {
 
         return Habitacion.builder()
                 .numeroHabitacion(numeroHabitacion)
@@ -881,16 +1197,53 @@ public class Empresa {
     }
 
 
-    public List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) {
+    @Override
+    public List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception {
+
+        if (nombreAlojamiento.isBlank()) {
+
+            throw new Exception("El nombre no puede estar vacio.");
+
+        }
+
+        if (!nombreAlojamiento.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+
+            throw new Exception("El nombre solo puede contener letras.");
+
+        }
+
+        if (tipoAlojamiento == null) {
+
+            throw new Exception("El tipo de alojamiento no puede estar vacio.");
+
+        }
+
+        if (ciudadAlojamiento == null) {
+
+            throw new Exception("La ciudad no puede estar vacia.");
+
+        }
+
+        if (precioMin < 0) {
+
+            throw new Exception("La capacidad maxima solo puede tener numeros positivos.");
+
+        }
+
+        if (precioMax < 0) {
+
+            throw new Exception("La capacidad maxima solo puede tener numeros positivos.");
+
+        }
 
         filtroAlojamiento.clear();
 
         filtroAlojamiento.addAll(alojamientos.stream()
-                .filter(alojamiento -> nombreAlojamiento == null || alojamiento.getNombreAlojamiento().equalsIgnoreCase(nombreAlojamiento))
-                .filter(alojamiento -> tipoAlojamiento == null || alojamiento.getTipoAlojamiento() == tipoAlojamiento)
-                .filter(alojamiento -> ciudadAlojamiento == null || alojamiento.getCiudadAlojamiento() == ciudadAlojamiento)
-                .filter(alojamiento -> precioMin < 0 || alojamiento.getPrecioPorNocheAlojamiento() >= precioMin)
-                .filter(alojamiento -> precioMax < 0 || alojamiento.getPrecioPorNocheAlojamiento() <= precioMax)
+                .filter(alojamiento -> alojamiento.getNombreAlojamiento().equalsIgnoreCase(nombreAlojamiento))
+                .filter(alojamiento -> alojamiento.getTipoAlojamiento() == tipoAlojamiento)
+                .filter(alojamiento -> alojamiento.getCiudadAlojamiento() == ciudadAlojamiento)
+                .filter(alojamiento -> alojamiento.getPrecioPorNocheAlojamiento() >= precioMin)
+                .filter(alojamiento -> alojamiento.getPrecioPorNocheAlojamiento() <= precioMax)
                 .toList());
 
         return filtroAlojamiento;
@@ -898,7 +1251,8 @@ public class Empresa {
     }
 
 
-    private Alojamiento buscarAlojamientoPorNombre(String nombreAlojamiento) {
+    @Override
+    public Alojamiento buscarAlojamientoPorNombre(String nombreAlojamiento) {
 
         for (Alojamiento alojamiento : alojamientos) {
 
@@ -914,14 +1268,16 @@ public class Empresa {
     }
 
 
-    private boolean numeroValido(long numero) {
+    @Override
+    public boolean numeroValido(long numero) {
 
         return numero >= 1000000000L && numero <= 9999999999L;
 
     }
 
 
-    private boolean buscarAdministrador() {
+    @Override
+    public boolean buscarAdministrador() {
 
         for (Usuario usuario : usuarios) {
 
@@ -937,7 +1293,8 @@ public class Empresa {
     }
 
 
-    private int buscarUsuario(long cedulaUsuario) {
+    @Override
+    public int buscarUsuario(long cedulaUsuario) {
 
         for (int i = 0; i < usuarios.size(); i++) {
 
@@ -953,7 +1310,8 @@ public class Empresa {
     }
 
 
-    private int buscarAlojamiento(int direccionAlojamiento) {
+    @Override
+    public int buscarAlojamiento(int direccionAlojamiento) {
 
         for (int i = 0; i < alojamientos.size(); i++) {
 
@@ -969,7 +1327,8 @@ public class Empresa {
     }
 
 
-    private int buscarHabitacion(Hotel hotel, int numeroHabitacion) {
+    @Override
+    public int buscarHabitacion(Hotel hotel, int numeroHabitacion) {
 
         for (int i = 0; i < hotel.getHabitaciones().size(); i++) {
 
@@ -987,32 +1346,12 @@ public class Empresa {
     }
 
 
-    private String generarCodigo() {
+    @Override
+    public String generarCodigo() {
 
         int codigo = (int) (Math.random() * 900000) + 100000;
 
         return String.valueOf(codigo);
-
-    }
-
-
-    public List<Usuario> listarUsuarios() {
-
-        return usuarios;
-
-    }
-
-
-    public List<Alojamiento> listarAlojamientos() {
-
-        return alojamientos;
-
-    }
-
-
-    public List<Habitacion> listarHabitaciones(Hotel hotel) {
-
-        return hotel.getHabitaciones();
 
     }
 
