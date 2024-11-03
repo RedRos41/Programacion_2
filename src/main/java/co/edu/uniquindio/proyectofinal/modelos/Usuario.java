@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectofinal.modelos;
 
 
+import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,10 +17,11 @@ import lombok.experimental.SuperBuilder;
 public class Usuario {
 
     @EqualsAndHashCode.Include
-    protected long cedula;
+    protected long cedulaUsuario;
 
-    protected String nombreCompleto, email, contraseña, codigoActivacion, codigoContraseña;
-    protected long telefono;
-    protected boolean activado;
+    protected String nombreUsuario, emailUsuario, contraseñaUsuario, codigoActivacion, codigoContraseña;
+    protected long telefonoUsuario;
+    protected boolean usuarioActivado;
+    protected TipoUsuario tipoUsuario;
 
 }

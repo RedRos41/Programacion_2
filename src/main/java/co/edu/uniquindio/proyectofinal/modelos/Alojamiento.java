@@ -1,13 +1,14 @@
 package co.edu.uniquindio.proyectofinal.modelos;
 
 
+import co.edu.uniquindio.proyectofinal.modelos.enums.CiudadAlojamiento;
+import co.edu.uniquindio.proyectofinal.modelos.enums.ServicioAlojamiento;
+import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 
 @Getter
@@ -21,10 +22,11 @@ public class Alojamiento {
     protected int direccionAlojamiento;
 
     protected String nombreAlojamiento, descripcionAlojamiento;
-    protected List<Ciudad> ciudades;
+    protected CiudadAlojamiento ciudadAlojamiento;
     protected String imagenAlojamiento;
     protected double precioPorNocheAlojamiento;
     protected int capacidadMaximaAlojamiento;
-    protected List<Servicio> servicios;
+    protected ServicioAlojamiento servicioAlojamiento;
+    protected TipoAlojamiento tipoAlojamiento;
 
 }

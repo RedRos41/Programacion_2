@@ -2,14 +2,15 @@
 'https://plantuml.com/sequence-diagram
 
 class Usuario {
-    - cedula: long
-    - nombreCompleto: String
-    - telefono: long
-    - email: String
-    - contraseña: String
+    - cedulaUsuario: long
+    - nombreUsuario: String
+    - telefonoUsuario: long
+    - emailUsuario: String
+    - contraseñaUsuario: String
     - codigoActivacion: String
     - codigoContraseña: String
-    - activado: boolean
+    - usuarioActivado: boolean
+    - tipoUsuario: TipoUsuario
 }
 
 enum TipoUsuario {
@@ -27,18 +28,31 @@ class Administrador extends Usuario {
 class Alojamiento {
     - direccionAlojamiento: int
     - nombreAlojamiento: String
-    - ciudades: List<Ciudad>
+    - ciudadAlojamiento: CiudadAlojamiento
     - descripcionAlojamiento: String
     - imagenAlojamiento: String
     - precioPorNocheAlojamiento: double
     - capacidadMaximaAlojamiento: int
-    - servicios: List<Servicio>
+    - servicioAlojamiento: ServicioAlojamiento
+    - tipoAlojamiento: TipoAlojamiento
 }
 
 enum TipoAlojamiento {
     CASA
     APARTAMENTO
     HOTEL
+}
+
+enum CiudadAlojamiento {
+    CALARCA
+    ARMENIA
+    PEREIRA
+}
+
+enum ServicioAlojamiento {
+    PISCINA
+    WIFI
+    DESAYUNO
 }
 
 class Casa extends Alojamiento {
