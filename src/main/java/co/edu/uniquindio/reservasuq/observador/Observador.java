@@ -1,4 +1,4 @@
-package co.edu.uniquindio.reservasuq.obsevador;
+package co.edu.uniquindio.reservasuq.observador;
 
 public interface Observador {
     void notificar();

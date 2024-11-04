@@ -19,7 +19,7 @@
     <!-- Sección de Gestión de Instalaciones con acciones -->
     <HBox spacing="10" alignment="CENTER">
         <Button text="Gestionar Instalaciones" onAction="#mostrarGestionInstalaciones"/>
-        <Button text="Ver Reservas" onAction="#mostrarReservas"/>
+
     </HBox>
 
     <!-- Tablas colocadas una al lado de la otra -->

@@ -2,8 +2,8 @@ package co.edu.uniquindio.reservasuq.controladores;
 
 import co.edu.uniquindio.reservasuq.modelo.*;
 import co.edu.uniquindio.reservasuq.modelo.enums.TipoPersona;
-import co.edu.uniquindio.reservasuq.obsevador.Observador;
-import co.edu.uniquindio.reservasuq.obsevador.VentanaObservable;
+import co.edu.uniquindio.reservasuq.observador.Observador;
+import co.edu.uniquindio.reservasuq.observador.VentanaObservable;
 import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,10 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorPrincipal implements ServiciosReservasUQ {

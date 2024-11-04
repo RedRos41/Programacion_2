@@ -2,6 +2,8 @@ package co.edu.uniquindio.reservasuq.controladores;
 
 import co.edu.uniquindio.reservasuq.modelo.Instalacion;
 import co.edu.uniquindio.reservasuq.modelo.Reserva;
+
+import co.edu.uniquindio.reservasuq.observador.Observador;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,7 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class PanelAdminControlador {
+public class PanelAdminControlador implements Observador {
 
     @FXML
     private TableView<Instalacion> tablaInstalaciones;
@@ -72,11 +74,16 @@ public class PanelAdminControlador {
 
     @FXML
     public void mostrarGestionInstalaciones() {
-        controladorPrincipal.navegarVentana("/gestionInstalaciones.fxml", "Gestionar Instalaciones");
+        controladorPrincipal.navegarVentanaObservable("/gestionInstalaciones.fxml", "Gestionar Instalaciones", this);
     }
 
     @FXML
     public void mostrarReservas() {
         controladorPrincipal.navegarVentana("/listaReservas.fxml", "Lista de Reservas");
+    }
+
+    @Override
+    public void notificar() {
+        cargarDatosInstalaciones();
     }
 }

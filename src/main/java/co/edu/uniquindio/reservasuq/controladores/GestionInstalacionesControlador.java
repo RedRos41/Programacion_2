@@ -3,6 +3,7 @@ package co.edu.uniquindio.reservasuq.controladores;
 import co.edu.uniquindio.reservasuq.modelo.Horario;
 import co.edu.uniquindio.reservasuq.modelo.Instalacion;
 import co.edu.uniquindio.reservasuq.modelo.enums.DiaSemana;
+import co.edu.uniquindio.reservasuq.observador.VentanaObservable;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -10,7 +11,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestionInstalacionesControlador {
+public class GestionInstalacionesControlador extends VentanaObservable {
 
     @FXML
     private TextField txtNombreInstalacion;
@@ -81,6 +82,8 @@ public class GestionInstalacionesControlador {
             mostrarAlerta("Instalación agregada correctamente", "Éxito", Alert.AlertType.INFORMATION);
             limpiarCampos();
 
+            notificarObservador();
+
         } catch (NumberFormatException e) {
             mostrarAlerta("Por favor, ingrese valores numéricos válidos para aforo y costo.", "Error de Entrada", Alert.AlertType.ERROR);
         } catch (Exception e) {
@@ -106,29 +109,6 @@ public class GestionInstalacionesControlador {
         if (chkDomingo.isSelected()) horarios.add(new Horario(DiaSemana.DOMINGO, horaInicio, horaFin));
     }
 
-    @FXML
-    public void actualizarInstalacion() {
-        try {
-            String nombre = txtNombreInstalacion.getText();
-            int aforo = Integer.parseInt(txtAforo.getText());
-            float costo = Float.parseFloat(txtCosto.getText());
-
-            Instalacion instalacion = controladorPrincipal.buscarInstalacionPorNombre(nombre);
-            if (instalacion != null) {
-                instalacion.setAforo(aforo);
-                instalacion.setCosto(costo);
-                mostrarAlerta("Instalación actualizada correctamente", "Éxito", Alert.AlertType.INFORMATION);
-            } else {
-                mostrarAlerta("La instalación no existe.", "Error", Alert.AlertType.ERROR);
-            }
-
-        } catch (NumberFormatException e) {
-            mostrarAlerta("Por favor, ingrese valores numéricos válidos para aforo y costo.", "Error de Entrada", Alert.AlertType.ERROR);
-        } catch (Exception e) {
-            mostrarAlerta("Error al actualizar la instalación: " + e.getMessage(), "Error", Alert.AlertType.ERROR);
-        }
-    }
-
     private void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
@@ -152,5 +132,3 @@ public class GestionInstalacionesControlador {
         chkDomingo.setSelected(false);
     }
 }
-
-

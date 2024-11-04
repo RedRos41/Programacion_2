@@ -9,6 +9,7 @@ import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -44,9 +45,21 @@ public class PanelClienteControlador {
 
     @FXML
     public void initialize() {
+        comboInstalacion.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Instalacion instalacion) {
+                return instalacion != null ? instalacion.getNombre() : "";
+            }
+
+            @Override
+            public Instalacion fromString(String nombre) {
+                return comboInstalacion.getItems().stream()
+                        .filter(instalacion -> instalacion.getNombre().equals(nombre))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
         cargarInstalaciones();
-        configurarTablaReservas();
-        cargarReservas();
     }
 
     private void cargarInstalaciones() {
@@ -61,16 +74,19 @@ public class PanelClienteControlador {
 
         if (instalacionSeleccionada != null && fechaSeleccionada != null) {
             DiaSemana diaSemana = DiaSemana.fromLocalDate(fechaSeleccionada);
-            List<Horario> horariosDisponibles = instalacionSeleccionada.obtenerHorariosPorDia(diaSemana);
 
+            List<Horario> horariosDisponibles = instalacionSeleccionada.getHorarios().get(diaSemana);
             List<LocalTime> bloquesHorario = new ArrayList<>();
-            for (Horario horario : horariosDisponibles) {
-                LocalTime horaInicio = horario.getHoraInicio();
-                LocalTime horaFin = horario.getHoraFin();
 
-                while (horaInicio.isBefore(horaFin)) {
-                    bloquesHorario.add(horaInicio);
-                    horaInicio = horaInicio.plusMinutes(30); // Intervalos de media hora
+            if (horariosDisponibles != null) {
+                for (Horario horario : horariosDisponibles) {
+                    LocalTime horaInicio = horario.getHoraInicio();
+                    LocalTime horaFin = horario.getHoraFin();
+
+                    while (horaInicio.isBefore(horaFin)) {
+                        bloquesHorario.add(horaInicio);
+                        horaInicio = horaInicio.plusMinutes(30); // Intervalos de media hora
+                    }
                 }
             }
 
