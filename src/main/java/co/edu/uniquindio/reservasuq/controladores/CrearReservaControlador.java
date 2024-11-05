@@ -1,15 +1,15 @@
 package co.edu.uniquindio.reservasuq.controladores;
 
+import co.edu.uniquindio.reservasuq.modelo.enums.DiaSemana;
 import co.edu.uniquindio.reservasuq.modelo.Horario;
 import co.edu.uniquindio.reservasuq.modelo.Instalacion;
 import co.edu.uniquindio.reservasuq.modelo.Sesion;
+import co.edu.uniquindio.reservasuq.observador.Observador;
 import co.edu.uniquindio.reservasuq.observador.VentanaObservable;
 import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,15 +20,12 @@ public class CrearReservaControlador extends VentanaObservable {
 
     @FXML
     private ComboBox<Instalacion> comboInstalacion;
-
     @FXML
     private DatePicker datePickerFecha;
-
     @FXML
     private ComboBox<LocalTime> comboHorario;
-
     @FXML
-    private Button btnReservar;
+    private TextArea txtDetallesInstalacion;
 
     private final ServiciosReservasUQ controladorPrincipal;
     private final Sesion sesion;
@@ -40,7 +37,7 @@ public class CrearReservaControlador extends VentanaObservable {
 
     @FXML
     public void initialize() {
-        comboInstalacion.setConverter(new StringConverter<>() {
+        comboInstalacion.setConverter(new javafx.util.StringConverter<>() {
             @Override
             public String toString(Instalacion instalacion) {
                 return instalacion != null ? instalacion.getNombre() : "";
@@ -54,6 +51,7 @@ public class CrearReservaControlador extends VentanaObservable {
                         .orElse(null);
             }
         });
+
         cargarInstalaciones();
     }
 
@@ -63,21 +61,47 @@ public class CrearReservaControlador extends VentanaObservable {
     }
 
     @FXML
+    public void mostrarDetallesInstalacion() {
+        Instalacion instalacionSeleccionada = comboInstalacion.getValue();
+        if (instalacionSeleccionada != null) {
+            StringBuilder detalles = new StringBuilder();
+            detalles.append("Aforo: ").append(instalacionSeleccionada.getAforo()).append("\n");
+            detalles.append("Costo: ").append(instalacionSeleccionada.getCosto()).append("\n");
+            detalles.append("Disponibilidad:\n");
+
+            instalacionSeleccionada.getHorarios().forEach((dia, horarios) -> {
+                detalles.append(dia).append(": ");
+                horarios.forEach(horario -> detalles.append(horario.getHoraInicio())
+                        .append(" - ").append(horario.getHoraFin()).append(", "));
+                detalles.delete(detalles.length() - 2, detalles.length());
+                detalles.append("\n");
+            });
+
+            txtDetallesInstalacion.setText(detalles.toString());
+        } else {
+            txtDetallesInstalacion.clear();
+        }
+    }
+
+    @FXML
     public void actualizarHorarios() {
         Instalacion instalacionSeleccionada = comboInstalacion.getValue();
         LocalDate fechaSeleccionada = datePickerFecha.getValue();
 
         if (instalacionSeleccionada != null && fechaSeleccionada != null) {
-            List<Horario> horariosDisponibles = controladorPrincipal.listarHorariosDisponibles(instalacionSeleccionada.getId(), fechaSeleccionada);
+            DiaSemana diaSemana = DiaSemana.fromLocalDate(fechaSeleccionada);
+            List<Horario> horariosDisponibles = instalacionSeleccionada.getHorarios().get(diaSemana);
             List<LocalTime> bloquesHorario = new ArrayList<>();
 
-            for (Horario horario : horariosDisponibles) {
-                LocalTime horaInicio = horario.getHoraInicio();
-                LocalTime horaFin = horario.getHoraFin();
+            if (horariosDisponibles != null) {
+                for (Horario horario : horariosDisponibles) {
+                    LocalTime horaInicio = horario.getHoraInicio();
+                    LocalTime horaFin = horario.getHoraFin();
 
-                while (horaInicio.isBefore(horaFin)) {
-                    bloquesHorario.add(horaInicio);
-                    horaInicio = horaInicio.plusMinutes(30);
+                    while (horaInicio.isBefore(horaFin)) {
+                        bloquesHorario.add(horaInicio);
+                        horaInicio = horaInicio.plusMinutes(30);
+                    }
                 }
             }
 
@@ -97,18 +121,9 @@ public class CrearReservaControlador extends VentanaObservable {
                 return;
             }
 
-            if (!fecha.isAfter(LocalDate.now().plusDays(1))) {
-                mostrarAlerta("La reserva debe hacerse con al menos 2 días de anticipación", "Error", Alert.AlertType.ERROR);
-                return;
-            }
-
             controladorPrincipal.crearReserva(instalacion.getId(), sesion.getPersona().getCedula(), fecha, hora.toString());
             mostrarAlerta("Reserva realizada con éxito", "Éxito", Alert.AlertType.INFORMATION);
-
-            // Notificar a los observadores (PanelClienteControlador)
             notificarObservador();
-
-
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), "Error", Alert.AlertType.ERROR);
         }

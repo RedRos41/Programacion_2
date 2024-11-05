@@ -98,7 +98,6 @@ public class ControladorPrincipal implements ServiciosReservasUQ {
         return reservasUQ.listarHorariosDisponibles(idInstalacion, fecha);
     }
 
-    // Métodos adicionales para manejo de la interfaz gráfica
 
     public void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);

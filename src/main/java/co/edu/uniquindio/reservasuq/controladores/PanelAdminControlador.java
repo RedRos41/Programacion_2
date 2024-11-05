@@ -2,7 +2,6 @@ package co.edu.uniquindio.reservasuq.controladores;
 
 import co.edu.uniquindio.reservasuq.modelo.Instalacion;
 import co.edu.uniquindio.reservasuq.modelo.Reserva;
-
 import co.edu.uniquindio.reservasuq.observador.Observador;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -77,8 +76,13 @@ public class PanelAdminControlador implements Observador {
         controladorPrincipal.navegarVentanaObservable("/gestionInstalaciones.fxml", "Gestionar Instalaciones", this);
     }
 
+    @FXML
+    public void mostrarVentanaCrearReserva() {
+        controladorPrincipal.navegarVentanaObservable("/crearReserva.fxml", "Crear Reserva", this);
+    }
+
     @Override
     public void notificar() {
-        cargarDatosInstalaciones();
+        cargarDatosReservas();
     }
 }
