@@ -14,12 +14,7 @@
         </font>
     </Label>
 
-    <HBox spacing="10">
-        <ComboBox fx:id="comboInstalacion" onAction="#actualizarHorarios"/>
-        <DatePicker fx:id="datePickerFecha" promptText="Seleccione una fecha" onAction="#actualizarHorarios" />
-        <ComboBox fx:id="comboHorario" promptText="Seleccione un horario"/>
-        <Button text="Reservar" onAction="#reservarInstalacion" />
-    </HBox>
+    <Button text="Nueva Reserva" onAction="#mostrarVentanaCrearReserva"/>
 
     <TableView fx:id="tablaReservas" VBox.vgrow="ALWAYS">
         <columns>

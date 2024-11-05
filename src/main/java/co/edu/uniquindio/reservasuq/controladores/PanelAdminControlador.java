@@ -77,11 +77,6 @@ public class PanelAdminControlador implements Observador {
         controladorPrincipal.navegarVentanaObservable("/gestionInstalaciones.fxml", "Gestionar Instalaciones", this);
     }
 
-    @FXML
-    public void mostrarReservas() {
-        controladorPrincipal.navegarVentana("/listaReservas.fxml", "Lista de Reservas");
-    }
-
     @Override
     public void notificar() {
         cargarDatosInstalaciones();

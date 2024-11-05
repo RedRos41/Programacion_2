@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uniquindio.reservasuq.CrearReserva"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.reservasuq.controladores.CrearReservaControlador"
+      spacing="10" style="-fx-padding: 20;">
 
-</AnchorPane>
+    <Label text="Crear Reserva">
+        <font>
+            <Font size="20.0"/>
+        </font>
+    </Label>
+
+    <HBox spacing="10">
+        <ComboBox fx:id="comboInstalacion" promptText="Seleccione una instalación" onAction="#actualizarHorarios"/>
+        <DatePicker fx:id="datePickerFecha" promptText="Seleccione una fecha" onAction="#actualizarHorarios" />
+        <ComboBox fx:id="comboHorario" promptText="Seleccione un horario"/>
+    </HBox>
+
+    <Button text="Reservar" onAction="#reservarInstalacion" maxWidth="150"/>
+</VBox>

@@ -27,18 +27,23 @@ public class ReservasUQ implements ServiciosReservasUQ {
 
     private void crearInstalacionesEjemplo() {
         List<Horario> horariosGimnasio = new ArrayList<>();
-        horariosGimnasio.add(new Horario(DiaSemana.LUNES, LocalTime.of(8, 0), LocalTime.of(18, 0)));
+        horariosGimnasio.add(new Horario(DiaSemana.LUNES, LocalTime.of(8, 0), LocalTime.of(15, 0)));
         horariosGimnasio.add(new Horario(DiaSemana.MARTES, LocalTime.of(8, 0), LocalTime.of(18, 0)));
 
         List<Horario> horariosPiscina = new ArrayList<>();
         horariosPiscina.add(new Horario(DiaSemana.JUEVES, LocalTime.of(8, 0), LocalTime.of(16, 0)));
-        horariosPiscina.add(new Horario(DiaSemana.VIERNES, LocalTime.of(8, 0), LocalTime.of(16, 0)));
+        horariosPiscina.add(new Horario(DiaSemana.VIERNES, LocalTime.of(8, 0), LocalTime.of(15, 0)));
+
+        List<Horario> horariosCanchaFutbol = new ArrayList<>();
+        horariosCanchaFutbol.add(new Horario(DiaSemana.MIERCOLES, LocalTime.of(8, 0), LocalTime.of(20, 0)));
+        horariosCanchaFutbol.add(new Horario(DiaSemana.JUEVES, LocalTime.of(10, 0), LocalTime.of(20, 0)));
+        horariosCanchaFutbol.add(new Horario(DiaSemana.SABADO, LocalTime.of(7, 0), LocalTime.of(14, 0)));
 
         Instalacion gimnasio = Instalacion.builder()
                 .id(UUID.randomUUID().toString())
                 .nombre("Gimnasio")
-                .aforo(70)
-                .costo(0.0f)
+                .aforo(20)
+                .costo(45000)
                 .horarios(new HashMap<>())
                 .build();
         gimnasio.agregarHorario(DiaSemana.LUNES, LocalTime.of(8, 0), LocalTime.of(18, 0));
@@ -47,15 +52,27 @@ public class ReservasUQ implements ServiciosReservasUQ {
         Instalacion piscina = Instalacion.builder()
                 .id(UUID.randomUUID().toString())
                 .nombre("Piscina")
-                .aforo(50)
-                .costo(5.0f)
+                .aforo(15)
+                .costo(18000)
                 .horarios(new HashMap<>())
                 .build();
         piscina.agregarHorario(DiaSemana.JUEVES, LocalTime.of(8, 0), LocalTime.of(16, 0));
         piscina.agregarHorario(DiaSemana.VIERNES, LocalTime.of(8, 0), LocalTime.of(16, 0));
 
+        Instalacion canchaFutbol = Instalacion.builder()
+                .id(UUID.randomUUID().toString())
+                .nombre("Cancha de Futbol")
+                .aforo(25)
+                .costo(55000)
+                .horarios(new HashMap<>())
+                .build();
+        canchaFutbol.agregarHorario(DiaSemana.MIERCOLES, LocalTime.of(8, 0), LocalTime.of(20, 0));
+        canchaFutbol.agregarHorario(DiaSemana.JUEVES, LocalTime.of(10, 0), LocalTime.of(20, 0));
+        canchaFutbol.agregarHorario(DiaSemana.SABADO, LocalTime.of(7, 0), LocalTime.of(14, 0));
+
         instalaciones.add(gimnasio);
         instalaciones.add(piscina);
+        instalaciones.add(canchaFutbol);
     }
 
     @Override

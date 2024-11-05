@@ -34,7 +34,7 @@ public class LoginControlador {
             Sesion sesion = Sesion.getInstancia();
             sesion.setPersona(persona);
 
-            // Verificar el tipo de usuario y navegar a la ventana correspondiente
+
             if (persona.getTipoPersona() == TipoPersona.ADMINISTRATIVO) {
                 controladorPrincipal.navegarVentana("/panelAdmin.fxml", "Panel Administrador");
             } else {
