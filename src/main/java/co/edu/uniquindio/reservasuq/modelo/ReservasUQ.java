@@ -160,15 +160,7 @@ public class ReservasUQ implements ServiciosReservasUQ {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public void cancelarReserva(String idReserva) throws Exception {
-        Reserva reserva = reservas.stream()
-                .filter(r -> r.getIdReserva().equals(idReserva))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Reserva no encontrada"));
 
-        reservas.remove(reserva);
-    }
 
     @Override
     public List<Instalacion> listarInstalaciones() {
@@ -256,5 +248,15 @@ public class ReservasUQ implements ServiciosReservasUQ {
         original.setNombre(instalacion.getNombre());
         original.setAforo(instalacion.getAforo());
         original.setCosto(instalacion.getCosto());
+    }
+
+    @Override
+    public void cancelarReserva(String idReserva) throws Exception {
+        Reserva reserva = reservas.stream()
+                .filter(r -> r.getIdReserva().equals(idReserva))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Reserva no encontrada"));
+
+        reservas.remove(reserva);
     }
 }

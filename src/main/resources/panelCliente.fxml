@@ -23,4 +23,6 @@
             <TableColumn text="Costo" fx:id="colCosto" />
         </columns>
     </TableView>
+
+    <Button text="Cancelar Reserva" onAction="#cancelarReservaSeleccionada"/>
 </VBox>

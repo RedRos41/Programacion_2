@@ -27,7 +27,7 @@ public class CrearReservaControlador extends VentanaObservable {
     @FXML
     private TextArea txtDetallesInstalacion;
 
-    private final ServiciosReservasUQ controladorPrincipal;
+    private final ControladorPrincipal controladorPrincipal;
     private final Sesion sesion;
 
     public CrearReservaControlador() {
@@ -121,14 +121,22 @@ public class CrearReservaControlador extends VentanaObservable {
                 return;
             }
 
-            controladorPrincipal.crearReserva(instalacion.getId(), sesion.getPersona().getCedula(), fecha, hora.toString());
+            if (!fecha.isAfter(LocalDate.now().plusDays(1))) {
+                mostrarAlerta("La reserva debe hacerse con al menos 2 días de anticipación", "Error", Alert.AlertType.ERROR);
+                return;
+            }
+
+            ControladorPrincipal.getInstancia().crearReserva(instalacion.getId(), Sesion.getInstancia().getPersona().getCedula(), fecha, hora.toString());
             mostrarAlerta("Reserva realizada con éxito", "Éxito", Alert.AlertType.INFORMATION);
 
+            controladorPrincipal.cerrarVentana(txtDetallesInstalacion);
             notificarObservador();
+
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), "Error", Alert.AlertType.ERROR);
         }
     }
+
 
     private void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
         Alert alerta = new Alert(tipo);

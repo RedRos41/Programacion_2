@@ -24,8 +24,6 @@ public interface ServiciosReservasUQ {
 
     List<Reserva> listarReservasPorPersona(String cedulaPersona);
 
-    void cancelarReserva(String idReserva) throws Exception;
-
     List<Instalacion> listarInstalaciones();
 
     Instalacion buscarInstalacionPorId(String idInstalacion) throws Exception;
@@ -39,6 +37,8 @@ public interface ServiciosReservasUQ {
     Instalacion buscarInstalacionPorNombre(String nombre) throws Exception;
 
     void actualizarInstalacion(Instalacion instalacion) throws Exception;
+
+    void cancelarReserva(String idReserva) throws Exception;
 
 
 }

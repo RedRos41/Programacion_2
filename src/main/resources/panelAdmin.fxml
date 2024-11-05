@@ -16,10 +16,9 @@
         </font>
     </Label>
 
-
     <HBox spacing="10" alignment="CENTER">
         <Button text="Gestionar Instalaciones" onAction="#mostrarGestionInstalaciones"/>
-        <Button text="Crear Reserva" onAction="#mostrarVentanaCrearReserva" />
+        <Button text="Crear Reserva" onAction="#mostrarVentanaCrearReserva"/>
         <Button text="Editar Instalación" onAction="#mostrarVentanaEditarInstalacion"/>
     </HBox>
 
@@ -48,6 +47,8 @@
                     <TableColumn text="Costo" fx:id="colCostoReserva" prefWidth="75"/>
                 </columns>
             </TableView>
+            <!-- Botón para cancelar reserva -->
+            <Button text="Cancelar Reserva" onAction="#cancelarReservaSeleccionada" />
         </VBox>
     </HBox>
 </VBox>

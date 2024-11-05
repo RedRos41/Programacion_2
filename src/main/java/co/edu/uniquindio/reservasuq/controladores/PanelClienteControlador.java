@@ -61,4 +61,22 @@ public class PanelClienteControlador implements Observador {
         colCosto.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getCosto()));
     }
+
+    @FXML
+    public void cancelarReservaSeleccionada() {
+        Reserva seleccionada = tablaReservas.getSelectionModel().getSelectedItem();
+        if (seleccionada == null) {
+            controladorPrincipal.mostrarAlerta("Seleccione una reserva para cancelar.", "Advertencia", Alert.AlertType.WARNING);
+            return;
+        }
+
+        try {
+            controladorPrincipal.cancelarReserva(seleccionada.getIdReserva());
+            controladorPrincipal.mostrarAlerta("Reserva cancelada con éxito.", "Éxito", Alert.AlertType.INFORMATION);
+            cargarReservas();
+        } catch (Exception e) {
+            controladorPrincipal.mostrarAlerta(e.getMessage(), "Error", Alert.AlertType.ERROR);
+        }
+    }
+
 }
