@@ -38,4 +38,7 @@ public interface ServiciosReservasUQ {
 
     Instalacion buscarInstalacionPorNombre(String nombre) throws Exception;
 
+    void actualizarInstalacion(Instalacion instalacion) throws Exception;
+
+
 }

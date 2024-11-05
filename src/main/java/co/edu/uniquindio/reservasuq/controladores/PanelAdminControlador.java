@@ -4,9 +4,14 @@ import co.edu.uniquindio.reservasuq.modelo.Instalacion;
 import co.edu.uniquindio.reservasuq.modelo.Reserva;
 import co.edu.uniquindio.reservasuq.observador.Observador;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -62,8 +67,8 @@ public class PanelAdminControlador implements Observador {
     }
 
     private void cargarDatosInstalaciones() {
-        List<Instalacion> instalaciones = controladorPrincipal.listarInstalaciones();
-        tablaInstalaciones.setItems(FXCollections.observableArrayList(instalaciones));
+        ObservableList<Instalacion> instalaciones = tablaInstalaciones.getItems();
+        instalaciones.setAll(controladorPrincipal.listarInstalaciones());
     }
 
     private void cargarDatosReservas() {
@@ -81,8 +86,38 @@ public class PanelAdminControlador implements Observador {
         controladorPrincipal.navegarVentanaObservable("/crearReserva.fxml", "Crear Reserva", this);
     }
 
+    @FXML
+    public void mostrarVentanaEditarInstalacion() {
+        Instalacion seleccionada = tablaInstalaciones.getSelectionModel().getSelectedItem();
+        if (seleccionada == null) {
+            controladorPrincipal.mostrarAlerta("Seleccione una instalación para editar.", "Advertencia", Alert.AlertType.WARNING);
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/editarInstalacion.fxml"));
+            Parent root = loader.load();
+
+            EditarInstalacionControlador controlador = loader.getController();
+            controlador.setInstalacion(seleccionada);
+            controlador.setObservador(this);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.setTitle("Editar Instalación");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void notificar() {
-        cargarDatosReservas();
+        javafx.application.Platform.runLater(() -> {
+            cargarDatosInstalaciones();
+            cargarDatosReservas();
+        });
     }
 }

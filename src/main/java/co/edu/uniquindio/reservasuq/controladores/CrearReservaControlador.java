@@ -123,6 +123,7 @@ public class CrearReservaControlador extends VentanaObservable {
 
             controladorPrincipal.crearReserva(instalacion.getId(), sesion.getPersona().getCedula(), fecha, hora.toString());
             mostrarAlerta("Reserva realizada con éxito", "Éxito", Alert.AlertType.INFORMATION);
+
             notificarObservador();
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), "Error", Alert.AlertType.ERROR);

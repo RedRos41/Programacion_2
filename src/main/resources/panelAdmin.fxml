@@ -20,6 +20,7 @@
     <HBox spacing="10" alignment="CENTER">
         <Button text="Gestionar Instalaciones" onAction="#mostrarGestionInstalaciones"/>
         <Button text="Crear Reserva" onAction="#mostrarVentanaCrearReserva" />
+        <Button text="Editar Instalación" onAction="#mostrarVentanaEditarInstalacion"/>
     </HBox>
 
     <!-- Tablas colocadas una al lado de la otra -->

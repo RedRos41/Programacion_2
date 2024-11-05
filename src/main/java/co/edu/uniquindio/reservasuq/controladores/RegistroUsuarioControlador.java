@@ -34,7 +34,6 @@ public class RegistroUsuarioControlador {
 
     @FXML
     public void initialize() {
-        // Poblar el ComboBox con los valores de TipoPersona
         comboTipoPersona.getItems().addAll(TipoPersona.values());
     }
 
@@ -56,10 +55,8 @@ public class RegistroUsuarioControlador {
                     txtEmail.getText(),
                     txtPassword.getText()
             );
-
             mostrarAlerta("Éxito", "Usuario registrado correctamente", Alert.AlertType.INFORMATION);
 
-            // Limpiar los campos después de registrar al usuario
             limpiarFormulario();
 
         } catch (Exception e) {

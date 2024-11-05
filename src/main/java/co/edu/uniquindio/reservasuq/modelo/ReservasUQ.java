@@ -249,4 +249,12 @@ public class ReservasUQ implements ServiciosReservasUQ {
                 .findFirst()
                 .orElseThrow(() -> new Exception("Instalación no encontrada."));
     }
+
+    @Override
+    public void actualizarInstalacion(Instalacion instalacion) throws Exception {
+        Instalacion original = buscarInstalacionPorId(instalacion.getId());
+        original.setNombre(instalacion.getNombre());
+        original.setAforo(instalacion.getAforo());
+        original.setCosto(instalacion.getCosto());
+    }
 }

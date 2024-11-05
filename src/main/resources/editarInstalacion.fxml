@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.reservasuq.controladores.EditarInstalacionControlador"
+      spacing="10" style="-fx-padding: 20;">
+    <Label text="Editar Instalación" />
+    <TextField fx:id="txtNombreInstalacion" promptText="Nombre de la Instalación" />
+    <TextField fx:id="txtAforo" promptText="Aforo" />
+    <TextField fx:id="txtCosto" promptText="Costo" />
+    <Button text="Guardar Cambios" onAction="#actualizarInstalacion" />
+</VBox>

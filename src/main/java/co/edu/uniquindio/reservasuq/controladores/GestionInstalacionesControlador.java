@@ -80,7 +80,8 @@ public class GestionInstalacionesControlador extends VentanaObservable {
 
             controladorPrincipal.crearInstalacion(nombre, aforo, costo, horarios);
             mostrarAlerta("Instalación agregada correctamente", "Éxito", Alert.AlertType.INFORMATION);
-            limpiarCampos();
+
+            controladorPrincipal.cerrarVentana(txtNombreInstalacion);
 
             notificarObservador();
 

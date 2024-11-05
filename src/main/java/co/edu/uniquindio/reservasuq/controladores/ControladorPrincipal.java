@@ -98,6 +98,18 @@ public class ControladorPrincipal implements ServiciosReservasUQ {
         return reservasUQ.listarHorariosDisponibles(idInstalacion, fecha);
     }
 
+    @Override
+    public void actualizarInstalacion(Instalacion instalacion) throws Exception {
+        reservasUQ.actualizarInstalacion(instalacion);
+    }
+
+    public void actualizarReservasConInstalacionEditada(Instalacion instalacion) {
+        for (Reserva reserva : listarTodasReservas()) {
+            if (reserva.getInstalacion().getId().equals(instalacion.getId())) {
+                reserva.setInstalacion(instalacion);
+            }
+        }
+    }
 
     public void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
