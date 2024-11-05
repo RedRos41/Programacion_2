@@ -148,171 +148,6 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public void editarUsuario(long cedulaUsuario, String nombreUsuario, String emailUsuario, long telefonoUsuario) throws Exception {
-
-        if (!numeroValido(cedulaUsuario)) {
-
-            throw new Exception("La cedula debe tener exactamente 10 digitos numericos.");
-
-        }
-
-        int idUsuario = buscarUsuario(cedulaUsuario);
-
-        if (idUsuario == -1) {
-
-            throw new Exception("No existe un usuario con la cedula proporcionada.");
-
-        }
-
-        if (nombreUsuario.isBlank()) {
-
-            throw new Exception("El nombre no puede estar vacio.");
-
-        }
-
-        if (!nombreUsuario.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
-
-            throw new Exception("El nombre solo puede contener letras.");
-
-        }
-
-        if (emailUsuario.isBlank()) {
-
-            throw new Exception("El email no puede estar vacio.");
-
-        }
-
-        if (!emailUsuario.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
-
-            throw new Exception("El email debe tener el formato de correo electronico.");
-
-        }
-
-        if (!numeroValido(telefonoUsuario)) {
-
-            throw new Exception("El telefono debe tener exactamente 10 digitos numericos.");
-
-        }
-
-        Usuario editarUsuario = usuarios.get(idUsuario);
-        editarUsuario.setCedulaUsuario(cedulaUsuario);
-        editarUsuario.setNombreUsuario(nombreUsuario);
-        editarUsuario.setEmailUsuario(emailUsuario);
-        editarUsuario.setTelefonoUsuario(telefonoUsuario);
-
-    }
-
-
-    @Override
-    public void eliminarUsuario(long cedulaUsuario) throws Exception {
-
-        if (!numeroValido(cedulaUsuario)) {
-
-            throw new Exception("La cedula debe tener exactamente 10 digitos numericos.");
-
-        }
-
-        int idUsuario = buscarUsuario(cedulaUsuario);
-
-        if (idUsuario == -1) {
-
-            throw new Exception("No existe un usuario con la cedula proporcionada.");
-
-        }
-
-        usuarios.remove(idUsuario);
-
-    }
-
-
-    @Override
-    public void solicitarCambioContraseña(String emailUsuario) throws Exception {
-
-        if (emailUsuario.isBlank()) {
-
-            throw new Exception("El email no puede estar vacio.");
-
-        }
-
-        if (!emailUsuario.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
-
-            throw new Exception("El email debe tener el formato de correo electronico.");
-
-        }
-
-        Usuario usuario = buscarUsuarioPorEmail(emailUsuario);
-
-        if (usuario == null) {
-
-            throw new Exception("No existe un usuario con el email proporcionado.");
-
-        }
-
-        String codigoContraseña = generarCodigo();
-
-        usuario.setCodigoContraseña(codigoContraseña);
-
-        try {
-
-            EnvioEmail.enviarCorreo(emailUsuario, "Código de cambio de Contraseña", "Su código de cambio de contraseña es: " + codigoContraseña);
-
-        }catch (Exception e) {
-
-            throw new Exception("Error al enviar el correo de cambio de contraseña. Por favor, intente nuevamente.");
-
-        }
-
-    }
-
-
-    @Override
-    public void cambiarContraseña(String codigoContraseña, String nuevaContraseña) throws Exception {
-
-        if (codigoContraseña.isBlank()) {
-
-            throw new Exception("El codigo de cambio de contraseña no puede estar vacio.");
-
-        }
-
-        if (codigoContraseña.length() != 6 || !codigoContraseña.matches("\\d{6}")) {
-
-            throw new Exception("El codigo de cambio de contraseña debe tener exactamente 6 digitos numericos.");
-
-        }
-
-        Usuario usuario = buscarUsuarioPorCodigoContraseña(codigoContraseña);
-
-        if (usuario == null) {
-
-            throw new Exception("El codigo de cambio de contraseña proporcionado es incorrecto.");
-
-        }
-
-        if (nuevaContraseña.isBlank()) {
-
-            throw new Exception("La contraseña no puede estar vacio.");
-
-        }
-        if (nuevaContraseña.length() < 8) {
-
-            throw new Exception("La contraseña debe tener al menos 8 caracteres.");
-
-        }
-
-        if (usuario.getContraseñaUsuario().equals(nuevaContraseña)) {
-
-            throw new Exception("La nueva contraseña no puede ser igual a la contraseña actual.");
-
-        }
-
-        usuario.setContraseñaUsuario(nuevaContraseña);
-
-        usuario.setCodigoContraseña(null);
-
-    }
-
-
-    @Override
     public void registrarCasa(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) throws Exception {
 
         if (direccionAlojamiento <= 0) {
@@ -588,6 +423,62 @@ public class Empresa implements ServicioEmpresa {
         Habitacion habitacion = crearHabitacion(numeroHabitacion, capacidadHabitacion, precioHabitacion, imagenHabitacion, descripcionHabitacion);
 
         hotel.getHabitaciones().add(habitacion);
+
+    }
+
+
+    @Override
+    public void editarUsuario(long cedulaUsuario, String nombreUsuario, String emailUsuario, long telefonoUsuario) throws Exception {
+
+        if (!numeroValido(cedulaUsuario)) {
+
+            throw new Exception("La cedula debe tener exactamente 10 digitos numericos.");
+
+        }
+
+        int idUsuario = buscarUsuario(cedulaUsuario);
+
+        if (idUsuario == -1) {
+
+            throw new Exception("No existe un usuario con la cedula proporcionada.");
+
+        }
+
+        if (nombreUsuario.isBlank()) {
+
+            throw new Exception("El nombre no puede estar vacio.");
+
+        }
+
+        if (!nombreUsuario.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+
+            throw new Exception("El nombre solo puede contener letras.");
+
+        }
+
+        if (emailUsuario.isBlank()) {
+
+            throw new Exception("El email no puede estar vacio.");
+
+        }
+
+        if (!emailUsuario.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
+            throw new Exception("El email debe tener el formato de correo electronico.");
+
+        }
+
+        if (!numeroValido(telefonoUsuario)) {
+
+            throw new Exception("El telefono debe tener exactamente 10 digitos numericos.");
+
+        }
+
+        Usuario editarUsuario = usuarios.get(idUsuario);
+        editarUsuario.setCedulaUsuario(cedulaUsuario);
+        editarUsuario.setNombreUsuario(nombreUsuario);
+        editarUsuario.setEmailUsuario(emailUsuario);
+        editarUsuario.setTelefonoUsuario(telefonoUsuario);
 
     }
 
@@ -921,6 +812,28 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public void eliminarUsuario(long cedulaUsuario) throws Exception {
+
+        if (!numeroValido(cedulaUsuario)) {
+
+            throw new Exception("La cedula debe tener exactamente 10 digitos numericos.");
+
+        }
+
+        int idUsuario = buscarUsuario(cedulaUsuario);
+
+        if (idUsuario == -1) {
+
+            throw new Exception("No existe un usuario con la cedula proporcionada.");
+
+        }
+
+        usuarios.remove(idUsuario);
+
+    }
+
+
+    @Override
     public void eliminarAlojamiento(int direccionAlojamiento) throws Exception {
 
         if (direccionAlojamiento <= 0) {
@@ -971,35 +884,166 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public Usuario buscarUsuarioPorEmail(String emailUsuario) {
+    public void solicitarCambioContraseña(String emailUsuario) throws Exception {
 
-        for (Usuario usuario : usuarios) {
+        if (emailUsuario.isBlank()) {
 
-            if (usuario.getEmailUsuario().equals(emailUsuario)) {
-
-                return usuario;
-
-            }
+            throw new Exception("El email no puede estar vacio.");
 
         }
-        return null;
+
+        if (!emailUsuario.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
+            throw new Exception("El email debe tener el formato de correo electronico.");
+
+        }
+
+        Usuario usuario = buscarUsuarioPorEmail(emailUsuario);
+
+        if (usuario == null) {
+
+            throw new Exception("No existe un usuario con el email proporcionado.");
+
+        }
+
+        String codigoContraseña = generarCodigo();
+
+        usuario.setCodigoContraseña(codigoContraseña);
+
+        try {
+
+            EnvioEmail.enviarCorreo(emailUsuario, "Código de cambio de Contraseña", "Su código de cambio de contraseña es: " + codigoContraseña);
+
+        }catch (Exception e) {
+
+            throw new Exception("Error al enviar el correo de cambio de contraseña. Por favor, intente nuevamente.");
+
+        }
 
     }
 
 
     @Override
-    public Usuario buscarUsuarioPorCodigoContraseña(String codigoContraseña) {
+    public void cambiarContraseña(String codigoContraseña, String nuevaContraseña) throws Exception {
 
-        for (Usuario usuario : usuarios) {
+        if (codigoContraseña.isBlank()) {
 
-            if (usuario.getCodigoContraseña().equals(codigoContraseña)) {
+            throw new Exception("El codigo de cambio de contraseña no puede estar vacio.");
 
-                return usuario;
+        }
+
+        if (codigoContraseña.length() != 6 || !codigoContraseña.matches("\\d{6}")) {
+
+            throw new Exception("El codigo de cambio de contraseña debe tener exactamente 6 digitos numericos.");
+
+        }
+
+        Usuario usuario = buscarUsuarioPorCodigoContraseña(codigoContraseña);
+
+        if (usuario == null) {
+
+            throw new Exception("El codigo de cambio de contraseña proporcionado es incorrecto.");
+
+        }
+
+        if (nuevaContraseña.isBlank()) {
+
+            throw new Exception("La contraseña no puede estar vacio.");
+
+        }
+        if (nuevaContraseña.length() < 8) {
+
+            throw new Exception("La contraseña debe tener al menos 8 caracteres.");
+
+        }
+
+        if (usuario.getContraseñaUsuario().equals(nuevaContraseña)) {
+
+            throw new Exception("La nueva contraseña no puede ser igual a la contraseña actual.");
+
+        }
+
+        usuario.setContraseñaUsuario(nuevaContraseña);
+
+        usuario.setCodigoContraseña(null);
+
+    }
+
+
+    @Override
+    public int buscarUsuario(long cedulaUsuario) {
+
+        for (int i = 0; i < usuarios.size(); i++) {
+
+            if (usuarios.get(i).getCedulaUsuario() == cedulaUsuario) {
+
+                return i;
 
             }
 
         }
-        return null;
+        return -1;
+
+    }
+
+
+    @Override
+    public int buscarAlojamiento(int direccionAlojamiento) {
+
+        for (int i = 0; i < alojamientos.size(); i++) {
+
+            if (alojamientos.get(i).getDireccionAlojamiento() == direccionAlojamiento) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public int buscarHabitacion(Hotel hotel, int numeroHabitacion) {
+
+        for (int i = 0; i < hotel.getHabitaciones().size(); i++) {
+
+            Habitacion habitacion = hotel.getHabitaciones().get(i);
+
+            if (habitacion.getNumeroHabitacion() == numeroHabitacion) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public boolean buscarAdministrador() {
+
+        for (Usuario usuario : usuarios) {
+
+            if (usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+
+                return true;
+
+            }
+
+        }
+        return false;
+
+    }
+
+
+    @Override
+    public boolean numeroValido(long numero) {
+
+        return numero >= 1000000000L && numero <= 9999999999L;
 
     }
 
@@ -1125,6 +1169,57 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public Usuario buscarUsuarioPorEmail(String emailUsuario) {
+
+        for (Usuario usuario : usuarios) {
+
+            if (usuario.getEmailUsuario().equals(emailUsuario)) {
+
+                return usuario;
+
+            }
+
+        }
+        return null;
+
+    }
+
+
+    @Override
+    public Usuario buscarUsuarioPorCodigoContraseña(String codigoContraseña) {
+
+        for (Usuario usuario : usuarios) {
+
+            if (usuario.getCodigoContraseña().equals(codigoContraseña)) {
+
+                return usuario;
+
+            }
+
+        }
+        return null;
+
+    }
+
+
+    @Override
+    public Alojamiento buscarAlojamientoPorNombre(String nombreAlojamiento) {
+
+        for (Alojamiento alojamiento : alojamientos) {
+
+            if (alojamiento.getNombreAlojamiento().equals(nombreAlojamiento)) {
+
+                return alojamiento;
+
+            }
+
+        }
+        return null;
+
+    }
+
+
+    @Override
     public Casa crearCasa(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) {
 
         return Casa.builder()
@@ -1198,6 +1293,16 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public String generarCodigo() {
+
+        int codigo = (int) (Math.random() * 900000) + 100000;
+
+        return String.valueOf(codigo);
+
+    }
+
+
+    @Override
     public List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception {
 
         if (nombreAlojamiento.isBlank()) {
@@ -1247,111 +1352,6 @@ public class Empresa implements ServicioEmpresa {
                 .toList());
 
         return filtroAlojamiento;
-
-    }
-
-
-    @Override
-    public Alojamiento buscarAlojamientoPorNombre(String nombreAlojamiento) {
-
-        for (Alojamiento alojamiento : alojamientos) {
-
-            if (alojamiento.getNombreAlojamiento().equals(nombreAlojamiento)) {
-
-                return alojamiento;
-
-            }
-
-        }
-        return null;
-
-    }
-
-
-    @Override
-    public boolean numeroValido(long numero) {
-
-        return numero >= 1000000000L && numero <= 9999999999L;
-
-    }
-
-
-    @Override
-    public boolean buscarAdministrador() {
-
-        for (Usuario usuario : usuarios) {
-
-            if (usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-
-                return true;
-
-            }
-
-        }
-        return false;
-
-    }
-
-
-    @Override
-    public int buscarUsuario(long cedulaUsuario) {
-
-        for (int i = 0; i < usuarios.size(); i++) {
-
-            if (usuarios.get(i).getCedulaUsuario() == cedulaUsuario) {
-
-                return i;
-
-            }
-
-        }
-        return -1;
-
-    }
-
-
-    @Override
-    public int buscarAlojamiento(int direccionAlojamiento) {
-
-        for (int i = 0; i < alojamientos.size(); i++) {
-
-            if (alojamientos.get(i).getDireccionAlojamiento() == direccionAlojamiento) {
-
-                return i;
-
-            }
-
-        }
-        return -1;
-
-    }
-
-
-    @Override
-    public int buscarHabitacion(Hotel hotel, int numeroHabitacion) {
-
-        for (int i = 0; i < hotel.getHabitaciones().size(); i++) {
-
-            Habitacion habitacion = hotel.getHabitaciones().get(i);
-
-            if (habitacion.getNumeroHabitacion() == numeroHabitacion) {
-
-                return i;
-
-            }
-
-        }
-        return -1;
-
-    }
-
-
-    @Override
-    public String generarCodigo() {
-
-        int codigo = (int) (Math.random() * 900000) + 100000;
-
-        return String.valueOf(codigo);
 
     }
 
