@@ -257,4 +257,14 @@ public class ReservasUQ implements ServiciosReservasUQ {
 
         reservas.remove(reserva);
     }
+
+    @Override
+    public boolean verificarDisponibilidadConDuracion(String idInstalacion, LocalDateTime fechaHoraReserva, int duracionHoras) {
+        LocalDateTime finReserva = fechaHoraReserva.plusHours(duracionHoras);
+        return reservas.stream()
+                .filter(reserva -> reserva.getInstalacion().getId().equals(idInstalacion))
+                .noneMatch(reserva ->
+                        (reserva.getFechaHoraReserva().isBefore(finReserva) && reserva.getFechaHoraReserva().plusHours(duracionHoras).isAfter(fechaHoraReserva))
+                );
+    }
 }

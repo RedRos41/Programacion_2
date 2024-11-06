@@ -7,6 +7,7 @@ import co.edu.uniquindio.reservasuq.modelo.Persona;
 import co.edu.uniquindio.reservasuq.modelo.Reserva;
 import co.edu.uniquindio.reservasuq.modelo.enums.TipoPersona;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -39,6 +40,8 @@ public interface ServiciosReservasUQ {
     void actualizarInstalacion(Instalacion instalacion) throws Exception;
 
     void cancelarReserva(String idReserva) throws Exception;
+
+    boolean verificarDisponibilidadConDuracion(String idInstalacion, LocalDateTime fechaHoraReserva, int duracionHoras);
 
 
 }

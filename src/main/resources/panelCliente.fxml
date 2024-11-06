@@ -6,7 +6,7 @@
 
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="co.edu.uniquindio.reservasuq.controladores.PanelClienteControlador"
-      spacing="10" style="-fx-padding: 20;">
+      spacing="10" style="-fx-padding: 20;" prefWidth="500" prefHeight="400">
 
     <Label text="Panel de Reservas del Usuario">
         <font>
@@ -16,11 +16,11 @@
 
     <Button text="Nueva Reserva" onAction="#mostrarVentanaCrearReserva"/>
 
-    <TableView fx:id="tablaReservas" VBox.vgrow="ALWAYS">
+    <TableView fx:id="tablaReservas" VBox.vgrow="ALWAYS" prefHeight="300">
         <columns>
-            <TableColumn text="Instalación" fx:id="colInstalacion" />
-            <TableColumn text="Fecha y Hora" fx:id="colFechaHora" />
-            <TableColumn text="Costo" fx:id="colCosto" />
+            <TableColumn text="Instalación" fx:id="colInstalacion" prefWidth="150"/>
+            <TableColumn text="Fecha y Hora" fx:id="colFechaHora" prefWidth="200"/>
+            <TableColumn text="Costo" fx:id="colCosto" prefWidth="100"/>
         </columns>
     </TableView>
 

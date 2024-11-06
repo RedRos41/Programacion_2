@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ControladorPrincipal implements ServiciosReservasUQ {
@@ -101,6 +102,11 @@ public class ControladorPrincipal implements ServiciosReservasUQ {
     @Override
     public void actualizarInstalacion(Instalacion instalacion) throws Exception {
         reservasUQ.actualizarInstalacion(instalacion);
+    }
+
+    @Override
+    public boolean verificarDisponibilidadConDuracion(String idInstalacion, LocalDateTime fechaHoraReserva, int duracionHoras) {
+        return reservasUQ.verificarDisponibilidadConDuracion(idInstalacion, fechaHoraReserva, duracionHoras);
     }
 
     public void actualizarReservasConInstalacionEditada(Instalacion instalacion) {

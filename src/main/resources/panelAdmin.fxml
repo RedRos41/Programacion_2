@@ -7,7 +7,7 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="co.edu.uniquindio.reservasuq.controladores.PanelAdminControlador"
-      spacing="10" style="-fx-padding: 10;">
+      spacing="10" style="-fx-padding: 10;" prefWidth="700" prefHeight="500">
 
     <!-- Título principal del panel -->
     <Label text="Panel de Administración" alignment="CENTER">
@@ -27,11 +27,11 @@
         <!-- Tabla de Instalaciones -->
         <VBox spacing="5" style="-fx-padding: 10;">
             <Label text="Instalaciones"/>
-            <TableView fx:id="tablaInstalaciones" prefWidth="300">
+            <TableView fx:id="tablaInstalaciones" prefWidth="350" prefHeight="300">
                 <columns>
                     <TableColumn text="Instalación" fx:id="colInstalacion" prefWidth="150"/>
-                    <TableColumn text="Capacidad" fx:id="colAforo" prefWidth="75"/>
-                    <TableColumn text="Costo" fx:id="colCosto" prefWidth="75"/>
+                    <TableColumn text="Capacidad" fx:id="colAforo" prefWidth="100"/>
+                    <TableColumn text="Costo" fx:id="colCosto" prefWidth="100"/>
                 </columns>
             </TableView>
         </VBox>
@@ -39,12 +39,12 @@
         <!-- Tabla de Reservas -->
         <VBox spacing="5" style="-fx-padding: 10;">
             <Label text="Reservas Realizadas"/>
-            <TableView fx:id="tablaReservas" prefWidth="300">
+            <TableView fx:id="tablaReservas" prefWidth="350" prefHeight="300">
                 <columns>
-                    <TableColumn text="Persona" fx:id="colPersonaReserva" prefWidth="100"/>
-                    <TableColumn text="Instalación" fx:id="colInstalacionReserva" prefWidth="100"/>
-                    <TableColumn text="Fecha y Hora" fx:id="colFechaHoraReserva" prefWidth="100"/>
-                    <TableColumn text="Costo" fx:id="colCostoReserva" prefWidth="75"/>
+                    <TableColumn text="Persona" fx:id="colPersonaReserva" prefWidth="150"/>
+                    <TableColumn text="Instalación" fx:id="colInstalacionReserva" prefWidth="150"/>
+                    <TableColumn text="Fecha y Hora" fx:id="colFechaHoraReserva" prefWidth="200"/>
+                    <TableColumn text="Costo" fx:id="colCostoReserva" prefWidth="100"/>
                 </columns>
             </TableView>
             <!-- Botón para cancelar reserva -->

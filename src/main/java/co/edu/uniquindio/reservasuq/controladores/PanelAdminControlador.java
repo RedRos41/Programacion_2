@@ -3,6 +3,7 @@ package co.edu.uniquindio.reservasuq.controladores;
 import co.edu.uniquindio.reservasuq.modelo.Instalacion;
 import co.edu.uniquindio.reservasuq.modelo.Reserva;
 import co.edu.uniquindio.reservasuq.observador.Observador;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -60,9 +62,15 @@ public class PanelAdminControlador implements Observador {
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPersona().getNombre()));
         colInstalacionReserva.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getInstalacion().getNombre()));
-        colFechaHoraReserva.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(
-                        cellData.getValue().getFechaHoraReserva().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
+        colFechaHoraReserva.setCellValueFactory(cellData -> {
+            LocalDateTime fechaHoraInicio = cellData.getValue().getFechaHoraReserva();
+            LocalDateTime fechaHoraFin = fechaHoraInicio.plusHours(2); // Duración de 2 horas
+            String rango = fechaHoraInicio.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+                    + " - "
+                    + fechaHoraFin.format(DateTimeFormatter.ofPattern("HH:mm"));
+            return new SimpleStringProperty(rango);
+        });
+
         colCostoReserva.setCellValueFactory(new PropertyValueFactory<>("costo"));
     }
 

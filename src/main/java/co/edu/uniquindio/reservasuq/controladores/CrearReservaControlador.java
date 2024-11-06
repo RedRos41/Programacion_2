@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +117,7 @@ public class CrearReservaControlador extends VentanaObservable {
             Instalacion instalacion = comboInstalacion.getValue();
             LocalDate fecha = datePickerFecha.getValue();
             LocalTime hora = comboHorario.getValue();
+            int duracionHoras = 2;
 
             if (instalacion == null || fecha == null || hora == null) {
                 mostrarAlerta("Seleccione todos los campos para reservar", "Error", Alert.AlertType.ERROR);
@@ -126,6 +128,7 @@ public class CrearReservaControlador extends VentanaObservable {
                 mostrarAlerta("La reserva debe hacerse con al menos 2 días de anticipación", "Error", Alert.AlertType.ERROR);
                 return;
             }
+            LocalDateTime fechaHoraReserva = LocalDateTime.of(fecha, hora);
 
             ControladorPrincipal.getInstancia().crearReserva(instalacion.getId(), Sesion.getInstancia().getPersona().getCedula(), fecha, hora.toString());
             mostrarAlerta("Reserva realizada con éxito", "Éxito", Alert.AlertType.INFORMATION);

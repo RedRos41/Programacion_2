@@ -5,12 +5,15 @@ import co.edu.uniquindio.reservasuq.modelo.Sesion;
 import co.edu.uniquindio.reservasuq.modelo.enums.DiaSemana;
 import co.edu.uniquindio.reservasuq.observador.Observador;
 import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class PanelClienteControlador implements Observador {
@@ -56,8 +59,14 @@ public class PanelClienteControlador implements Observador {
     private void configurarTablaReservas() {
         colInstalacion.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getInstalacion().getNombre()));
-        colFechaHora.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(cellData.getValue().getFechaHoraReserva().toString()));
+        colFechaHora.setCellValueFactory(cellData -> {
+            LocalDateTime fechaHoraInicio = cellData.getValue().getFechaHoraReserva();
+            LocalDateTime fechaHoraFin = fechaHoraInicio.plusHours(2); // Duración de 2 horas
+            String rango = fechaHoraInicio.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+                    + " - "
+                    + fechaHoraFin.format(DateTimeFormatter.ofPattern("HH:mm"));
+            return new SimpleStringProperty(rango);
+        });
         colCosto.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getCosto()));
     }
