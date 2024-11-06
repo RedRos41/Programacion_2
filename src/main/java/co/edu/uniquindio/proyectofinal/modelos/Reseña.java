@@ -1,7 +1,7 @@
 package co.edu.uniquindio.proyectofinal.modelos;
 
 
-import lombok.EqualsAndHashCode;import lombok.EqualsAndHashCode;
+import lombok.EqualsAndHashCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
