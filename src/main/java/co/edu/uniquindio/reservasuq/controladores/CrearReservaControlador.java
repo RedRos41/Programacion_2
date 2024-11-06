@@ -7,6 +7,7 @@ import co.edu.uniquindio.reservasuq.modelo.Sesion;
 import co.edu.uniquindio.reservasuq.observador.Observador;
 import co.edu.uniquindio.reservasuq.observador.VentanaObservable;
 import co.edu.uniquindio.reservasuq.servicio.ServiciosReservasUQ;
+import co.edu.uniquindio.reservasuq.utils.EnvioEmail;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -131,6 +132,18 @@ public class CrearReservaControlador extends VentanaObservable {
 
             controladorPrincipal.cerrarVentana(txtDetallesInstalacion);
             notificarObservador();
+
+            String destinatario = sesion.getPersona().getEmail();
+            String asunto = "Confirmación de Reserva";
+            String mensaje = String.format(
+                    "Estimado/a %s,\n\nSu reserva ha sido confirmada.\n\nDetalles:\nInstalación: %s\nFecha: %s\nHora: %s\n\nGracias por su preferencia.",
+                    sesion.getPersona().getNombre(),
+                    instalacion.getNombre(),
+                    fecha,
+                    hora
+            );
+
+            EnvioEmail.enviarNotificacion(destinatario, asunto, mensaje);
 
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), "Error", Alert.AlertType.ERROR);

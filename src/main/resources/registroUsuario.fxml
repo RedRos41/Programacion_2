@@ -28,6 +28,6 @@
     <Button text="Registrar"
             onAction="#registrarUsuario"
             prefWidth="200.0"
-            style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+    />
 
 </VBox>

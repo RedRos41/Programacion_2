@@ -118,18 +118,4 @@ public class GestionInstalacionesControlador extends VentanaObservable {
         alert.showAndWait();
     }
 
-    private void limpiarCampos() {
-        txtNombreInstalacion.clear();
-        txtAforo.clear();
-        txtCosto.clear();
-        txtHoraInicio.clear();
-        txtHoraFin.clear();
-        chkLunes.setSelected(false);
-        chkMartes.setSelected(false);
-        chkMiercoles.setSelected(false);
-        chkJueves.setSelected(false);
-        chkViernes.setSelected(false);
-        chkSabado.setSelected(false);
-        chkDomingo.setSelected(false);
-    }
 }

@@ -160,8 +160,6 @@ public class ReservasUQ implements ServiciosReservasUQ {
                 .collect(Collectors.toList());
     }
 
-
-
     @Override
     public List<Instalacion> listarInstalaciones() {
         return instalaciones;

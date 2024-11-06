@@ -19,7 +19,6 @@ public class Instalacion {
     private float costo;
     private Map<DiaSemana, List<Horario>> horarios;
 
-    // Método para agregar un horario a un día específico
     public void agregarHorario(DiaSemana dia, LocalTime horaInicio, LocalTime horaFin) {
         if (horarios == null) {
             horarios = new HashMap<>();
@@ -27,7 +26,6 @@ public class Instalacion {
         horarios.computeIfAbsent(dia, k -> new ArrayList<>()).add(new Horario(dia, horaInicio, horaFin));
     }
 
-    // Método para obtener horarios de un día específico
     public List<Horario> obtenerHorariosPorDia(DiaSemana dia) {
         return horarios != null ? horarios.getOrDefault(dia, new ArrayList<>()) : new ArrayList<>();
     }
