@@ -47,7 +47,6 @@ public class RegistroUsuarioControlador {
                 return;
             }
 
-            // Registrar al usuario utilizando ControladorPrincipal
             controladorPrincipal.registrarPersona(
                     txtCedula.getText(),
                     txtNombre.getText(),

@@ -30,7 +30,6 @@ public class LoginControlador {
 
             Persona persona = controladorPrincipal.login(email, password);
 
-            // Guardar la sesión del usuario autenticado
             Sesion sesion = Sesion.getInstancia();
             sesion.setPersona(persona);
 
