@@ -35,6 +35,8 @@ class Alojamiento {
     - capacidadMaximaAlojamiento: int
     - servicioAlojamiento: ServicioAlojamiento
     - tipoAlojamiento: TipoAlojamiento
+    - ofertas: List<Oferta>
+    - reseñas: List<Reseña>
 }
 
 enum TipoAlojamiento {
@@ -97,6 +99,7 @@ class Factura {
 }
 
 class Oferta {
+    - idOferta: int
     - descripcionOferta: String
     - descuentoOferta: float
     - fechaInicioOferta: Date
@@ -109,6 +112,7 @@ class Estadistica {
 }
 
 class Reseña {
+    - idReseña: int
     - cometarioReseña: String
     - calificacionReseña: float
 }

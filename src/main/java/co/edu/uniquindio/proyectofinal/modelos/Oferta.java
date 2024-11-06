@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectofinal.modelos;
 
 
+import lombok.EqualsAndHashCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +13,12 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class Oferta {
+
+    @EqualsAndHashCode.Include
+    private int idOferta;
 
     private String descripcionOferta;
     private float descuentoOferta;

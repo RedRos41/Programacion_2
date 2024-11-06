@@ -13,6 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -428,6 +429,72 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public void registrarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) throws Exception {
+
+        if (alojamiento == null) {
+
+            throw new Exception("El alojamiento no puede estar vacio.");
+
+        }
+
+        if (idOferta <= 0) {
+
+            throw new Exception("La id de la oferta solo puede tener numeros positivos.");
+
+        }
+
+        if (buscarOferta(alojamiento, idOferta) != -1) {
+
+            throw new Exception("Ya existe una oferta con la id proporcionada.");
+
+        }
+
+        if (descripcionOferta.isBlank()) {
+
+            throw new Exception("La descripcion no puede estar vacio.");
+
+        }
+
+        if (descuentoOferta <= 0) {
+
+            throw new Exception("El descuento de la oferta solo puede tener numeros positivos.");
+
+        }
+
+        Date fechaActual = new Date();
+
+        if (fechaInicioOferta == null) {
+
+            throw new Exception("La fecha de inicio no puede estar vacio.");
+
+        }
+
+        if (fechaInicioOferta.before(fechaActual)) {
+
+            throw new Exception("La fecha de inicio no puede estar en el pasado.");
+
+        }
+
+        if (fechaFinOferta == null) {
+
+            throw new Exception("La fecha de fin no puede estar vacio.");
+
+        }
+
+        if (fechaFinOferta.before(fechaInicioOferta)) {
+
+            throw new Exception("La fecha de fin no puede estar antes de la fecha de inicio.");
+
+        }
+
+        Oferta oferta = crearOferta(idOferta, descripcionOferta, descuentoOferta, fechaInicioOferta, fechaFinOferta);
+
+        alojamiento.getOfertas().add(oferta);
+
+    }
+
+
+    @Override
     public void editarUsuario(long cedulaUsuario, String nombreUsuario, String emailUsuario, long telefonoUsuario) throws Exception {
 
         if (!numeroValido(cedulaUsuario)) {
@@ -812,6 +879,77 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public void editarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) throws Exception {
+
+        if (alojamiento == null) {
+
+            throw new Exception("El alojamiento no puede estar vacio.");
+
+        }
+
+        if (idOferta <= 0) {
+
+            throw new Exception("La id de la oferta solo puede tener numeros positivos.");
+
+        }
+
+        int identificacionOferta = buscarOferta(alojamiento, idOferta);
+
+        if (identificacionOferta == -1) {
+
+            throw new Exception("No existe una oferta con la identificacion proporcionada.");
+
+        }
+
+        if (descripcionOferta.isBlank()) {
+
+            throw new Exception("La descripcion no puede estar vacio.");
+
+        }
+
+        if (descuentoOferta <= 0) {
+
+            throw new Exception("El descuento de la oferta solo puede tener numeros positivos.");
+
+        }
+
+        Date fechaActual = new Date();
+
+        if (fechaInicioOferta == null) {
+
+            throw new Exception("La fecha de inicio no puede estar vacio.");
+
+        }
+
+        if (fechaInicioOferta.before(fechaActual)) {
+
+            throw new Exception("La fecha de inicio no puede estar en el pasado.");
+
+        }
+
+        if (fechaFinOferta == null) {
+
+            throw new Exception("La fecha de fin no puede estar vacio.");
+
+        }
+
+        if (fechaFinOferta.before(fechaInicioOferta)) {
+
+            throw new Exception("La fecha de fin no puede estar antes de la fecha de inicio.");
+
+        }
+
+        Oferta editarOferta = alojamiento.getOfertas().get(identificacionOferta);
+        editarOferta.setIdOferta(idOferta);
+        editarOferta.setDescripcionOferta(descripcionOferta);
+        editarOferta.setDescuentoOferta(descuentoOferta);
+        editarOferta.setFechaInicioOferta(fechaInicioOferta);
+        editarOferta.setFechaFinOferta(fechaFinOferta);
+
+    }
+
+
+    @Override
     public void eliminarUsuario(long cedulaUsuario) throws Exception {
 
         if (!numeroValido(cedulaUsuario)) {
@@ -879,6 +1017,34 @@ public class Empresa implements ServicioEmpresa {
         }
 
         hotel.getHabitaciones().remove(idHabitacion);
+
+    }
+
+
+    @Override
+    public void eliminarOferta(Alojamiento alojamiento, int idOferta) throws Exception {
+
+        if (alojamiento == null) {
+
+            throw new Exception("El alojamiento no puede estar vacio.");
+
+        }
+
+        if (idOferta <= 0) {
+
+            throw new Exception("La id de la oferta solo puede tener numeros positivos.");
+
+        }
+
+        int identificacionOferta = buscarOferta(alojamiento, idOferta);
+
+        if (identificacionOferta == -1) {
+
+            throw new Exception("No existe una oferta con la identificacion proporcionada.");
+
+        }
+
+        alojamiento.getOfertas().remove(identificacionOferta);
 
     }
 
@@ -971,6 +1137,26 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public void recargarBilletera(Cliente cliente, double saldoBilletera) throws Exception {
+
+        if (cliente == null) {
+
+            throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (saldoBilletera <= 0) {
+
+            throw new Exception("El saldo de la billetera solo puede tener numeros positivos.");
+
+        }
+
+        cliente.getBilleteraCliente().setSaldoBilletera(cliente.getBilleteraCliente().getSaldoBilletera() + saldoBilletera);
+
+    }
+
+
+    @Override
     public int buscarUsuario(long cedulaUsuario) {
 
         for (int i = 0; i < usuarios.size(); i++) {
@@ -1012,6 +1198,25 @@ public class Empresa implements ServicioEmpresa {
             Habitacion habitacion = hotel.getHabitaciones().get(i);
 
             if (habitacion.getNumeroHabitacion() == numeroHabitacion) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public int buscarOferta(Alojamiento alojamiento, int idOferta) {
+
+        for (int i = 0; i < alojamiento.getOfertas().size(); i++) {
+
+            Oferta oferta = alojamiento.getOfertas().get(i);
+
+            if (oferta.getIdOferta() == idOferta) {
 
                 return i;
 
@@ -1234,6 +1439,7 @@ public class Empresa implements ServicioEmpresa {
                 .servicioAlojamiento(servicioAlojamiento)
                 .aseoCasa(aseoCasa)
                 .mantenimientoCasa(mantenimientoCasa)
+                .ofertas(new ArrayList<>())
                 .build();
 
     }
@@ -1254,6 +1460,7 @@ public class Empresa implements ServicioEmpresa {
                 .servicioAlojamiento(servicioAlojamiento)
                 .aseoApartamento(aseoApartamento)
                 .mantenimientoApartamento(mantenimientoApartamento)
+                .ofertas(new ArrayList<>())
                 .build();
 
     }
@@ -1273,6 +1480,7 @@ public class Empresa implements ServicioEmpresa {
                 .capacidadMaximaAlojamiento(capacidadMaximaAlojamiento)
                 .servicioAlojamiento(servicioAlojamiento)
                 .habitaciones(new ArrayList<>())
+                .ofertas(new ArrayList<>())
                 .build();
 
     }
@@ -1287,6 +1495,20 @@ public class Empresa implements ServicioEmpresa {
                 .precioHabitacion(precioHabitacion)
                 .imagenHabitacion(imagenHabitacion)
                 .descripcionHabitacion(descripcionHabitacion)
+                .build();
+
+    }
+
+
+    @Override
+    public Oferta crearOferta(int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) {
+
+        return Oferta.builder()
+                .idOferta(idOferta)
+                .descripcionOferta(descripcionOferta)
+                .descuentoOferta(descuentoOferta)
+                .fechaInicioOferta(fechaInicioOferta)
+                .fechaFinOferta(fechaFinOferta)
                 .build();
 
     }

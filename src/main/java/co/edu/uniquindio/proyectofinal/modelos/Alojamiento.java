@@ -10,6 +10,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -28,5 +30,7 @@ public class Alojamiento {
     protected int capacidadMaximaAlojamiento;
     protected ServicioAlojamiento servicioAlojamiento;
     protected TipoAlojamiento tipoAlojamiento;
+    protected List<Oferta> ofertas;
+    protected List<Reseña> reseñas;
 
 }

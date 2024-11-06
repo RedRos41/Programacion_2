@@ -7,6 +7,7 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.ServicioAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -22,6 +23,8 @@ public interface ServicioEmpresa {
 
     void registrarHabitacion(Hotel hotel, int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) throws Exception;
 
+    void registrarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) throws Exception;
+
     void editarUsuario(long cedulaUsuario, String nombreUsuario, String emailUsuario, long telefonoUsuario) throws Exception;
 
     void editarCasa(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) throws Exception;
@@ -32,21 +35,29 @@ public interface ServicioEmpresa {
 
     void editarHabitacion(Hotel hotel, int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) throws Exception;
 
+    void editarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) throws Exception;
+
     void eliminarUsuario(long cedulaUsuario) throws Exception;
 
     void eliminarAlojamiento(int direccionAlojamiento) throws Exception;
 
     void eliminarHabitacion(Hotel hotel, int numeroHabitacion) throws Exception;
 
+    void eliminarOferta(Alojamiento alojamiento, int idOferta) throws Exception;
+
     void solicitarCambioContraseña(String emailUsuario) throws Exception;
 
     void cambiarContraseña(String codigoContraseña, String nuevaContraseña) throws Exception;
+
+    void recargarBilletera(Cliente cliente, double saldoBilletera) throws Exception;
 
     int buscarUsuario(long cedulaUsuario);
 
     int buscarAlojamiento(int direccionAlojamiento);
 
     int buscarHabitacion(Hotel hotel, int numeroHabitacion);
+
+    int buscarOferta(Alojamiento alojamiento, int idOferta);
 
     boolean buscarAdministrador();
 
@@ -69,6 +80,8 @@ public interface ServicioEmpresa {
     Hotel crearHotel(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento);
 
     Habitacion crearHabitacion(int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion);
+
+    Oferta crearOferta(int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta);
 
     String generarCodigo();
 
