@@ -83,6 +83,8 @@ public interface ServicioEmpresa {
 
     Oferta crearOferta(int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta);
 
+    Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña);
+
     String generarCodigo();
 
     List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception;

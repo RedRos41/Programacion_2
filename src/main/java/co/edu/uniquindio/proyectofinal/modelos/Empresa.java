@@ -1440,6 +1440,7 @@ public class Empresa implements ServicioEmpresa {
                 .aseoCasa(aseoCasa)
                 .mantenimientoCasa(mantenimientoCasa)
                 .ofertas(new ArrayList<>())
+                .reseñas(new ArrayList<>())
                 .build();
 
     }
@@ -1461,6 +1462,7 @@ public class Empresa implements ServicioEmpresa {
                 .aseoApartamento(aseoApartamento)
                 .mantenimientoApartamento(mantenimientoApartamento)
                 .ofertas(new ArrayList<>())
+                .reseñas(new ArrayList<>())
                 .build();
 
     }
@@ -1481,6 +1483,7 @@ public class Empresa implements ServicioEmpresa {
                 .servicioAlojamiento(servicioAlojamiento)
                 .habitaciones(new ArrayList<>())
                 .ofertas(new ArrayList<>())
+                .reseñas(new ArrayList<>())
                 .build();
 
     }
@@ -1509,6 +1512,18 @@ public class Empresa implements ServicioEmpresa {
                 .descuentoOferta(descuentoOferta)
                 .fechaInicioOferta(fechaInicioOferta)
                 .fechaFinOferta(fechaFinOferta)
+                .build();
+
+    }
+
+
+    @Override
+    public Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña) {
+
+        return Reseña.builder()
+                .idReseña(idReseña)
+                .cometarioReseña(cometarioReseña)
+                .calificacionReseña(calificacionReseña)
                 .build();
 
     }
