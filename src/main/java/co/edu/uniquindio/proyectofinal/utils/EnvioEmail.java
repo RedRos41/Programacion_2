@@ -13,14 +13,14 @@ public class EnvioEmail {
     public static void enviarCorreo(String destinatario, String asunto, String mensaje) {
 
         Email email = EmailBuilder.startingBlank()
-                .from("SU_EMAIL")
+                .from("testemailuq01@gmail.com")
                 .to(destinatario)
                 .withSubject(asunto)
                 .withPlainText(mensaje)
                 .buildEmail();
 
         try (Mailer mailer = MailerBuilder
-                .withSMTPServer("smtp.gmail.com", 587, "SU_EMAIL", "SU_CLAVE")
+                .withSMTPServer("smtp.gmail.com", 587, "testemailuq01@gmail.com", "RedRosa1")
                 .withTransportStrategy(TransportStrategy.SMTP_TLS)
                 .withDebugLogging(true)
                 .buildMailer()) {

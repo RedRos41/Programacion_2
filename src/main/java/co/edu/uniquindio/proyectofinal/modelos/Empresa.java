@@ -7,7 +7,6 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
 import co.edu.uniquindio.proyectofinal.servicios.ServicioEmpresa;
 import co.edu.uniquindio.proyectofinal.utils.EnvioEmail;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,7 +18,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @ToString
 public class Empresa implements ServicioEmpresa {
 

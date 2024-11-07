@@ -93,13 +93,13 @@ public interface ServicioEmpresa {
 
     Reserva crearReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva);
 
-    Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña);
+    //Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña);
 
-    Estadistica obtenerEstadisticas();
+    //Estadistica obtenerEstadisticas();
 
-    Factura generarFactura() throws Exception;
+    //Factura generarFactura() throws Exception;
 
-    Qr generarQr() throws Exception;
+    //Qr generarQr() throws Exception;
 
     String generarCodigo();
 
