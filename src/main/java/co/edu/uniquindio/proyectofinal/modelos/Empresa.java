@@ -1718,18 +1718,6 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña) {
-
-        return Reseña.builder()
-                .idReseña(idReseña)
-                .cometarioReseña(cometarioReseña)
-                .calificacionReseña(calificacionReseña)
-                .build();
-
-    }
-
-
-    @Override
     public String generarCodigo() {
 
         int codigo = (int) (Math.random() * 900000) + 100000;

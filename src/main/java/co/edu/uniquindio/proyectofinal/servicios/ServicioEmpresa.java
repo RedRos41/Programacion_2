@@ -95,6 +95,12 @@ public interface ServicioEmpresa {
 
     Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña);
 
+    Estadistica obtenerEstadisticas();
+
+    Factura generarFactura() throws Exception;
+
+    Qr generarQr() throws Exception;
+
     String generarCodigo();
 
     List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception;
