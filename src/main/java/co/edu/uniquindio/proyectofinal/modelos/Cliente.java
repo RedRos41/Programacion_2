@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -14,5 +16,6 @@ import lombok.experimental.SuperBuilder;
 public class Cliente extends Usuario {
 
     private Billetera billeteraCliente;
+    private List<Reserva> reservas;
 
 }

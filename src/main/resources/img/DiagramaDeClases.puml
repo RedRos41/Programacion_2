@@ -20,6 +20,7 @@ enum TipoUsuario {
 
 class Cliente extends Usuario {
     - billeteraCliente: Billetera
+    - reservas: List<Reserva>
 }
 
 class Administrador extends Usuario {
@@ -84,6 +85,7 @@ class Billetera {
 }
 
 class Reserva {
+    - idReserva: int
     - clienteReserva: Cliente
     - alojamientoReserva: Alojamiento
     - fechaInicioReserva: Date

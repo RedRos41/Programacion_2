@@ -495,6 +495,72 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public void registrarReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva) throws Exception {
+
+        if (clienteReserva == null) {
+
+            throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (idReserva <= 0) {
+
+            throw new Exception("La id de la reserva solo puede tener numeros positivos.");
+
+        }
+
+        if (buscarReserva(clienteReserva, idReserva) != -1) {
+
+            throw new Exception("Ya existe una reserva con la id proporcionada.");
+
+        }
+
+        if (alojamientoReserva == null) {
+
+            throw new Exception("El alojamiento no puede estar vacio.");
+
+        }
+
+        if (numHuespedesReserva <= 0) {
+
+            throw new Exception("El numero de huespedes solo puede tener numeros positivos.");
+
+        }
+
+        Date fechaActual = new Date();
+
+        if (fechaInicioReserva == null) {
+
+            throw new Exception("La fecha de inicio no puede estar vacio.");
+
+        }
+
+        if (fechaInicioReserva.before(fechaActual)) {
+
+            throw new Exception("La fecha de inicio no puede estar en el pasado.");
+
+        }
+
+        if (fechaFinReserva == null) {
+
+            throw new Exception("La fecha de fin no puede estar vacio.");
+
+        }
+
+        if (fechaFinReserva.before(fechaInicioReserva)) {
+
+            throw new Exception("La fecha de fin no puede estar antes de la fecha de inicio.");
+
+        }
+
+        Reserva reserva = crearReserva(clienteReserva, idReserva, alojamientoReserva, numHuespedesReserva, fechaInicioReserva, fechaFinReserva);
+
+        clienteReserva.getReservas().add(reserva);
+
+    }
+
+
+    @Override
     public void editarUsuario(long cedulaUsuario, String nombreUsuario, String emailUsuario, long telefonoUsuario) throws Exception {
 
         if (!numeroValido(cedulaUsuario)) {
@@ -950,6 +1016,78 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public void editarReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva) throws Exception {
+
+        if (clienteReserva == null) {
+
+            throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (idReserva <= 0) {
+
+            throw new Exception("La id de la reserva solo puede tener numeros positivos.");
+
+        }
+
+        int identificacionReserva = buscarReserva(clienteReserva, idReserva);
+
+        if (identificacionReserva == -1) {
+
+            throw new Exception("No existe una reserva con la identificacion proporcionada.");
+
+        }
+
+        if (alojamientoReserva == null) {
+
+            throw new Exception("El alojamiento no puede estar vacio.");
+
+        }
+
+        if (numHuespedesReserva <= 0) {
+
+            throw new Exception("El numero de huespedes solo puede tener numeros positivos.");
+
+        }
+
+        Date fechaActual = new Date();
+
+        if (fechaInicioReserva == null) {
+
+            throw new Exception("La fecha de inicio no puede estar vacio.");
+
+        }
+
+        if (fechaInicioReserva.before(fechaActual)) {
+
+            throw new Exception("La fecha de inicio no puede estar en el pasado.");
+
+        }
+
+        if (fechaFinReserva == null) {
+
+            throw new Exception("La fecha de fin no puede estar vacio.");
+
+        }
+
+        if (fechaFinReserva.before(fechaInicioReserva)) {
+
+            throw new Exception("La fecha de fin no puede estar antes de la fecha de inicio.");
+
+        }
+
+        Reserva editarReserva = clienteReserva.getReservas().get(identificacionReserva);
+        editarReserva.setClienteReserva(clienteReserva);
+        editarReserva.setIdReserva(idReserva);
+        editarReserva.setAlojamientoReserva(alojamientoReserva);
+        editarReserva.setNumHuespedesReserva(numHuespedesReserva);
+        editarReserva.setFechaInicioReserva(fechaInicioReserva);
+        editarReserva.setFechaFinReserva(fechaFinReserva);
+
+    }
+
+
+    @Override
     public void eliminarUsuario(long cedulaUsuario) throws Exception {
 
         if (!numeroValido(cedulaUsuario)) {
@@ -1045,6 +1183,34 @@ public class Empresa implements ServicioEmpresa {
         }
 
         alojamiento.getOfertas().remove(identificacionOferta);
+
+    }
+
+
+    @Override
+    public void eliminarReserva(Cliente clienteReserva, int idReserva) throws Exception {
+
+        if (clienteReserva == null) {
+
+            throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (idReserva <= 0) {
+
+            throw new Exception("La id de la reserva solo puede tener numeros positivos.");
+
+        }
+
+        int identificacionReserva = buscarReserva(clienteReserva, idReserva);
+
+        if (identificacionReserva == -1) {
+
+            throw new Exception("No existe una reserva con la identificacion proporcionada.");
+
+        }
+
+        clienteReserva.getReservas().remove(identificacionReserva);
 
     }
 
@@ -1217,6 +1383,25 @@ public class Empresa implements ServicioEmpresa {
             Oferta oferta = alojamiento.getOfertas().get(i);
 
             if (oferta.getIdOferta() == idOferta) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public int buscarReserva(Cliente clienteReserva, int idReserva) {
+
+        for (int i = 0; i < clienteReserva.getReservas().size(); i++) {
+
+            Reserva reserva = clienteReserva.getReservas().get(i);
+
+            if (reserva.getIdReserva() == idReserva) {
 
                 return i;
 
@@ -1512,6 +1697,21 @@ public class Empresa implements ServicioEmpresa {
                 .descuentoOferta(descuentoOferta)
                 .fechaInicioOferta(fechaInicioOferta)
                 .fechaFinOferta(fechaFinOferta)
+                .build();
+
+    }
+
+
+    @Override
+    public Reserva crearReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva) {
+
+        return Reserva.builder()
+                .clienteReserva(clienteReserva)
+                .idReserva(idReserva)
+                .alojamientoReserva(alojamientoReserva)
+                .numHuespedesReserva(numHuespedesReserva)
+                .fechaInicioReserva(fechaInicioReserva)
+                .fechaFinReserva(fechaFinReserva)
                 .build();
 
     }
