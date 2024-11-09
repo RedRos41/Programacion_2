@@ -86,26 +86,26 @@ class Billetera {
 
 class Reserva {
     - idReserva: int
-    - clienteReserva: Cliente
+    - clienteReserva: Usuario
     - alojamientoReserva: Alojamiento
-    - fechaInicioReserva: Date
-    - fechaFinReserva: Date
+    - fechaInicioReserva: LocalDateTime
+    - fechaFinReserva: LocalDateTime
     - numHuespedesReserva: int
 }
 
 class Factura {
     - subTotalFactura: double
     - totalFactura: double
-    - fechaFactura: Date
-    - codigoFactura: UUID
+    - fechaFactura: LocalDateTime
+    - codigoFactura: String
 }
 
 class Oferta {
     - idOferta: int
     - descripcionOferta: String
     - descuentoOferta: float
-    - fechaInicioOferta: Date
-    - fechaFinOferta: Date
+    - fechaInicioOferta: LocalDateTime
+    - fechaFinOferta: LocalDateTime
 }
 
 class Estadistica {

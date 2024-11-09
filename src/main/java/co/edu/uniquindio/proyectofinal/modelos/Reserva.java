@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -20,9 +20,9 @@ public class Reserva {
     @EqualsAndHashCode.Include
     private int idReserva;
 
-    private Cliente clienteReserva;
+    private Usuario clienteReserva;
     private Alojamiento alojamientoReserva;
-    private Date fechaInicioReserva, fechaFinReserva;
+    private LocalDateTime fechaInicioReserva, fechaFinReserva;
     private int numHuespedesReserva;
 
 }

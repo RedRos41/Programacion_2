@@ -7,7 +7,7 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.ServicioAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -23,9 +23,9 @@ public interface ServicioEmpresa {
 
     void registrarHabitacion(Hotel hotel, int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) throws Exception;
 
-    void registrarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) throws Exception;
+    void registrarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta) throws Exception;
 
-    void registrarReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva) throws Exception;
+    void registrarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception;
 
     void editarUsuario(long cedulaUsuario, String nombreUsuario, String emailUsuario, long telefonoUsuario) throws Exception;
 
@@ -37,9 +37,9 @@ public interface ServicioEmpresa {
 
     void editarHabitacion(Hotel hotel, int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion) throws Exception;
 
-    void editarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) throws Exception;
+    void editarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta) throws Exception;
 
-    void editarReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva) throws Exception;
+    void editarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception;
 
     void eliminarUsuario(long cedulaUsuario) throws Exception;
 
@@ -49,13 +49,13 @@ public interface ServicioEmpresa {
 
     void eliminarOferta(Alojamiento alojamiento, int idOferta) throws Exception;
 
-    void eliminarReserva(Cliente clienteReserva, int idReserva) throws Exception;
+    void eliminarReserva(Usuario clienteReserva, int idReserva) throws Exception;
 
     void solicitarCambioContraseña(String emailUsuario) throws Exception;
 
     void cambiarContraseña(String codigoContraseña, String nuevaContraseña) throws Exception;
 
-    void recargarBilletera(Cliente cliente, double saldoBilletera) throws Exception;
+    void recargarBilletera(Usuario cliente, double saldoBilletera) throws Exception;
 
     int buscarUsuario(long cedulaUsuario);
 
@@ -65,7 +65,7 @@ public interface ServicioEmpresa {
 
     int buscarOferta(Alojamiento alojamiento, int idOferta);
 
-    int buscarReserva(Cliente clienteReserva, int idReserva);
+    int buscarReserva(Usuario clienteReserva, int idReserva);
 
     boolean buscarAdministrador();
 
@@ -89,15 +89,15 @@ public interface ServicioEmpresa {
 
     Habitacion crearHabitacion(int numeroHabitacion, int capacidadHabitacion, double precioHabitacion, String imagenHabitacion, String descripcionHabitacion);
 
-    Oferta crearOferta(int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta);
+    Oferta crearOferta(int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta);
 
-    Reserva crearReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva);
+    Reserva crearReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
 
-    //Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña);
+    Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña);
 
     //Estadistica obtenerEstadisticas();
 
-    //Factura generarFactura() throws Exception;
+    Factura generarFactura();
 
     //Qr generarQr() throws Exception;
 

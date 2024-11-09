@@ -11,9 +11,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 @Getter
@@ -427,7 +428,7 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public void registrarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) throws Exception {
+    public void registrarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta) throws Exception {
 
         if (alojamiento == null) {
 
@@ -459,15 +460,13 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        Date fechaActual = new Date();
-
         if (fechaInicioOferta == null) {
 
             throw new Exception("La fecha de inicio no puede estar vacio.");
 
         }
 
-        if (fechaInicioOferta.before(fechaActual)) {
+        if (fechaInicioOferta.isBefore(LocalDateTime.now())) {
 
             throw new Exception("La fecha de inicio no puede estar en el pasado.");
 
@@ -479,7 +478,7 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        if (fechaFinOferta.before(fechaInicioOferta)) {
+        if (fechaFinOferta.isBefore(fechaInicioOferta)) {
 
             throw new Exception("La fecha de fin no puede estar antes de la fecha de inicio.");
 
@@ -493,11 +492,17 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public void registrarReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva) throws Exception {
+    public void registrarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception {
 
         if (clienteReserva == null) {
 
             throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (!(clienteReserva instanceof Cliente)) {
+
+            throw new Exception("El usuario proporcionado no es un cliente");
 
         }
 
@@ -525,15 +530,13 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        Date fechaActual = new Date();
-
         if (fechaInicioReserva == null) {
 
             throw new Exception("La fecha de inicio no puede estar vacio.");
 
         }
 
-        if (fechaInicioReserva.before(fechaActual)) {
+        if (fechaInicioReserva.isBefore(LocalDateTime.now())) {
 
             throw new Exception("La fecha de inicio no puede estar en el pasado.");
 
@@ -545,7 +548,7 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        if (fechaFinReserva.before(fechaInicioReserva)) {
+        if (fechaFinReserva.isBefore(fechaInicioReserva)) {
 
             throw new Exception("La fecha de fin no puede estar antes de la fecha de inicio.");
 
@@ -553,7 +556,7 @@ public class Empresa implements ServicioEmpresa {
 
         Reserva reserva = crearReserva(clienteReserva, idReserva, alojamientoReserva, numHuespedesReserva, fechaInicioReserva, fechaFinReserva);
 
-        clienteReserva.getReservas().add(reserva);
+        ((Cliente) clienteReserva).getReservas().add(reserva);
 
     }
 
@@ -943,7 +946,7 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public void editarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) throws Exception {
+    public void editarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta) throws Exception {
 
         if (alojamiento == null) {
 
@@ -977,15 +980,13 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        Date fechaActual = new Date();
-
         if (fechaInicioOferta == null) {
 
             throw new Exception("La fecha de inicio no puede estar vacio.");
 
         }
 
-        if (fechaInicioOferta.before(fechaActual)) {
+        if (fechaInicioOferta.isBefore(LocalDateTime.now())) {
 
             throw new Exception("La fecha de inicio no puede estar en el pasado.");
 
@@ -997,7 +998,7 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        if (fechaFinOferta.before(fechaInicioOferta)) {
+        if (fechaFinOferta.isBefore(fechaInicioOferta)) {
 
             throw new Exception("La fecha de fin no puede estar antes de la fecha de inicio.");
 
@@ -1014,11 +1015,17 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public void editarReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva) throws Exception {
+    public void editarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception {
 
         if (clienteReserva == null) {
 
             throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (!(clienteReserva instanceof Cliente)) {
+
+            throw new Exception("El usuario proporcionado no es un cliente");
 
         }
 
@@ -1048,15 +1055,13 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        Date fechaActual = new Date();
-
         if (fechaInicioReserva == null) {
 
             throw new Exception("La fecha de inicio no puede estar vacio.");
 
         }
 
-        if (fechaInicioReserva.before(fechaActual)) {
+        if (fechaInicioReserva.isBefore(LocalDateTime.now())) {
 
             throw new Exception("La fecha de inicio no puede estar en el pasado.");
 
@@ -1068,13 +1073,13 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        if (fechaFinReserva.before(fechaInicioReserva)) {
+        if (fechaFinReserva.isBefore(fechaInicioReserva)) {
 
             throw new Exception("La fecha de fin no puede estar antes de la fecha de inicio.");
 
         }
 
-        Reserva editarReserva = clienteReserva.getReservas().get(identificacionReserva);
+        Reserva editarReserva = ((Cliente) clienteReserva).getReservas().get(identificacionReserva);
         editarReserva.setClienteReserva(clienteReserva);
         editarReserva.setIdReserva(idReserva);
         editarReserva.setAlojamientoReserva(alojamientoReserva);
@@ -1186,11 +1191,17 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public void eliminarReserva(Cliente clienteReserva, int idReserva) throws Exception {
+    public void eliminarReserva(Usuario clienteReserva, int idReserva) throws Exception {
 
         if (clienteReserva == null) {
 
             throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (!(clienteReserva instanceof Cliente)) {
+
+            throw new Exception("El usuario proporcionado no es un cliente");
 
         }
 
@@ -1208,7 +1219,7 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        clienteReserva.getReservas().remove(identificacionReserva);
+        ((Cliente) clienteReserva).getReservas().remove(identificacionReserva);
 
     }
 
@@ -1301,11 +1312,17 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public void recargarBilletera(Cliente cliente, double saldoBilletera) throws Exception {
+    public void recargarBilletera(Usuario cliente, double saldoBilletera) throws Exception {
 
         if (cliente == null) {
 
             throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (!(cliente instanceof Cliente)) {
+
+            throw new Exception("El usuario proporcionado no es un cliente");
 
         }
 
@@ -1315,7 +1332,7 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        cliente.getBilleteraCliente().setSaldoBilletera(cliente.getBilleteraCliente().getSaldoBilletera() + saldoBilletera);
+        ((Cliente) cliente).getBilleteraCliente().setSaldoBilletera(((Cliente) cliente).getBilleteraCliente().getSaldoBilletera() + saldoBilletera);
 
     }
 
@@ -1393,15 +1410,21 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public int buscarReserva(Cliente clienteReserva, int idReserva) {
+    public int buscarReserva(Usuario clienteReserva, int idReserva) {
 
-        for (int i = 0; i < clienteReserva.getReservas().size(); i++) {
+        if (clienteReserva instanceof Cliente cliente) {
 
-            Reserva reserva = clienteReserva.getReservas().get(i);
+            List<Reserva> reservas = cliente.getReservas();
 
-            if (reserva.getIdReserva() == idReserva) {
+            for (int i = 0; i < reservas.size(); i++) {
 
-                return i;
+                Reserva reserva = reservas.get(i);
+
+                if (reserva.getIdReserva() == idReserva) {
+
+                    return i;
+
+                }
 
             }
 
@@ -1458,6 +1481,7 @@ public class Empresa implements ServicioEmpresa {
                     .contraseñaUsuario(contraseñaUsuario)
                     .telefonoUsuario(telefonoUsuario)
                     .billeteraCliente(new Billetera(0.0))
+                    .reservas(new ArrayList<>())
                     .build();
 
             default -> throw new Exception("Tipo de usuario no valido.");
@@ -1687,7 +1711,7 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public Oferta crearOferta(int idOferta, String descripcionOferta, float descuentoOferta, Date fechaInicioOferta, Date fechaFinOferta) {
+    public Oferta crearOferta(int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta) {
 
         return Oferta.builder()
                 .idOferta(idOferta)
@@ -1701,7 +1725,7 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public Reserva crearReserva(Cliente clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, Date fechaInicioReserva, Date fechaFinReserva) {
+    public Reserva crearReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) {
 
         return Reserva.builder()
                 .clienteReserva(clienteReserva)
@@ -1710,6 +1734,31 @@ public class Empresa implements ServicioEmpresa {
                 .numHuespedesReserva(numHuespedesReserva)
                 .fechaInicioReserva(fechaInicioReserva)
                 .fechaFinReserva(fechaFinReserva)
+                .build();
+
+    }
+
+
+    @Override
+    public Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña) {
+
+        return Reseña.builder()
+                .idReseña(idReseña)
+                .cometarioReseña(cometarioReseña)
+                .calificacionReseña(calificacionReseña)
+                .build();
+
+    }
+
+
+    @Override
+    public Factura generarFactura() {
+
+        return Factura.builder()
+                .codigoFactura(String.valueOf(UUID.randomUUID()))
+                .fechaFactura(LocalDateTime.now())
+                //.subTotalFactura(subTotalFactura)
+                //.totalFactura(totalFactura)
                 .build();
 
     }

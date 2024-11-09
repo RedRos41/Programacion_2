@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -22,6 +22,6 @@ public class Oferta {
 
     private String descripcionOferta;
     private float descuentoOferta;
-    private Date fechaInicioOferta, fechaFinOferta;
+    private LocalDateTime fechaInicioOferta, fechaFinOferta;
 
 }

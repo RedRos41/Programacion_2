@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -17,7 +16,7 @@ import java.util.UUID;
 public class Factura {
 
     private double subTotalFactura, totalFactura;
-    private Date fechaFactura;
-    private UUID codigoFactura;
+    private LocalDateTime fechaFactura;
+    private String codigoFactura;
 
 }
