@@ -20,7 +20,7 @@ public class EnvioEmail {
                 .buildEmail();
 
         try (Mailer mailer = MailerBuilder
-                .withSMTPServer("smtp.gmail.com", 587, "testemailuq01@gmail.com", "RedRosa1")
+                .withSMTPServer("smtp.gmail.com", 587, "testemailuq01@gmail.com", "onif vyju rssf suqb")
                 .withTransportStrategy(TransportStrategy.SMTP_TLS)
                 .withDebugLogging(true)
                 .buildMailer()) {

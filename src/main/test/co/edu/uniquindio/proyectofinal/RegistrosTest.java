@@ -20,7 +20,7 @@ public class RegistrosTest {
     @Test
     public void testRegistrarUsuario() throws Exception {
 
-        empresa.registrarUsuario(TipoUsuario.CLIENTE, 1125999432, "Derek Rodriguez Rodriguez", "DerekRoseRod@gmail.com", "RedRosa1", 3026707477L);
+        empresa.registrarUsuario(TipoUsuario.CLIENTE, 1125999432, "Derek Rodriguez Rodriguez", "testemailuq01@gmail.com", "RedRosa1", 3026707477L);
 
         int usuario = empresa.buscarUsuario(1125999432);
 
