@@ -22,40 +22,19 @@ import java.util.UUID;
 @ToString
 public class Empresa implements ServicioEmpresa {
 
-    private static Empresa INSTANCIA;
     private Usuario usuario;
     private final List<Usuario> usuarios;
     private final List<Alojamiento> alojamientos;
     private final List<Alojamiento> filtroAlojamiento;
 
 
-    private Empresa() {
+    public Empresa() {
 
         this.usuarios = new ArrayList<>();
         this.alojamientos = new ArrayList<>();
         this.filtroAlojamiento = new ArrayList<>();
 
     }
-
-
-    public static Empresa getInstancia() {
-
-        if(INSTANCIA == null){
-
-            INSTANCIA = new Empresa();
-
-        }
-        return INSTANCIA;
-
-    }
-
-
-    public void cerrarSesion() {
-
-        usuario = null;
-
-    }
-
 
     @Override
     public void registrarUsuario(TipoUsuario tipoUsuario, long cedulaUsuario, String nombreUsuario, String emailUsuario, String contraseñaUsuario, long telefonoUsuario) throws Exception {
