@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 
 public class InicioControlador {
 
+    // falta la lista aleatoria de alojamiententos
+    // los botones para una sección para la búsqueda de alojamientos
+    // y una sección de ofertas.
 
     private final ControladorPrincipal controladorPrincipal;
 
@@ -16,10 +19,12 @@ public class InicioControlador {
     }
 
     public void irIniciarSesion(ActionEvent actionEvent) {
-        controladorPrincipal.navegarVentana("/iniciarSesion.fxml", "Iniciar Sesión");
+        controladorPrincipal.navegarVentana("/IniciarSesion.fxml", "Iniciar Sesión");
     }
 
     public void irRegistroCliente(ActionEvent actionEvent) {
-        controladorPrincipal.navegarVentana("/registroUsuario.fxml", "Registro Persona");
+        controladorPrincipal.navegarVentana("/RegistrarUsuario.fxml", "Registro Persona");
     }
+
+
 }

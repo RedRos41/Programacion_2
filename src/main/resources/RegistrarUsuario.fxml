@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyectofinal.controladores.RegistrarUsuarioControlador">
+    <children>
+        <VBox alignment="CENTER" spacing="10" layoutX="50" layoutY="30">
+            <Label text="Registro de Usuario" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <HBox spacing="10">
+                <Label text="Cédula:" />
+                <TextField fx:id="txtCedula" promptText="Ingrese su cédula" />
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Nombre:" />
+                <TextField fx:id="txtNombre" promptText="Ingrese su nombre" />
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Email:" />
+                <TextField fx:id="txtEmail" promptText="Ingrese su email" />
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Contraseña:" />
+                <PasswordField fx:id="txtContraseña" promptText="Ingrese su contraseña" />
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Teléfono:" />
+                <TextField fx:id="txtTelefono" promptText="Ingrese su teléfono" />
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Tipo de Usuario:" />
+                <ComboBox fx:id="comboTipoUsuario" promptText="Seleccione tipo de usuario" />
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Registrar" onAction="#registrarUsuario" />
+                <Button text="Cancelar" onAction="#cancelarRegistro" />
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

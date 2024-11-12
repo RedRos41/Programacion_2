@@ -14,7 +14,7 @@
       fx:controller="co.edu.uniquindio.proyectofinal.controladores.InicioControlador">
 
 
-    <Label text="Bienvenido a la app ReservasUQ" >
+    <Label text="Bienvenido a BookYourStayApp." >
         <font>
             <Font size="18.0" />
         </font>

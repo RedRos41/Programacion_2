@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyectofinal.controladores.IniciarSesionControlador">
+    <children>
+        <VBox alignment="CENTER" spacing="10" layoutX="50" layoutY="30">
+            <Label text="Iniciar Sesión" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <HBox spacing="10">
+                <Label text="Email:" />
+                <TextField fx:id="txtEmail" promptText="Ingrese su email" />
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Contraseña:" />
+                <PasswordField fx:id="txtContraseña" promptText="Ingrese su contraseña" />
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Código de Activación (Solo Primera Vez):" />
+                <TextField fx:id="txtCodigoActivacion" promptText="Ingrese su código de activación" />
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Iniciar Sesión" onAction="#iniciarSesion" />
+                <Button text="Cancelar" onAction="#cancelarInicioSesion" />
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>
