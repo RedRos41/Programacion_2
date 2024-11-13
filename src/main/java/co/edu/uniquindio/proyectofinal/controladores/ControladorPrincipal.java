@@ -223,6 +223,18 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return empresa.filtrarAlojamientos(nombreAlojamiento, tipoAlojamiento, ciudadAlojamiento, precioMin, precioMax);
     }
 
+    @Override
+    public int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva){
+        return empresa.calcularDiasReserva(fechaInicioReserva, fechaFinReserva);
+    }
+
+    @Override
+    public double calcularCostoReserva(Alojamiento alojamiento, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva){
+        return empresa.calcularCostoReserva(alojamiento,fechaInicioReserva,fechaFinReserva);
+    }
+
+
+
     //  metodos de los servicios:
     // Qr generarQr() throws Exception;
     // Estadistica obtenerEstadisticas();

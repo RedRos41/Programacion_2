@@ -12,6 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -532,6 +533,13 @@ public class Empresa implements ServicioEmpresa {
             throw new Exception("La fecha de fin no puede estar antes de la fecha de inicio.");
 
         }
+
+        if (((Cliente) clienteReserva).getBilleteraCliente().getSaldoBilletera() < calcularCostoReserva(alojamientoReserva, fechaInicioReserva, fechaFinReserva)) {
+
+            throw new Exception("Saldo insuficiente, verifique su saldo.");
+
+        }
+
 
         Reserva reserva = crearReserva(clienteReserva, idReserva, alojamientoReserva, numHuespedesReserva, fechaInicioReserva, fechaFinReserva);
 
@@ -1805,5 +1813,23 @@ public class Empresa implements ServicioEmpresa {
         return filtroAlojamiento;
 
     }
+
+
+    @Override
+    public int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) {
+
+        return (int) ChronoUnit.DAYS.between(fechaInicioReserva, fechaFinReserva);
+    }
+
+    @Override
+    public double calcularCostoReserva(Alojamiento alojamiento, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) {
+
+        int dias = calcularDiasReserva(fechaInicioReserva, fechaFinReserva);
+
+        double precioPorNoche = alojamiento.getPrecioPorNocheAlojamiento();
+
+        return dias * precioPorNoche;
+    }
+
 
 }

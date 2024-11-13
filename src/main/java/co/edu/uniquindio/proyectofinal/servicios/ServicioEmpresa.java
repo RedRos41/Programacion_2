@@ -66,6 +66,8 @@ public interface ServicioEmpresa {
 
     void recargarBilletera(Usuario cliente, double saldoBilletera) throws Exception;
     boolean numeroValido(long numero);
+    int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
+    double calcularCostoReserva(Alojamiento alojamiento, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
 
     Factura generarFactura();
     String generarCodigo();
