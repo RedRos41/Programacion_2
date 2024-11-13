@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class RegistrosTest {
 
-    private final Empresa empresa = Empresa.getInstancia();
+    private final Empresa empresa = new Empresa();
 
 
     @Test

@@ -23,7 +23,6 @@ import java.util.UUID;
 @ToString
 public class Empresa implements ServicioEmpresa {
 
-    private Usuario usuario;
     private final List<Usuario> usuarios;
     private final List<Alojamiento> alojamientos;
     private final List<Alojamiento> filtroAlojamiento;
@@ -544,6 +543,182 @@ public class Empresa implements ServicioEmpresa {
         Reserva reserva = crearReserva(clienteReserva, idReserva, alojamientoReserva, numHuespedesReserva, fechaInicioReserva, fechaFinReserva);
 
         ((Cliente) clienteReserva).getReservas().add(reserva);
+
+    }
+
+
+    @Override
+    public Usuario iniciarSesion(String emailUsuario, String codigoActivacion, String contraseñaUsuario) throws Exception {
+
+        if (emailUsuario.isBlank()) {
+
+            throw new Exception("El email no puede estar vacio.");
+
+        }
+
+        if (!emailUsuario.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
+            throw new Exception("El email debe tener el formato de correo electronico.");
+
+        }
+
+        Usuario usuario = buscarUsuarioPorEmail(emailUsuario);
+
+        if (usuario == null) {
+
+            throw new Exception("No existe un usuario con el email proporcionado.");
+
+        }
+
+        if (usuario.isUsuarioActivado()) {
+
+            if (contraseñaUsuario.isBlank()) {
+
+                throw new Exception("La contraseña no puede estar vacia.");
+
+            }
+
+            if (contraseñaUsuario.length() < 8) {
+
+                throw new Exception("La contraseña debe tener al menos 8 caracteres.");
+
+            }
+
+            if (!usuario.getContraseñaUsuario().equals(contraseñaUsuario)) {
+
+                throw new Exception("La contraseña es incorrecta.");
+
+            }
+
+        } else {
+
+            if (codigoActivacion.isBlank()) {
+
+                throw new Exception("El codigo de activacion no puede estar vacio.");
+
+            }
+
+            if (codigoActivacion.length() != 6 || !codigoActivacion.matches("\\d{6}")) {
+
+                throw new Exception("El codigo de activacion debe tener exactamente 6 digitos numericos.");
+
+            }
+
+            if (!usuario.getCodigoActivacion().equals(codigoActivacion)) {
+
+                throw new Exception("El codigo de activacion es incorrecto.");
+
+            }
+
+            if (contraseñaUsuario.isBlank()) {
+
+                throw new Exception("La contraseña no puede estar vacia.");
+
+            }
+
+            if (contraseñaUsuario.length() < 8) {
+
+                throw new Exception("La contraseña debe tener al menos 8 caracteres.");
+
+            }
+
+            if (!usuario.getContraseñaUsuario().equals(contraseñaUsuario)) {
+
+                throw new Exception("La contraseña es incorrecta.");
+
+            }
+
+            usuario.setUsuarioActivado(true);
+
+        }
+        return usuario;
+
+    }
+
+
+    @Override
+    public void solicitarCambioContraseña(String emailUsuario) throws Exception {
+
+        if (emailUsuario.isBlank()) {
+
+            throw new Exception("El email no puede estar vacio.");
+
+        }
+
+        if (!emailUsuario.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+
+            throw new Exception("El email debe tener el formato de correo electronico.");
+
+        }
+
+        Usuario usuario = buscarUsuarioPorEmail(emailUsuario);
+
+        if (usuario == null) {
+
+            throw new Exception("No existe un usuario con el email proporcionado.");
+
+        }
+
+        String codigoContraseña = generarCodigo();
+
+        usuario.setCodigoContraseña(codigoContraseña);
+
+        try {
+
+            EnvioEmail.enviarCorreo(emailUsuario, "Código de cambio de Contraseña", "Su código de cambio de contraseña es: " + codigoContraseña);
+
+        }catch (Exception e) {
+
+            throw new Exception("Error al enviar el correo de cambio de contraseña. Por favor, intente nuevamente.");
+
+        }
+
+    }
+
+
+    @Override
+    public void cambiarContraseña(String codigoContraseña, String nuevaContraseña) throws Exception {
+
+        if (codigoContraseña.isBlank()) {
+
+            throw new Exception("El codigo de cambio de contraseña no puede estar vacio.");
+
+        }
+
+        if (codigoContraseña.length() != 6 || !codigoContraseña.matches("\\d{6}")) {
+
+            throw new Exception("El codigo de cambio de contraseña debe tener exactamente 6 digitos numericos.");
+
+        }
+
+        Usuario usuario = buscarUsuarioPorCodigoContraseña(codigoContraseña);
+
+        if (usuario == null) {
+
+            throw new Exception("El codigo de cambio de contraseña proporcionado es incorrecto.");
+
+        }
+
+        if (nuevaContraseña.isBlank()) {
+
+            throw new Exception("La contraseña no puede estar vacio.");
+
+        }
+        if (nuevaContraseña.length() < 8) {
+
+            throw new Exception("La contraseña debe tener al menos 8 caracteres.");
+
+        }
+
+        if (usuario.getContraseñaUsuario().equals(nuevaContraseña)) {
+
+            throw new Exception("La nueva contraseña no puede ser igual a la contraseña actual.");
+
+        }
+
+        usuario.setContraseñaUsuario(nuevaContraseña);
+
+        usuario.setCodigoContraseña(null);
 
     }
 
@@ -1212,241 +1387,6 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public void solicitarCambioContraseña(String emailUsuario) throws Exception {
-
-        if (emailUsuario.isBlank()) {
-
-            throw new Exception("El email no puede estar vacio.");
-
-        }
-
-        if (!emailUsuario.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
-
-            throw new Exception("El email debe tener el formato de correo electronico.");
-
-        }
-
-        Usuario usuario = buscarUsuarioPorEmail(emailUsuario);
-
-        if (usuario == null) {
-
-            throw new Exception("No existe un usuario con el email proporcionado.");
-
-        }
-
-        String codigoContraseña = generarCodigo();
-
-        usuario.setCodigoContraseña(codigoContraseña);
-
-        try {
-
-            EnvioEmail.enviarCorreo(emailUsuario, "Código de cambio de Contraseña", "Su código de cambio de contraseña es: " + codigoContraseña);
-
-        }catch (Exception e) {
-
-            throw new Exception("Error al enviar el correo de cambio de contraseña. Por favor, intente nuevamente.");
-
-        }
-
-    }
-
-
-    @Override
-    public void cambiarContraseña(String codigoContraseña, String nuevaContraseña) throws Exception {
-
-        if (codigoContraseña.isBlank()) {
-
-            throw new Exception("El codigo de cambio de contraseña no puede estar vacio.");
-
-        }
-
-        if (codigoContraseña.length() != 6 || !codigoContraseña.matches("\\d{6}")) {
-
-            throw new Exception("El codigo de cambio de contraseña debe tener exactamente 6 digitos numericos.");
-
-        }
-
-        Usuario usuario = buscarUsuarioPorCodigoContraseña(codigoContraseña);
-
-        if (usuario == null) {
-
-            throw new Exception("El codigo de cambio de contraseña proporcionado es incorrecto.");
-
-        }
-
-        if (nuevaContraseña.isBlank()) {
-
-            throw new Exception("La contraseña no puede estar vacio.");
-
-        }
-        if (nuevaContraseña.length() < 8) {
-
-            throw new Exception("La contraseña debe tener al menos 8 caracteres.");
-
-        }
-
-        if (usuario.getContraseñaUsuario().equals(nuevaContraseña)) {
-
-            throw new Exception("La nueva contraseña no puede ser igual a la contraseña actual.");
-
-        }
-
-        usuario.setContraseñaUsuario(nuevaContraseña);
-
-        usuario.setCodigoContraseña(null);
-
-    }
-
-
-    @Override
-    public void recargarBilletera(Usuario cliente, double saldoBilletera) throws Exception {
-
-        if (cliente == null) {
-
-            throw new Exception("El cliente no puede estar vacio.");
-
-        }
-
-        if (!(cliente instanceof Cliente)) {
-
-            throw new Exception("El usuario proporcionado no es un cliente");
-
-        }
-
-        if (saldoBilletera <= 0) {
-
-            throw new Exception("El saldo de la billetera solo puede tener numeros positivos.");
-
-        }
-
-        ((Cliente) cliente).getBilleteraCliente().setSaldoBilletera(((Cliente) cliente).getBilleteraCliente().getSaldoBilletera() + saldoBilletera);
-
-    }
-
-
-    @Override
-    public int buscarUsuario(long cedulaUsuario) {
-
-        for (int i = 0; i < usuarios.size(); i++) {
-
-            if (usuarios.get(i).getCedulaUsuario() == cedulaUsuario) {
-
-                return i;
-
-            }
-
-        }
-        return -1;
-
-    }
-
-
-    @Override
-    public int buscarAlojamiento(int direccionAlojamiento) {
-
-        for (int i = 0; i < alojamientos.size(); i++) {
-
-            if (alojamientos.get(i).getDireccionAlojamiento() == direccionAlojamiento) {
-
-                return i;
-
-            }
-
-        }
-        return -1;
-
-    }
-
-
-    @Override
-    public int buscarHabitacion(Hotel hotel, int numeroHabitacion) {
-
-        for (int i = 0; i < hotel.getHabitaciones().size(); i++) {
-
-            Habitacion habitacion = hotel.getHabitaciones().get(i);
-
-            if (habitacion.getNumeroHabitacion() == numeroHabitacion) {
-
-                return i;
-
-            }
-
-        }
-        return -1;
-
-    }
-
-
-    @Override
-    public int buscarOferta(Alojamiento alojamiento, int idOferta) {
-
-        for (int i = 0; i < alojamiento.getOfertas().size(); i++) {
-
-            Oferta oferta = alojamiento.getOfertas().get(i);
-
-            if (oferta.getIdOferta() == idOferta) {
-
-                return i;
-
-            }
-
-        }
-        return -1;
-
-    }
-
-
-    @Override
-    public int buscarReserva(Usuario clienteReserva, int idReserva) {
-
-        if (clienteReserva instanceof Cliente cliente) {
-
-            List<Reserva> reservas = cliente.getReservas();
-
-            for (int i = 0; i < reservas.size(); i++) {
-
-                Reserva reserva = reservas.get(i);
-
-                if (reserva.getIdReserva() == idReserva) {
-
-                    return i;
-
-                }
-
-            }
-
-        }
-        return -1;
-
-    }
-
-
-    @Override
-    public boolean buscarAdministrador() {
-
-        for (Usuario usuario : usuarios) {
-
-            if (usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-
-                return true;
-
-            }
-
-        }
-        return false;
-
-    }
-
-
-    @Override
-    public boolean numeroValido(long numero) {
-
-        return numero >= 1000000000L && numero <= 9999999999L;
-
-    }
-
-
-    @Override
     public Usuario crearUsuario(TipoUsuario tipoUsuario, long cedulaUsuario, String nombreUsuario, String emailUsuario, String contraseñaUsuario, long telefonoUsuario) throws Exception {
 
         return switch (tipoUsuario) {
@@ -1474,146 +1414,6 @@ public class Empresa implements ServicioEmpresa {
             default -> throw new Exception("Tipo de usuario no valido.");
 
         };
-
-    }
-
-
-    @Override
-    public Usuario iniciarSesion(String emailUsuario, String codigoActivacion, String contraseñaUsuario) throws Exception {
-
-        if (emailUsuario.isBlank()) {
-
-            throw new Exception("El email no puede estar vacio.");
-
-        }
-
-        if (!emailUsuario.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
-
-            throw new Exception("El email debe tener el formato de correo electronico.");
-
-        }
-
-        Usuario usuario = buscarUsuarioPorEmail(emailUsuario);
-
-        if (usuario == null) {
-
-            throw new Exception("No existe un usuario con el email proporcionado.");
-
-        }
-
-        if (usuario.isUsuarioActivado()) {
-
-            if (contraseñaUsuario.isBlank()) {
-
-                throw new Exception("La contraseña no puede estar vacia.");
-
-            }
-
-            if (contraseñaUsuario.length() < 8) {
-
-                throw new Exception("La contraseña debe tener al menos 8 caracteres.");
-
-            }
-
-            if (!usuario.getContraseñaUsuario().equals(contraseñaUsuario)) {
-
-                throw new Exception("La contraseña es incorrecta.");
-
-            }
-
-        } else {
-
-            if (codigoActivacion.isBlank()) {
-
-                throw new Exception("El codigo de activacion no puede estar vacio.");
-
-            }
-
-            if (codigoActivacion.length() != 6 || !codigoActivacion.matches("\\d{6}")) {
-
-                throw new Exception("El codigo de activacion debe tener exactamente 6 digitos numericos.");
-
-            }
-
-            if (!usuario.getCodigoActivacion().equals(codigoActivacion)) {
-
-                throw new Exception("El codigo de activacion es incorrecto.");
-
-            }
-
-            if (contraseñaUsuario.isBlank()) {
-
-                throw new Exception("La contraseña no puede estar vacia.");
-
-            }
-
-            if (contraseñaUsuario.length() < 8) {
-
-                throw new Exception("La contraseña debe tener al menos 8 caracteres.");
-
-            }
-
-            if (!usuario.getContraseñaUsuario().equals(contraseñaUsuario)) {
-
-                throw new Exception("La contraseña es incorrecta.");
-
-            }
-
-            usuario.setUsuarioActivado(true);
-
-        }
-        return usuario;
-
-    }
-
-
-    @Override
-    public Usuario buscarUsuarioPorEmail(String emailUsuario) {
-
-        for (Usuario usuario : usuarios) {
-
-            if (usuario.getEmailUsuario().equals(emailUsuario)) {
-
-                return usuario;
-
-            }
-
-        }
-        return null;
-
-    }
-
-
-    @Override
-    public Usuario buscarUsuarioPorCodigoContraseña(String codigoContraseña) {
-
-        for (Usuario usuario : usuarios) {
-
-            if (usuario.getCodigoContraseña().equals(codigoContraseña)) {
-
-                return usuario;
-
-            }
-
-        }
-        return null;
-
-    }
-
-
-    @Override
-    public Alojamiento buscarAlojamientoPorNombre(String nombreAlojamiento) {
-
-        for (Alojamiento alojamiento : alojamientos) {
-
-            if (alojamiento.getNombreAlojamiento().equals(nombreAlojamiento)) {
-
-                return alojamiento;
-
-            }
-
-        }
-        return null;
 
     }
 
@@ -1739,14 +1539,220 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public Factura generarFactura() {
+    public int buscarUsuario(long cedulaUsuario) {
 
-        return Factura.builder()
-                .codigoFactura(String.valueOf(UUID.randomUUID()))
-                .fechaFactura(LocalDateTime.now())
-                //.subTotalFactura(subTotalFactura)
-                //.totalFactura(totalFactura)
-                .build();
+        for (int i = 0; i < usuarios.size(); i++) {
+
+            if (usuarios.get(i).getCedulaUsuario() == cedulaUsuario) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public int buscarAlojamiento(int direccionAlojamiento) {
+
+        for (int i = 0; i < alojamientos.size(); i++) {
+
+            if (alojamientos.get(i).getDireccionAlojamiento() == direccionAlojamiento) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public int buscarHabitacion(Hotel hotel, int numeroHabitacion) {
+
+        for (int i = 0; i < hotel.getHabitaciones().size(); i++) {
+
+            Habitacion habitacion = hotel.getHabitaciones().get(i);
+
+            if (habitacion.getNumeroHabitacion() == numeroHabitacion) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public int buscarOferta(Alojamiento alojamiento, int idOferta) {
+
+        for (int i = 0; i < alojamiento.getOfertas().size(); i++) {
+
+            Oferta oferta = alojamiento.getOfertas().get(i);
+
+            if (oferta.getIdOferta() == idOferta) {
+
+                return i;
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public int buscarReserva(Usuario clienteReserva, int idReserva) {
+
+        if (clienteReserva instanceof Cliente cliente) {
+
+            List<Reserva> reservas = cliente.getReservas();
+
+            for (int i = 0; i < reservas.size(); i++) {
+
+                Reserva reserva = reservas.get(i);
+
+                if (reserva.getIdReserva() == idReserva) {
+
+                    return i;
+
+                }
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public boolean buscarAdministrador() {
+
+        for (Usuario usuario : usuarios) {
+
+            if (usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+
+                return true;
+
+            }
+
+        }
+        return false;
+
+    }
+
+
+    @Override
+    public Usuario buscarUsuarioPorEmail(String emailUsuario) {
+
+        for (Usuario usuario : usuarios) {
+
+            if (usuario.getEmailUsuario().equals(emailUsuario)) {
+
+                return usuario;
+
+            }
+
+        }
+        return null;
+
+    }
+
+
+    @Override
+    public Usuario buscarUsuarioPorCodigoContraseña(String codigoContraseña) {
+
+        for (Usuario usuario : usuarios) {
+
+            if (usuario.getCodigoContraseña().equals(codigoContraseña)) {
+
+                return usuario;
+
+            }
+
+        }
+        return null;
+
+    }
+
+
+    @Override
+    public Alojamiento buscarAlojamientoPorNombre(String nombreAlojamiento) {
+
+        for (Alojamiento alojamiento : alojamientos) {
+
+            if (alojamiento.getNombreAlojamiento().equals(nombreAlojamiento)) {
+
+                return alojamiento;
+
+            }
+
+        }
+        return null;
+
+    }
+
+
+    @Override
+    public void recargarBilletera(Usuario cliente, double saldoBilletera) throws Exception {
+
+        if (cliente == null) {
+
+            throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (!(cliente instanceof Cliente)) {
+
+            throw new Exception("El usuario proporcionado no es un cliente");
+
+        }
+
+        if (saldoBilletera <= 0) {
+
+            throw new Exception("El saldo de la billetera solo puede tener numeros positivos.");
+
+        }
+
+        ((Cliente) cliente).getBilleteraCliente().setSaldoBilletera(((Cliente) cliente).getBilleteraCliente().getSaldoBilletera() + saldoBilletera);
+
+    }
+
+
+    @Override
+    public boolean numeroValido(long numero) {
+
+        return numero >= 1000000000L && numero <= 9999999999L;
+
+    }
+
+
+    @Override
+    public int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) {
+
+        return (int) ChronoUnit.DAYS.between(fechaInicioReserva, fechaFinReserva);
+
+    }
+
+
+    @Override
+    public double calcularCostoReserva(Alojamiento alojamiento, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) {
+
+        int dias = calcularDiasReserva(fechaInicioReserva, fechaFinReserva);
+
+        double precioPorNoche = alojamiento.getPrecioPorNocheAlojamiento();
+
+        return dias * precioPorNoche;
 
     }
 
@@ -1762,74 +1768,45 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public Factura generarFactura() {
+
+        return Factura.builder()
+                .codigoFactura(String.valueOf(UUID.randomUUID()))
+                .fechaFactura(LocalDateTime.now())
+                //.subTotalFactura(subTotalFactura)
+                //.totalFactura(totalFactura)
+                .build();
+
+    }
+
+
+    @Override
     public List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception {
 
-        if (nombreAlojamiento.isBlank()) {
-
-            throw new Exception("El nombre no puede estar vacio.");
-
-        }
-
-        if (!nombreAlojamiento.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+        if (!nombreAlojamiento.isBlank() && !nombreAlojamiento.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
 
             throw new Exception("El nombre solo puede contener letras.");
-
-        }
-
-        if (tipoAlojamiento == null) {
-
-            throw new Exception("El tipo de alojamiento no puede estar vacio.");
-
-        }
-
-        if (ciudadAlojamiento == null) {
-
-            throw new Exception("La ciudad no puede estar vacia.");
-
-        }
-
-        if (precioMin < 0) {
-
-            throw new Exception("La capacidad maxima solo puede tener numeros positivos.");
-
-        }
-
-        if (precioMax < 0) {
-
-            throw new Exception("La capacidad maxima solo puede tener numeros positivos.");
 
         }
 
         filtroAlojamiento.clear();
 
         filtroAlojamiento.addAll(alojamientos.stream()
-                .filter(alojamiento -> alojamiento.getNombreAlojamiento().equalsIgnoreCase(nombreAlojamiento))
-                .filter(alojamiento -> alojamiento.getTipoAlojamiento() == tipoAlojamiento)
-                .filter(alojamiento -> alojamiento.getCiudadAlojamiento() == ciudadAlojamiento)
-                .filter(alojamiento -> alojamiento.getPrecioPorNocheAlojamiento() >= precioMin)
-                .filter(alojamiento -> alojamiento.getPrecioPorNocheAlojamiento() <= precioMax)
+                .filter(alojamiento -> nombreAlojamiento.isBlank() || alojamiento.getNombreAlojamiento().equalsIgnoreCase(nombreAlojamiento))
+                .filter(alojamiento -> tipoAlojamiento == null || alojamiento.getTipoAlojamiento() == tipoAlojamiento)
+                .filter(alojamiento -> ciudadAlojamiento == null || alojamiento.getCiudadAlojamiento() == ciudadAlojamiento)
+                .filter(alojamiento -> precioMin <= 0 || alojamiento.getPrecioPorNocheAlojamiento() >= precioMin)
+                .filter(alojamiento -> precioMax <= 0 || alojamiento.getPrecioPorNocheAlojamiento() <= precioMax)
                 .toList());
+
+        if (filtroAlojamiento.isEmpty()) {
+
+            throw new Exception("No se encontraron alojamientos con los criterios proporcionados.");
+
+        }
 
         return filtroAlojamiento;
 
     }
-
-
-    @Override
-    public int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) {
-
-        return (int) ChronoUnit.DAYS.between(fechaInicioReserva, fechaFinReserva);
-    }
-
-    @Override
-    public double calcularCostoReserva(Alojamiento alojamiento, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) {
-
-        int dias = calcularDiasReserva(fechaInicioReserva, fechaFinReserva);
-
-        double precioPorNoche = alojamiento.getPrecioPorNocheAlojamiento();
-
-        return dias * precioPorNoche;
-    }
-
 
 }
