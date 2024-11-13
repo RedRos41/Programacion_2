@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import co.edu.uniquindio.proyectofinal.controladores.ControladorPrincipal;
+import co.edu.uniquindio.proyectofinal.modelos.Sesion;
+import co.edu.uniquindio.proyectofinal.modelos.Usuario;
+import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
 
 public class IniciarSesionControlador {
 
@@ -31,10 +33,17 @@ public class IniciarSesionControlador {
             String contraseña = txtContraseña.getText();
             String codigoActivacion = txtCodigoActivacion.getText();
 
-            controladorPrincipal.iniciarSesion(email, codigoActivacion, contraseña);
+            Usuario usuarioAutenticado = controladorPrincipal.iniciarSesion(email, codigoActivacion, contraseña);
+            Sesion.getInstancia().setUsuario(usuarioAutenticado);
 
             controladorPrincipal.mostrarAlerta("Inicio de sesión exitoso", "Éxito", Alert.AlertType.INFORMATION);
             controladorPrincipal.cerrarVentana(txtEmail);
+
+            if (usuarioAutenticado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                controladorPrincipal.navegarVentana("/PanelAdmin.fxml", "Panel de Administrador");
+            } else if (usuarioAutenticado.getTipoUsuario() == TipoUsuario.CLIENTE) {
+                controladorPrincipal.navegarVentana("/PanelCliente.fxml", "Panel de Cliente");
+            }
 
         } catch (Exception e) {
             controladorPrincipal.mostrarAlerta(e.getMessage(), "Error de Inicio de Sesión", Alert.AlertType.ERROR);
