@@ -62,6 +62,7 @@ public interface ServicioEmpresa {
     boolean numeroValido(long numero);
     int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
     double calcularCostoReserva(Alojamiento alojamiento, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
+    boolean fechasSeSuperponen(LocalDateTime inicio1, LocalDateTime fin1, LocalDateTime inicio2, LocalDateTime fin2);
 
     String generarCodigo();
     Factura generarFactura();

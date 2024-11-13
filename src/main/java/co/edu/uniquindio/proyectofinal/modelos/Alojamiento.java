@@ -32,5 +32,6 @@ public class Alojamiento {
     protected TipoAlojamiento tipoAlojamiento;
     protected List<Oferta> ofertas;
     protected List<Reseña> reseñas;
+    protected List<Reserva> reservasAlojamiento;
 
 }

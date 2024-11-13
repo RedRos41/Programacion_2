@@ -38,6 +38,7 @@ class Alojamiento {
     - tipoAlojamiento: TipoAlojamiento
     - ofertas: List<Oferta>
     - reseñas: List<Reseña>
+    - reservasAlojamiento: List<Reserva>
 }
 
 enum TipoAlojamiento {

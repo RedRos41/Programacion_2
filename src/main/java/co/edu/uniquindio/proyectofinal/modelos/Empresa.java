@@ -509,6 +509,12 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
+        if (numHuespedesReserva > alojamientoReserva.getCapacidadMaximaAlojamiento()) {
+
+            throw new Exception("El numero de huespedes no puede exceder la capacidad maxima.");
+
+        }
+
         if (fechaInicioReserva == null) {
 
             throw new Exception("La fecha de inicio no puede estar vacio.");
@@ -533,16 +539,31 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        if (((Cliente) clienteReserva).getBilleteraCliente().getSaldoBilletera() < calcularCostoReserva(alojamientoReserva, fechaInicioReserva, fechaFinReserva)) {
+        for (Reserva reservaExistente : alojamientoReserva.getReservasAlojamiento()) {
+
+            if (fechasSeSuperponen(fechaInicioReserva, fechaFinReserva, reservaExistente.getFechaInicioReserva(), reservaExistente.getFechaFinReserva())) {
+
+                throw new Exception("Las fechas proporcionadas se superponen con una reserva existente.");
+
+            }
+
+        }
+
+        double saldoActual = ((Cliente) clienteReserva).getBilleteraCliente().getSaldoBilletera();
+
+        double costoReserva = calcularCostoReserva(alojamientoReserva, fechaInicioReserva, fechaFinReserva);
+
+        if (saldoActual < costoReserva) {
 
             throw new Exception("Saldo insuficiente, verifique su saldo.");
 
         }
 
-
         Reserva reserva = crearReserva(clienteReserva, idReserva, alojamientoReserva, numHuespedesReserva, fechaInicioReserva, fechaFinReserva);
 
         ((Cliente) clienteReserva).getReservas().add(reserva);
+
+        alojamientoReserva.getReservasAlojamiento().add(reserva);
 
     }
 
@@ -1435,6 +1456,7 @@ public class Empresa implements ServicioEmpresa {
                 .mantenimientoCasa(mantenimientoCasa)
                 .ofertas(new ArrayList<>())
                 .reseñas(new ArrayList<>())
+                .reservasAlojamiento(new ArrayList<>())
                 .build();
 
     }
@@ -1457,6 +1479,7 @@ public class Empresa implements ServicioEmpresa {
                 .mantenimientoApartamento(mantenimientoApartamento)
                 .ofertas(new ArrayList<>())
                 .reseñas(new ArrayList<>())
+                .reservasAlojamiento(new ArrayList<>())
                 .build();
 
     }
@@ -1478,6 +1501,7 @@ public class Empresa implements ServicioEmpresa {
                 .habitaciones(new ArrayList<>())
                 .ofertas(new ArrayList<>())
                 .reseñas(new ArrayList<>())
+                .reservasAlojamiento(new ArrayList<>())
                 .build();
 
     }
@@ -1753,6 +1777,14 @@ public class Empresa implements ServicioEmpresa {
         double precioPorNoche = alojamiento.getPrecioPorNocheAlojamiento();
 
         return dias * precioPorNoche;
+
+    }
+
+
+    @Override
+    public boolean fechasSeSuperponen(LocalDateTime inicio1, LocalDateTime fin1, LocalDateTime inicio2, LocalDateTime fin2) {
+
+        return (inicio1.isBefore(fin2) && fin1.isAfter(inicio2));
 
     }
 
