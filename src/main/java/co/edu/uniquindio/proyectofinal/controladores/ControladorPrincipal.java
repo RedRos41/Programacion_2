@@ -101,10 +101,6 @@ public class ControladorPrincipal implements ServicioEmpresa{
     public void editarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta) throws Exception{
         empresa.editarOferta(alojamiento,idOferta,descripcionOferta,descuentoOferta,fechaInicioOferta,fechaFinOferta);
     }
-    @Override
-    public void editarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception{
-        empresa.editarReserva(clienteReserva, idReserva, alojamientoReserva, numHuespedesReserva, fechaInicioReserva, fechaFinReserva);
-    }
 
 
     @Override
