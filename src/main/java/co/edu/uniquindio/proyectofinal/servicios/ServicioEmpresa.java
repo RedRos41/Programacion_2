@@ -62,10 +62,12 @@ public interface ServicioEmpresa {
     boolean numeroValido(long numero);
     int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
     double calcularCostoReserva(Alojamiento alojamiento, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
-    boolean fechasSeSuperponen(LocalDateTime inicio1, LocalDateTime fin1, LocalDateTime inicio2, LocalDateTime fin2);
+    boolean fechasSeSuperponen(LocalDateTime fechaInicio1, LocalDateTime fechaFin1, LocalDateTime fechaInicio2, LocalDateTime fechaFin2);
+    double obtenerDescuento(Alojamiento alojamiento, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    double calcularDescuento(double descuentoOferta);
 
     String generarCodigo();
-    Factura generarFactura();
+    Factura generarFactura(double subTotalFactura, double totalFactura);
 
     List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception;
 

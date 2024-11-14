@@ -614,7 +614,7 @@ public class Empresa implements ServicioEmpresa {
 
         if (saldoActual < costoReserva) {
 
-            throw new Exception("Saldo insuficiente, verifique su saldo.");
+            throw new Exception("El saldo actual no puede ser menor al costo de la reserva.");
 
         }
 
@@ -623,6 +623,14 @@ public class Empresa implements ServicioEmpresa {
         ((Cliente) clienteReserva).getReservas().add(reserva);
 
         alojamientoReserva.getReservasAlojamiento().add(reserva);
+
+        double descuentoOferta = obtenerDescuento(alojamientoReserva, fechaInicioReserva, fechaFinReserva);
+
+        double calculoDescuento = calcularDescuento(descuentoOferta);
+
+        double totalFactura = costoReserva * calculoDescuento;
+
+        Factura factura = generarFactura(costoReserva, totalFactura);
 
     }
 
@@ -1841,9 +1849,34 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public boolean fechasSeSuperponen(LocalDateTime inicio1, LocalDateTime fin1, LocalDateTime inicio2, LocalDateTime fin2) {
+    public boolean fechasSeSuperponen(LocalDateTime fechaInicio1, LocalDateTime fechaFin1, LocalDateTime fechaInicio2, LocalDateTime fechaFin2) {
 
-        return (inicio1.isBefore(fin2) && fin1.isAfter(inicio2));
+        return (fechaInicio1.isBefore(fechaFin2) && fechaFin1.isAfter(fechaInicio2));
+
+    }
+
+
+    @Override
+    public double obtenerDescuento(Alojamiento alojamiento, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+
+        for (Oferta oferta : alojamiento.getOfertas()) {
+
+            if (!fechaInicio.isBefore(oferta.getFechaInicioOferta()) && !fechaFin.isAfter(oferta.getFechaFinOferta())) {
+
+                return oferta.getDescuentoOferta();
+
+            }
+
+        }
+        return 0;
+
+    }
+
+
+    @Override
+    public double calcularDescuento(double descuentoOferta) {
+
+        return 1 - descuentoOferta / 100;
 
     }
 
@@ -1859,13 +1892,13 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public Factura generarFactura() {
+    public Factura generarFactura(double subTotalFactura, double totalFactura) {
 
         return Factura.builder()
                 .codigoFactura(String.valueOf(UUID.randomUUID()))
                 .fechaFactura(LocalDateTime.now())
-                //.subTotalFactura(subTotalFactura)
-                //.totalFactura(totalFactura)
+                .subTotalFactura(subTotalFactura)
+                .totalFactura(totalFactura)
                 .build();
 
     }
