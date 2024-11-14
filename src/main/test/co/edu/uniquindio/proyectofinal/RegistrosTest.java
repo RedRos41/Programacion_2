@@ -112,4 +112,18 @@ public class RegistrosTest {
 
     }
 
+
+    @Test
+    public void testRegistrarReseña() throws Exception {
+
+        Alojamiento alojamiento = empresa.crearApartamento(212, "SierraGrandeF", CiudadAlojamiento.ARMENIA, "Apto 203", "", 200000, 3, ServicioAlojamiento.PISCINA, 40000, 1000000);
+
+        empresa.registrarReseña(alojamiento, 223, "Bueno", 4.5f);
+
+        int reseña = empresa.buscarReseña(alojamiento, 223);
+
+        assertNotEquals(-1, reseña, "La reseña no se registro");
+
+    }
+
 }
