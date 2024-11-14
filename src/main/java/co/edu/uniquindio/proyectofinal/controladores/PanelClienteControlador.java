@@ -76,7 +76,7 @@ public class PanelClienteControlador {
 
     @FXML
     private void gestionarCliente(ActionEvent event) {
-        // Lógica para editar datos del cliente o eliminar la cuenta
+        controladorPrincipal.navegarVentana("/editarPerfilCliente.fxml", "Gestionar Perfil del Cliente");
     }
 
     @FXML

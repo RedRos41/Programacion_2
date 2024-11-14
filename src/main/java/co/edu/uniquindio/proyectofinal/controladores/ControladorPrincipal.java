@@ -233,6 +233,11 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return empresa.calcularCostoReserva(alojamiento,fechaInicioReserva,fechaFinReserva);
     }
 
+    @Override
+    public boolean fechasSeSuperponen(LocalDateTime inicio1, LocalDateTime fin1, LocalDateTime inicio2, LocalDateTime fin2){
+        return empresa.fechasSeSuperponen(inicio1,fin1,inicio2,fin2);
+    }
+
 
 
     //  metodos de los servicios:
