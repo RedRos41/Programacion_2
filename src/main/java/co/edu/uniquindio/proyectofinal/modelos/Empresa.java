@@ -636,6 +636,52 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public void registrarReseña(Alojamiento alojamiento, int idReseña, String cometarioReseña, float calificacionReseña) throws Exception {
+
+        if (alojamiento == null) {
+
+            throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (idReseña <= 0) {
+
+            throw new Exception("La id de la reseña solo puede tener numeros positivos.");
+
+        }
+
+        if (buscarReseña(alojamiento, idReseña) != -1) {
+
+            throw new Exception("Ya existe una reseña con la id proporcionada.");
+
+        }
+
+        if (cometarioReseña.isBlank()) {
+
+            throw new Exception("El cometario no puede estar vacio.");
+
+        }
+
+        if (calificacionReseña < 1 || calificacionReseña > 5) {
+
+            throw new Exception("La calificacion debe estar entre 1 y 5.");
+
+        }
+
+        if (!reservaPasada(alojamiento)) {
+
+            throw new Exception("La reseña solo puede ser creada después de finalizar la reserva.");
+
+        }
+
+        Reseña reseña = crearReseña(idReseña, cometarioReseña, calificacionReseña);
+
+        alojamiento.getReseñas().add(reseña);
+
+    }
+
+
+    @Override
     public Usuario iniciarSesion(String emailUsuario, String codigoActivacion, String contraseñaUsuario) throws Exception {
 
         if (emailUsuario.isBlank()) {
@@ -1265,6 +1311,49 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public void editarReseña(Alojamiento alojamiento, int idReseña, String cometarioReseña, float calificacionReseña) throws Exception {
+
+        if (alojamiento == null) {
+
+            throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (idReseña <= 0) {
+
+            throw new Exception("La id de la reseña solo puede tener numeros positivos.");
+
+        }
+
+        int identificacionReseña = buscarReseña(alojamiento, idReseña);
+
+        if (identificacionReseña == -1) {
+
+            throw new Exception("No existe una reseña con la identificacion proporcionada.");
+
+        }
+
+        if (cometarioReseña.isBlank()) {
+
+            throw new Exception("El cometario no puede estar vacio.");
+
+        }
+
+        if (calificacionReseña < 1 || calificacionReseña > 5) {
+
+            throw new Exception("La calificacion debe estar entre 1 y 5.");
+
+        }
+
+        Reseña editarReseña = alojamiento.getReseñas().get(identificacionReseña);
+        editarReseña.setIdReseña(idReseña);
+        editarReseña.setCometarioReseña(cometarioReseña);
+        editarReseña.setCalificacionReseña(calificacionReseña);
+
+    }
+
+
+    @Override
     public void eliminarUsuario(long cedulaUsuario) throws Exception {
 
         if (!numeroValido(cedulaUsuario)) {
@@ -1394,6 +1483,34 @@ public class Empresa implements ServicioEmpresa {
         }
 
         ((Cliente) clienteReserva).getReservas().remove(identificacionReserva);
+
+    }
+
+
+    @Override
+    public void eliminarReseña(Alojamiento alojamiento, int idReseña) throws  Exception {
+
+        if (alojamiento == null) {
+
+            throw new Exception("El cliente no puede estar vacio.");
+
+        }
+
+        if (idReseña <= 0) {
+
+            throw new Exception("La id de la reseña solo puede tener numeros positivos.");
+
+        }
+
+        int identificacionReseña = buscarReseña(alojamiento, idReseña);
+
+        if (identificacionReseña == -1) {
+
+            throw new Exception("No existe una reseña con la identificacion proporcionada.");
+
+        }
+
+        alojamiento.getReseñas().remove(identificacionReseña);
 
     }
 
@@ -1590,9 +1707,11 @@ public class Empresa implements ServicioEmpresa {
     @Override
     public int buscarHabitacion(Hotel hotel, int numeroHabitacion) {
 
-        for (int i = 0; i < hotel.getHabitaciones().size(); i++) {
+        List<Habitacion> habitaciones = hotel.getHabitaciones();
 
-            Habitacion habitacion = hotel.getHabitaciones().get(i);
+        for (int i = 0; i < habitaciones.size(); i++) {
+
+            Habitacion habitacion = habitaciones.get(i);
 
             if (habitacion.getNumeroHabitacion() == numeroHabitacion) {
 
@@ -1609,9 +1728,11 @@ public class Empresa implements ServicioEmpresa {
     @Override
     public int buscarOferta(Alojamiento alojamiento, int idOferta) {
 
-        for (int i = 0; i < alojamiento.getOfertas().size(); i++) {
+        List<Oferta> ofertas = alojamiento.getOfertas();
 
-            Oferta oferta = alojamiento.getOfertas().get(i);
+        for (int i = 0; i < ofertas.size(); i++) {
+
+            Oferta oferta = ofertas.get(i);
 
             if (oferta.getIdOferta() == idOferta) {
 
@@ -1641,6 +1762,27 @@ public class Empresa implements ServicioEmpresa {
                     return i;
 
                 }
+
+            }
+
+        }
+        return -1;
+
+    }
+
+
+    @Override
+    public int buscarReseña(Alojamiento alojamiento, int idReseña) {
+
+        List<Reseña> reseñas = alojamiento.getReseñas();
+
+        for (int i = 0; i < reseñas.size(); i++) {
+
+            Reseña reseña = reseñas.get(i);
+
+            if (reseña.getIdReseña() == idReseña) {
+
+                return i;
 
             }
 
@@ -1739,7 +1881,9 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        ((Cliente) cliente).getBilleteraCliente().setSaldoBilletera(((Cliente) cliente).getBilleteraCliente().getSaldoBilletera() + saldoBilletera);
+        Billetera billetera = ((Cliente) cliente).getBilleteraCliente();
+
+        billetera.setSaldoBilletera(billetera.getSaldoBilletera() + saldoBilletera);
 
     }
 
@@ -1801,6 +1945,23 @@ public class Empresa implements ServicioEmpresa {
     public double calcularDescuento(double descuentoOferta) {
 
         return 1 - descuentoOferta / 100;
+
+    }
+
+
+    @Override
+    public boolean reservaPasada(Alojamiento alojamiento) {
+
+        for (Reserva reserva : alojamiento.getReservasAlojamiento()) {
+
+            if (reserva.getClienteReserva() instanceof Cliente && reserva.getFechaFinReserva().isBefore(LocalDateTime.now())) {
+
+                return true;
+
+            }
+
+        }
+        return false;
 
     }
 
