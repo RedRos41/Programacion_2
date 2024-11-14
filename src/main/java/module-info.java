@@ -18,4 +18,6 @@ module co.edu.uniquindio.proyectofinal {
     exports co.edu.uniquindio.proyectofinal;
     exports co.edu.uniquindio.proyectofinal.controladores;
     opens co.edu.uniquindio.proyectofinal.controladores to javafx.fxml;
+    opens co.edu.uniquindio.proyectofinal.modelos to javafx.base;
+
 }

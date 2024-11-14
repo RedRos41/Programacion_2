@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="EditarPerfilCliente"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyectofinal.controladores.EditarPerfilClienteControlador" alignment="CENTER" spacing="10" style="-fx-padding: 20;">
 
-</AnchorPane>
+    <!-- Título -->
+    <Label text="Editar Perfil del Cliente" style="-fx-font-size: 18px; -fx-font-weight: bold;" alignment="CENTER"/>
+
+    <!-- Campos de Texto para Edición -->
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Nombre:"/>
+        <TextField fx:id="txtNombre" promptText="Ingrese su nombre"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Email:"/>
+        <TextField fx:id="txtEmail" promptText="Ingrese su correo electrónico"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Teléfono:"/>
+        <TextField fx:id="txtTelefono" promptText="Ingrese su teléfono"/>
+    </HBox>
+
+    <!-- Botones de Acción -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Guardar Cambios" onAction="#guardarCambios"/>
+        <Button text="Cancelar" onAction="#cancelarEdicion"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Botón para Eliminar Cuenta -->
+    <Button text="Eliminar Cuenta" onAction="#eliminarCuenta" style="-fx-text-fill: red; -fx-font-weight: bold;"/>
+
+</VBox>

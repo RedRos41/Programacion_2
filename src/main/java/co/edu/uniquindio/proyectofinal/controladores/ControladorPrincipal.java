@@ -294,4 +294,41 @@ public class ControladorPrincipal implements ServicioEmpresa{
         stage.close();
     }
 
+    public int generarCodigoReserva() {
+
+        int maxId = 0;
+        for (Usuario usuario : empresa.getUsuarios()) {
+            if (usuario instanceof Cliente cliente) {
+                for (Reserva reserva : cliente.getReservas()) {
+                    if (reserva.getIdReserva() > maxId) {
+                        maxId = reserva.getIdReserva();
+                    }
+                }
+            }
+        }
+        return maxId + 1;
+    }
+
+    public void navegarVentanaConAlojamiento(String nombreFxml, String titulo, Alojamiento alojamiento) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreFxml));
+            Parent root = loader.load();
+
+            RealizarReservaControlador realizarReservaControlador = loader.getController();
+            realizarReservaControlador.setAlojamientoSeleccionado(alojamiento);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle(titulo);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }

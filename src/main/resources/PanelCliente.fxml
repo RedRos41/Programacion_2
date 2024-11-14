@@ -42,6 +42,24 @@
         </VBox>
     </TitledPane>
 
+    <!-- Resultados de Búsqueda de Alojamientos -->
+    <TitledPane text="Resultados de Búsqueda" expanded="true">
+        <VBox spacing="5">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            <TableView fx:id="tablaResultadosBusqueda">
+                <columns>
+                    <TableColumn fx:id="colNombreAlojamiento" text="Nombre" prefWidth="150"/>
+                    <TableColumn fx:id="colTipoAlojamiento" text="Tipo" prefWidth="100"/>
+                    <TableColumn fx:id="colCiudadAlojamiento" text="Ciudad" prefWidth="100"/>
+                    <TableColumn fx:id="colPrecioAlojamiento" text="Precio por Noche" prefWidth="100"/>
+                </columns>
+            </TableView>
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Seleccionar para Reserva" onAction="#seleccionarAlojamientoParaReserva"/>
+            </HBox>
+        </VBox>
+    </TitledPane>
+
     <!-- Tabla de Reservas -->
     <TitledPane text="Mis Reservas" expanded="true">
         <VBox spacing="5">

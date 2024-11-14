@@ -31,6 +31,21 @@ public class PanelClienteControlador {
     private TableColumn<Reserva, String> colFechaFin;
 
     @FXML
+    private TableView<Alojamiento> tablaResultadosBusqueda;
+
+    @FXML
+    private TableColumn<Alojamiento, String> colNombreAlojamiento;
+
+    @FXML
+    private TableColumn<Alojamiento, TipoAlojamiento> colTipoAlojamiento;
+
+    @FXML
+    private TableColumn<Alojamiento, CiudadAlojamiento> colCiudadAlojamiento;
+
+    @FXML
+    private TableColumn<Alojamiento, Double> colPrecioAlojamiento;
+
+    @FXML
     private TextField txtBuscarNombre;
 
     @FXML
@@ -59,6 +74,12 @@ public class PanelClienteControlador {
         colFechaInicio.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
         colFechaFin.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
 
+        // Inicializar la tabla de resultados de búsqueda de alojamientos
+        colNombreAlojamiento.setCellValueFactory(new PropertyValueFactory<>("nombreAlojamiento"));
+        colTipoAlojamiento.setCellValueFactory(new PropertyValueFactory<>("tipoAlojamiento"));
+        colCiudadAlojamiento.setCellValueFactory(new PropertyValueFactory<>("ciudadAlojamiento"));
+        colPrecioAlojamiento.setCellValueFactory(new PropertyValueFactory<>("precioPorNocheAlojamiento"));
+
         // Poblar ComboBoxes
         comboTipoAlojamiento.getItems().addAll(TipoAlojamiento.values());
         comboCiudadAlojamiento.getItems().addAll(CiudadAlojamiento.values());
@@ -81,7 +102,7 @@ public class PanelClienteControlador {
 
     @FXML
     private void realizarReserva(ActionEvent event) {
-        controladorPrincipal.navegarVentana("/reservarAlojamiento.fxml", "Realizar Reserva");
+        controladorPrincipal.navegarVentana("/realizarReserva.fxml", "Realizar Reserva");
     }
 
     @FXML
@@ -106,7 +127,18 @@ public class PanelClienteControlador {
     }
 
     private void mostrarResultadosBusqueda(List<Alojamiento> alojamientos) {
-        // Lógica para mostrar resultados de búsqueda en una nueva ventana o en la interfaz actual
+        ObservableList<Alojamiento> listaResultados = FXCollections.observableArrayList(alojamientos);
+        tablaResultadosBusqueda.setItems(listaResultados);
+    }
+
+    @FXML
+    private void seleccionarAlojamientoParaReserva(ActionEvent event) {
+        Alojamiento alojamientoSeleccionado = tablaResultadosBusqueda.getSelectionModel().getSelectedItem();
+        if (alojamientoSeleccionado != null) {
+            controladorPrincipal.navegarVentanaConAlojamiento("/realizarReserva.fxml", "Realizar Reserva", alojamientoSeleccionado);
+        } else {
+            controladorPrincipal.mostrarAlerta("Por favor, seleccione un alojamiento para reservar", "Seleccionar Alojamiento", Alert.AlertType.WARNING);
+        }
     }
 
     @FXML

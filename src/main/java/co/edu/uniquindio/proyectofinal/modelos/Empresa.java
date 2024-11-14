@@ -34,7 +34,66 @@ public class Empresa implements ServicioEmpresa {
         this.alojamientos = new ArrayList<>();
         this.filtroAlojamiento = new ArrayList<>();
 
+
+        inicializarAlojamientos();
+
+        //CUENTAS DE PRUEBAS, YA AL TERMINAR *BORRARLAS*
+        try {
+            Usuario admin = crearUsuario(
+                    TipoUsuario.ADMINISTRADOR,
+                    1111111111,
+                    "Admin",
+                    "admin@nose.com",
+                    "admin123",
+                    1111111111
+            );
+            admin.setUsuarioActivado(true);
+            usuarios.add(admin);
+
+            Usuario cliente = crearUsuario(
+                    TipoUsuario.CLIENTE,
+                    1222222222,
+                    "ClientePrueba",
+                    "cliente@example.com",
+                    "cliente123",
+                    1222222222
+            );
+            cliente.setUsuarioActivado(true);
+
+            if (cliente instanceof Cliente clienteEspecifico) {
+                clienteEspecifico.getBilleteraCliente().setSaldoBilletera(500000.0); // saldo inicial
+            }
+
+            usuarios.add(cliente);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
+
+
+    private void inicializarAlojamientos() {
+        try {
+            registrarCasa(
+                    100, "Casa Bella", CiudadAlojamiento.ARMENIA, "Casa amplia y cómoda",
+                    "casa_bella.jpg", 200.0, 5, ServicioAlojamiento.WIFI, 30.0, 50.0);
+
+            registrarApartamento(
+                    101, "Apartamento Moderno", CiudadAlojamiento.PEREIRA, "Moderno y bien ubicado",
+                    "apto_moderno.jpg", 150.0, 4, ServicioAlojamiento.DESAYUNO, 20.0, 40.0);
+
+            registrarHotel(
+                    102, "Hotel Premium", CiudadAlojamiento.CALARCA, "Hotel de alta categoría",
+                    "hotel_premium.jpg", 300.0, 20, ServicioAlojamiento.PISCINA);
+
+        } catch (Exception e) {
+            System.out.println("Error al inicializar alojamientos: " + e.getMessage());
+        }
+    }
+//---
+
 
     @Override
     public void registrarUsuario(TipoUsuario tipoUsuario, long cedulaUsuario, String nombreUsuario, String emailUsuario, String contraseñaUsuario, long telefonoUsuario) throws Exception {
