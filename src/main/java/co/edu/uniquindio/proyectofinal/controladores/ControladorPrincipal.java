@@ -62,6 +62,11 @@ public class ControladorPrincipal implements ServicioEmpresa{
         empresa.registrarReserva(clienteReserva,idReserva,alojamientoReserva,numHuespedesReserva,fechaInicioReserva,fechaFinReserva);
     }
 
+    @Override
+    public void registrarReseña(Alojamiento alojamiento, int idReseña, String cometarioReseña, float calificacionReseña) throws Exception {
+
+    }
+
 
     @Override
     public Usuario iniciarSesion(String emailUsuario, String codigoActivacion, String contraseñaUsuario) throws Exception {
@@ -102,6 +107,16 @@ public class ControladorPrincipal implements ServicioEmpresa{
         empresa.editarOferta(alojamiento,idOferta,descripcionOferta,descuentoOferta,fechaInicioOferta,fechaFinOferta);
     }
 
+    @Override
+    public void editarReseña(Alojamiento alojamiento, int idReseña, String cometarioReseña, float calificacionReseña) throws Exception {
+
+    }
+
+    @Override
+    public void editarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception {
+
+    }
+
 
     @Override
     public void eliminarUsuario(long cedulaUsuario) throws Exception{
@@ -122,6 +137,11 @@ public class ControladorPrincipal implements ServicioEmpresa{
     @Override
     public void eliminarReserva(Usuario clienteReserva, int idReserva) throws Exception{
         empresa.eliminarReserva(clienteReserva,idReserva);
+    }
+
+    @Override
+    public void eliminarReseña(Alojamiento alojamiento, int idReseña) throws Exception {
+
     }
 
 
@@ -145,6 +165,12 @@ public class ControladorPrincipal implements ServicioEmpresa{
     public int buscarReserva(Usuario clienteReserva, int idReserva) {
         return empresa.buscarReserva(clienteReserva, idReserva);
     }
+
+    @Override
+    public int buscarReseña(Alojamiento alojamiento, int idReseña) {
+        return 0;
+    }
+
     @Override
     public boolean buscarAdministrador() {
         return empresa.buscarAdministrador();
@@ -214,6 +240,12 @@ public class ControladorPrincipal implements ServicioEmpresa{
     public String generarCodigo() {
         return empresa.generarCodigo();
     }
+
+    @Override
+    public Factura generarFactura(double subTotalFactura, double totalFactura) {
+        return null;
+    }
+
     @Override
     public List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception {
         return empresa.filtrarAlojamientos(nombreAlojamiento, tipoAlojamiento, ciudadAlojamiento, precioMin, precioMax);
@@ -234,6 +266,20 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return empresa.fechasSeSuperponen(inicio1,fin1,inicio2,fin2);
     }
 
+    @Override
+    public double obtenerDescuento(Alojamiento alojamiento, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        return 0;
+    }
+
+    @Override
+    public double calcularDescuento(double descuentoOferta) {
+        return 0;
+    }
+
+    @Override
+    public boolean reservaPasada(Alojamiento alojamiento) {
+        return false;
+    }
 
 
     //  metodos de los servicios:

@@ -1352,6 +1352,11 @@ public class Empresa implements ServicioEmpresa {
 
     }
 
+    @Override
+    public void editarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception {
+
+    }
+
 
     @Override
     public void eliminarUsuario(long cedulaUsuario) throws Exception {
@@ -1963,6 +1968,11 @@ public class Empresa implements ServicioEmpresa {
         }
         return false;
 
+    }
+
+    @Override
+    public Factura generarFactura() {
+        return null;
     }
 
 

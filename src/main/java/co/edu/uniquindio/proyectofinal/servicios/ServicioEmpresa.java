@@ -34,6 +34,8 @@ public interface ServicioEmpresa {
     void editarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta) throws Exception;
     void editarReseña(Alojamiento alojamiento, int idReseña, String cometarioReseña, float calificacionReseña) throws Exception;
 
+    void editarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception;
+
     void eliminarUsuario(long cedulaUsuario) throws Exception;
     void eliminarAlojamiento(int direccionAlojamiento) throws Exception;
     void eliminarHabitacion(Hotel hotel, int numeroHabitacion) throws Exception;
@@ -69,6 +71,8 @@ public interface ServicioEmpresa {
     double obtenerDescuento(Alojamiento alojamiento, LocalDateTime fechaInicio, LocalDateTime fechaFin);
     double calcularDescuento(double descuentoOferta);
     boolean reservaPasada(Alojamiento alojamiento);
+
+    Factura generarFactura();
 
     String generarCodigo();
     Factura generarFactura(double subTotalFactura, double totalFactura);
