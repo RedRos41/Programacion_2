@@ -4,79 +4,79 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyectofinal.controladores.PanelClienteControlador" spacing="10" alignment="CENTER" style="-fx-padding: 20;">
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyectofinal.controladores.PanelClienteControlador" spacing="10" alignment="CENTER" style="-fx-padding: 20;">
 
-    <!-- Título -->
-    <Label text="Panel de Cliente" style="-fx-font-size: 18px; -fx-font-weight: bold;" alignment="CENTER"/>
+    <VBox spacing="10">
+        <Label text="Panel de Cliente" style="-fx-font-size: 18px; -fx-font-weight: bold;" alignment="CENTER"/>
 
-    <!-- Botones de Acciones Principales -->
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Gestionar Cliente" onAction="#gestionarCliente"/>
-        <Button text="Realizar Reserva" onAction="#realizarReserva"/>
-        <Button text="Billetera" onAction="#abrirBilletera"/>
-    </HBox>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Gestionar Cliente" onAction="#gestionarCliente"/>
+            <Button text="Realizar Reserva" onAction="#realizarReserva"/>
+            <Button text="Billetera" onAction="#abrirBilletera"/>
+        </HBox>
 
-    <!-- Búsqueda de Alojamientos -->
-    <TitledPane text="Buscar Alojamientos" expanded="true">
-        <VBox spacing="5">
-            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-            <HBox spacing="10">
-                <Label text="Nombre:"/>
-                <TextField fx:id="txtBuscarNombre" promptText="Ingrese el nombre del alojamiento"/>
-            </HBox>
-            <HBox spacing="10">
-                <Label text="Tipo de Alojamiento:"/>
-                <ComboBox fx:id="comboTipoAlojamiento" promptText="Seleccione el tipo"/>
-            </HBox>
-            <HBox spacing="10">
-                <Label text="Ciudad:"/>
-                <ComboBox fx:id="comboCiudadAlojamiento" promptText="Seleccione la ciudad"/>
-            </HBox>
-            <HBox spacing="10">
-                <Label text="Precio Mín:"/>
-                <TextField fx:id="txtPrecioMin" promptText="0.0"/>
-                <Label text="Precio Máx:"/>
-                <TextField fx:id="txtPrecioMax" promptText="0.0"/>
-            </HBox>
-            <Button text="Buscar" onAction="#buscarAlojamientos"/>
-        </VBox>
-    </TitledPane>
+        <HBox spacing="10" alignment="CENTER">
+            <Label fx:id="lblSaldoDisponible" text="Saldo: $0.00" style="-fx-font-weight: bold;"/>
+        </HBox>
 
-    <!-- Resultados de Búsqueda de Alojamientos -->
-    <TitledPane text="Resultados de Búsqueda" expanded="true">
-        <VBox spacing="5">
-            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-            <TableView fx:id="tablaResultadosBusqueda">
-                <columns>
-                    <TableColumn fx:id="colNombreAlojamiento" text="Nombre" prefWidth="150"/>
-                    <TableColumn fx:id="colTipoAlojamiento" text="Tipo" prefWidth="100"/>
-                    <TableColumn fx:id="colCiudadAlojamiento" text="Ciudad" prefWidth="100"/>
-                    <TableColumn fx:id="colPrecioAlojamiento" text="Precio por Noche" prefWidth="100"/>
-                </columns>
-            </TableView>
-            <HBox spacing="10" alignment="CENTER">
+        <TitledPane text="Buscar Alojamientos" expanded="true">
+            <VBox spacing="5">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                <HBox spacing="10">
+                    <Label text="Nombre:"/>
+                    <TextField fx:id="txtBuscarNombre" promptText="Ingrese el nombre del alojamiento"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Tipo de Alojamiento:"/>
+                    <ComboBox fx:id="comboTipoAlojamiento" promptText="Seleccione el tipo"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Ciudad:"/>
+                    <ComboBox fx:id="comboCiudadAlojamiento" promptText="Seleccione la ciudad"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Precio Mín:"/>
+                    <TextField fx:id="txtPrecioMin" promptText="0.0"/>
+                    <Label text="Precio Máx:"/>
+                    <TextField fx:id="txtPrecioMax" promptText="0.0"/>
+                </HBox>
+                <Button text="Buscar" onAction="#buscarAlojamientos"/>
+            </VBox>
+        </TitledPane>
+
+        <TitledPane text="Resultados de Búsqueda" expanded="true">
+            <VBox spacing="5">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                <TableView fx:id="tablaResultadosBusqueda">
+                    <columns>
+                        <TableColumn fx:id="colNombreAlojamiento" text="Nombre" prefWidth="150"/>
+                        <TableColumn fx:id="colTipoAlojamiento" text="Tipo" prefWidth="100"/>
+                        <TableColumn fx:id="colCiudadAlojamiento" text="Ciudad" prefWidth="100"/>
+                        <TableColumn fx:id="colPrecioAlojamiento" text="Precio por Noche" prefWidth="100"/>
+                    </columns>
+                </TableView>
                 <Button text="Seleccionar para Reserva" onAction="#seleccionarAlojamientoParaReserva"/>
-            </HBox>
-        </VBox>
-    </TitledPane>
+            </VBox>
+        </TitledPane>
+    </VBox>
 
-    <!-- Tabla de Reservas -->
-    <TitledPane text="Mis Reservas" expanded="true">
-        <VBox spacing="5">
-            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-            <TableView fx:id="tablaReservas">
-                <columns>
-                    <TableColumn fx:id="colIdReserva" text="ID" prefWidth="50"/>
-                    <TableColumn fx:id="colAlojamiento" text="Alojamiento" prefWidth="150"/>
-                    <TableColumn fx:id="colFechaInicio" text="Fecha Inicio" prefWidth="100"/>
-                    <TableColumn fx:id="colFechaFin" text="Fecha Fin" prefWidth="100"/>
-                </columns>
-            </TableView>
-            <HBox spacing="10" alignment="CENTER">
-                <Button text="Cancelar Reserva" onAction="#cancelarReserva"/>
-                <Button text="Agregar Reseña" onAction="#agregarReseña"/>
-            </HBox>
-        </VBox>
-    </TitledPane>
-
-</VBox>
+    <VBox spacing="10">
+        <TitledPane text="Mis Reservas" expanded="true">
+            <VBox spacing="5">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                <TableView fx:id="tablaReservas">
+                    <columns>
+                        <TableColumn fx:id="colIdReserva" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="colAlojamiento" text="Alojamiento" prefWidth="150"/>
+                        <TableColumn fx:id="colFechaInicio" text="Fecha Inicio" prefWidth="100"/>
+                        <TableColumn fx:id="colFechaFin" text="Fecha Fin" prefWidth="100"/>
+                    </columns>
+                </TableView>
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Cancelar Reserva" onAction="#cancelarReserva"/>
+                    <Button text="Agregar Reseña" onAction="#agregarReseña"/>
+                </HBox>
+            </VBox>
+        </TitledPane>
+    </VBox>
+</HBox>

@@ -25,4 +25,9 @@ public class Reserva {
     private LocalDateTime fechaInicioReserva, fechaFinReserva;
     private int numHuespedesReserva;
 
+
+    public String getNombreAlojamiento() {
+        return alojamientoReserva != null ? alojamientoReserva.getNombreAlojamiento() : "Sin Alojamiento";
+    }
+
 }

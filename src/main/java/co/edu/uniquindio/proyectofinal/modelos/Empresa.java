@@ -54,8 +54,8 @@ public class Empresa implements ServicioEmpresa {
                     TipoUsuario.CLIENTE,
                     1222222222,
                     "ClientePrueba",
-                    "cliente@example.com",
-                    "cliente123",
+                    "aa@aa.co",
+                    "12121212",
                     1222222222
             );
             cliente.setUsuarioActivado(true);
@@ -1969,12 +1969,6 @@ public class Empresa implements ServicioEmpresa {
         return false;
 
     }
-
-    @Override
-    public Factura generarFactura() {
-        return null;
-    }
-
 
     @Override
     public String generarCodigo() {

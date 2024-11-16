@@ -9,7 +9,7 @@ public abstract class VentanaObservable {
         this.observador = observador;
     }
 
-    protected void notificarObservador() {
+    public void notificarObservador() {
         if (observador != null) {
             observador.notificar();
         }

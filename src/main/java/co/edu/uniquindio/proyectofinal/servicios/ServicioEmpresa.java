@@ -72,8 +72,6 @@ public interface ServicioEmpresa {
     double calcularDescuento(double descuentoOferta);
     boolean reservaPasada(Alojamiento alojamiento);
 
-    Factura generarFactura();
-
     String generarCodigo();
     Factura generarFactura(double subTotalFactura, double totalFactura);
 

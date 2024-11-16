@@ -1,8 +1,7 @@
 package co.edu.uniquindio.proyectofinal.controladores;
 
 import co.edu.uniquindio.proyectofinal.modelos.*;
-import co.edu.uniquindio.proyectofinal.modelos.enums.CiudadAlojamiento;
-import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
+import co.edu.uniquindio.proyectofinal.observador.VentanaObservable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class RealizarReservaControlador {
+public class RealizarReservaControlador extends VentanaObservable {
 
     @FXML
     private ComboBox<Alojamiento> comboAlojamientos;
@@ -32,17 +31,19 @@ public class RealizarReservaControlador {
     public RealizarReservaControlador() {
         this.controladorPrincipal = ControladorPrincipal.getInstancia();
     }
+
     public void setAlojamientoSeleccionado(Alojamiento alojamiento) {
         this.alojamientoSeleccionado = alojamiento;
-        // Aquí puedes inicializar los campos de la interfaz con los datos del alojamiento
+        if (alojamiento != null) {
+            comboAlojamientos.setValue(alojamiento);
+            comboAlojamientos.setDisable(true);
+        }
     }
 
     @FXML
     public void initialize() {
-        // Configurar el ComboBox de alojamientos
         cargarAlojamientosDisponibles();
 
-        // Configurar el Spinner de número de huéspedes
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 1);
         spinnerNumHuespedes.setValueFactory(valueFactory);
     }
@@ -59,29 +60,36 @@ public class RealizarReservaControlador {
 
     @FXML
     private void confirmarReserva(ActionEvent event) {
-        Alojamiento alojamientoSeleccionado = comboAlojamientos.getValue();
-        LocalDate fechaInicio = fechaInicioReserva.getValue();
-        LocalDate fechaFin = fechaFinReserva.getValue();
-        int numHuespedes = spinnerNumHuespedes.getValue();
-
-        if (alojamientoSeleccionado == null || fechaInicio == null || fechaFin == null || fechaInicio.isAfter(fechaFin)) {
-            controladorPrincipal.mostrarAlerta("Por favor, complete todos los campos correctamente.", "Advertencia", Alert.AlertType.WARNING);
-            return;
-        }
-
         try {
+            Alojamiento alojamiento = comboAlojamientos.getValue();
+            LocalDate fechaInicio = fechaInicioReserva.getValue();
+            LocalDate fechaFin = fechaFinReserva.getValue();
+            int numHuespedes = spinnerNumHuespedes.getValue();
+
+            if (alojamiento == null || fechaInicio == null || fechaFin == null) {
+                throw new Exception("Por favor, complete todos los campos correctamente.");
+            }
+
             controladorPrincipal.registrarReserva(
                     Sesion.getInstancia().getUsuario(),
                     controladorPrincipal.generarCodigoReserva(),
-                    alojamientoSeleccionado,
+                    alojamiento,
                     numHuespedes,
                     fechaInicio.atStartOfDay(),
                     fechaFin.atStartOfDay()
             );
+
             controladorPrincipal.mostrarAlerta("Reserva confirmada con éxito", "Éxito", Alert.AlertType.INFORMATION);
-            controladorPrincipal.cerrarVentana(comboAlojamientos);  // Cierra la ventana actual
+
+            // Notificar al observador antes de cerrar la ventana
+            notificarObservador();
+
+            controladorPrincipal.cerrarVentana(comboAlojamientos);
         } catch (Exception e) {
             controladorPrincipal.mostrarAlerta(e.getMessage(), "Error al realizar la reserva", Alert.AlertType.ERROR);
         }
     }
+
+
+
 }

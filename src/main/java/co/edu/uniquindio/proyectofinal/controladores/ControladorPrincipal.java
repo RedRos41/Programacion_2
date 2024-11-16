@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
@@ -21,6 +22,8 @@ public class ControladorPrincipal implements ServicioEmpresa{
 
     private static ControladorPrincipal INSTANCIA;
     private final Empresa empresa;
+    private final List<Observador> observadores = new ArrayList<>();
+
 
     private ControladorPrincipal() {
         empresa = new Empresa();
@@ -33,9 +36,23 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return INSTANCIA;
     }
 
+
+    public void registrarVentanaObservable(Observador observador) {
+        if (!observadores.contains(observador)) {
+            observadores.add(observador);
+        }
+    }
+
+    public void notificarObservadores() {
+        for (Observador observador : observadores) {
+            observador.notificar();
+        }
+    }
+
     @Override
     public void registrarUsuario(TipoUsuario tipoUsuario, long cedulaUsuario, String nombreUsuario, String emailUsuario, String contraseñaUsuario, long telefonoUsuario) throws Exception {
         empresa.registrarUsuario(tipoUsuario,cedulaUsuario,nombreUsuario,emailUsuario,contraseñaUsuario, telefonoUsuario);
+        notificarObservadores();
     }
     @Override
     public void registrarCasa(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento, double aseoCasa, double mantenimientoCasa) throws Exception{
@@ -61,11 +78,11 @@ public class ControladorPrincipal implements ServicioEmpresa{
     public void registrarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception{
         empresa.registrarReserva(clienteReserva,idReserva,alojamientoReserva,numHuespedesReserva,fechaInicioReserva,fechaFinReserva);
     }
-
     @Override
     public void registrarReseña(Alojamiento alojamiento, int idReseña, String cometarioReseña, float calificacionReseña) throws Exception {
-
+        empresa.registrarReseña(alojamiento,idReseña,cometarioReseña,calificacionReseña);
     }
+
 
 
     @Override
@@ -106,12 +123,10 @@ public class ControladorPrincipal implements ServicioEmpresa{
     public void editarOferta(Alojamiento alojamiento, int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta) throws Exception{
         empresa.editarOferta(alojamiento,idOferta,descripcionOferta,descuentoOferta,fechaInicioOferta,fechaFinOferta);
     }
-
     @Override
-    public void editarReseña(Alojamiento alojamiento, int idReseña, String cometarioReseña, float calificacionReseña) throws Exception {
-
+    public void editarReseña(Alojamiento alojamiento, int idReseña, String cometarioReseña, float calificacionReseña) throws Exception{
+        empresa.editarReseña(alojamiento, idReseña, cometarioReseña, calificacionReseña);
     }
-
     @Override
     public void editarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception {
 
@@ -137,11 +152,11 @@ public class ControladorPrincipal implements ServicioEmpresa{
     @Override
     public void eliminarReserva(Usuario clienteReserva, int idReserva) throws Exception{
         empresa.eliminarReserva(clienteReserva,idReserva);
+        notificarObservadores();
     }
-
     @Override
-    public void eliminarReseña(Alojamiento alojamiento, int idReseña) throws Exception {
-
+    public void eliminarReseña(Alojamiento alojamiento, int idReseña) throws  Exception{
+        empresa.eliminarReseña(alojamiento,idReseña);
     }
 
 
@@ -165,10 +180,9 @@ public class ControladorPrincipal implements ServicioEmpresa{
     public int buscarReserva(Usuario clienteReserva, int idReserva) {
         return empresa.buscarReserva(clienteReserva, idReserva);
     }
-
     @Override
-    public int buscarReseña(Alojamiento alojamiento, int idReseña) {
-        return 0;
+    public int buscarReseña(Alojamiento alojamiento, int idReseña){
+        return empresa.buscarReseña(alojamiento,idReseña);
     }
 
     @Override
@@ -225,27 +239,18 @@ public class ControladorPrincipal implements ServicioEmpresa{
 
 
     @Override
-    public void recargarBilletera(Usuario cliente, double saldoBilletera) throws Exception {
-        empresa.recargarBilletera(cliente, saldoBilletera);
+    public void recargarBilletera(Usuario cliente, double monto) throws Exception {
+        empresa.recargarBilletera(cliente, monto);
     }
     @Override
     public boolean numeroValido(long numero) {
         return empresa.numeroValido(numero);
     }
-    @Override
-    public Factura generarFactura() {
-        return empresa.generarFactura();
-    }
+
     @Override
     public String generarCodigo() {
         return empresa.generarCodigo();
     }
-
-    @Override
-    public Factura generarFactura(double subTotalFactura, double totalFactura) {
-        return null;
-    }
-
     @Override
     public List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception {
         return empresa.filtrarAlojamientos(nombreAlojamiento, tipoAlojamiento, ciudadAlojamiento, precioMin, precioMax);
@@ -260,6 +265,10 @@ public class ControladorPrincipal implements ServicioEmpresa{
     public double calcularCostoReserva(Alojamiento alojamiento, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva){
         return empresa.calcularCostoReserva(alojamiento,fechaInicioReserva,fechaFinReserva);
     }
+    @Override
+    public double obtenerDescuento(Alojamiento alojamiento, LocalDateTime fechaInicio, LocalDateTime fechaFin){
+        return empresa.obtenerDescuento(alojamiento,fechaInicio,fechaFin);
+    }
 
     @Override
     public boolean fechasSeSuperponen(LocalDateTime inicio1, LocalDateTime fin1, LocalDateTime inicio2, LocalDateTime fin2){
@@ -267,19 +276,19 @@ public class ControladorPrincipal implements ServicioEmpresa{
     }
 
     @Override
-    public double obtenerDescuento(Alojamiento alojamiento, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-        return 0;
+    public  boolean reservaPasada(Alojamiento alojamiento){
+        return empresa.reservaPasada(alojamiento);
+    }
+    @Override
+    public  double calcularDescuento(double descuentoOferta){
+        return empresa.calcularDescuento(descuentoOferta);
     }
 
     @Override
-    public double calcularDescuento(double descuentoOferta) {
-        return 0;
+    public Factura generarFactura(double subTotalFactura, double totalFactura){
+        return empresa.generarFactura(subTotalFactura,totalFactura);
     }
 
-    @Override
-    public boolean reservaPasada(Alojamiento alojamiento) {
-        return false;
-    }
 
 
     //  metodos de los servicios:
@@ -351,13 +360,14 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return maxId + 1;
     }
 
-    public void navegarVentanaConAlojamiento(String nombreFxml, String titulo, Alojamiento alojamiento) {
+    public void navegarVentanaObservableConAlojamiento(String nombreFxml, String titulo, Alojamiento alojamiento, Observador observador) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreFxml));
             Parent root = loader.load();
 
             RealizarReservaControlador realizarReservaControlador = loader.getController();
             realizarReservaControlador.setAlojamientoSeleccionado(alojamiento);
+            realizarReservaControlador.setObservador(observador);
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -369,8 +379,5 @@ public class ControladorPrincipal implements ServicioEmpresa{
             e.printStackTrace();
         }
     }
-
-
-
 
 }
