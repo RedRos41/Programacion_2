@@ -7,6 +7,7 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
 import co.edu.uniquindio.proyectofinal.servicios.ServicioEmpresa;
 import co.edu.uniquindio.proyectofinal.utils.EnvioEmail;
+import co.edu.uniquindio.proyectofinal.utils.Qr;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -178,7 +179,7 @@ public class Empresa implements ServicioEmpresa {
 
         }catch (Exception e) {
 
-            throw new Exception("Error al enviar el correo de activacion. Por favor, intente nuevamente.");
+            throw new Exception("Error al enviar el codigo de activacion. Por favor, intente nuevamente.");
 
         }
 
@@ -631,6 +632,24 @@ public class Empresa implements ServicioEmpresa {
         double totalFactura = costoReserva * calculoDescuento;
 
         Factura factura = generarFactura(costoReserva, totalFactura);
+
+        String codigoFactura = factura.getCodigoFactura();
+
+        String rutaQr = "Qr_" + codigoFactura + ".png";
+
+        Qr.generarQr("Factura: " + codigoFactura, rutaQr);
+
+        String emailUsuario = clienteReserva.getEmailUsuario();
+
+        try {
+
+            EnvioEmail.enviarCorreo(emailUsuario, "Factura de la Reserva", "Su factura de la reserva: " + factura + "Los detalles de la reserva:" + reserva + "La ruta del Qr:" + rutaQr);
+
+        }catch (Exception e) {
+
+            throw new Exception("Error al enviar la factura de la reserva. Por favor, intente nuevamente.");
+
+        }
 
     }
 

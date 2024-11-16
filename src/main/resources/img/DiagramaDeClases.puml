@@ -120,9 +120,6 @@ class Reseña {
     - calificacionReseña: float
 }
 
-class QR {
-}
-
 Cliente "1" --> "1" Billetera
 Administrador "1" --> "many" Alojamiento
 Cliente "1" --> "many" Reserva

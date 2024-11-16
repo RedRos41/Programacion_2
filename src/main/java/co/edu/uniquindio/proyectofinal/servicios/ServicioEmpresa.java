@@ -78,6 +78,5 @@ public interface ServicioEmpresa {
     List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception;
 
     //Estadistica obtenerEstadisticas();
-    //Qr generarQr() throws Exception;
 
 }
