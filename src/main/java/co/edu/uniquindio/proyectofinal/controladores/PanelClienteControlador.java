@@ -91,6 +91,7 @@ public class PanelClienteControlador implements Observador {
 
     @Override
     public void notificar() {
+        cargarSaldoDisponible();
         cargarReservasCliente();
     }
 
@@ -200,6 +201,7 @@ public class PanelClienteControlador implements Observador {
         Reserva reservaSeleccionada = tablaReservas.getSelectionModel().getSelectedItem();
         if (reservaSeleccionada != null) {
             try {
+                // Verifica si la reserva ya terminó
                 if (reservaSeleccionada.getFechaFinReserva().isAfter(LocalDateTime.now())) {
                     controladorPrincipal.mostrarAlerta(
                             "Solo puede agregar una reseña a reservas finalizadas.",
@@ -209,7 +211,9 @@ public class PanelClienteControlador implements Observador {
                     return;
                 }
 
+                // Abre la ventana para agregar reseña
                 controladorPrincipal.navegarVentanaObservable("/agregarReseña.fxml", "Agregar Reseña", this);
+
             } catch (Exception e) {
                 controladorPrincipal.mostrarAlerta(e.getMessage(), "Error al agregar reseña", Alert.AlertType.ERROR);
             }
@@ -217,6 +221,7 @@ public class PanelClienteControlador implements Observador {
             controladorPrincipal.mostrarAlerta("Por favor, seleccione una reserva para agregar una reseña.", "Advertencia", Alert.AlertType.WARNING);
         }
     }
+
 
 
 

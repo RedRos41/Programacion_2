@@ -81,8 +81,8 @@ public class RealizarReservaControlador extends VentanaObservable {
 
             controladorPrincipal.mostrarAlerta("Reserva confirmada con éxito", "Éxito", Alert.AlertType.INFORMATION);
 
-            // Notificar al observador antes de cerrar la ventana
-            notificarObservador();
+
+            controladorPrincipal.notificarObservadores();
 
             controladorPrincipal.cerrarVentana(comboAlojamientos);
         } catch (Exception e) {

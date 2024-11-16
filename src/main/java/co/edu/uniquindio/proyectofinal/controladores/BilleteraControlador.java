@@ -52,6 +52,10 @@ public class BilleteraControlador {
                 txtMontoRecarga.clear();
                 controladorPrincipal.mostrarAlerta("Recarga exitosa", "Billetera", Alert.AlertType.INFORMATION);
             }
+
+            controladorPrincipal.notificarObservadores();
+            controladorPrincipal.cerrarVentana(lblSaldoActual);
+
         } catch (NumberFormatException e) {
             controladorPrincipal.mostrarAlerta("Ingrese un monto válido.", "Error de formato", Alert.AlertType.WARNING);
         } catch (Exception e) {

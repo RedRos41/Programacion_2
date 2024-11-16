@@ -360,6 +360,10 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return maxId + 1;
     }
 
+    public int generarCodigoReseña() {
+        return (int) (Math.random() * 9000) + 1000;
+    }
+
     public void navegarVentanaObservableConAlojamiento(String nombreFxml, String titulo, Alojamiento alojamiento, Observador observador) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreFxml));
