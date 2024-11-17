@@ -103,7 +103,7 @@ public class InicioControlador {
     }
 
     private void cargarAlojamientosRecomendados() {
-        List<Alojamiento> alojamientosRecomendados = controladorPrincipal.obtenerAlojamientosAleatorios(5);
+        List<Alojamiento> alojamientosRecomendados = controladorPrincipal.obtenerAlojamientosAleatorios();
         ObservableList<Alojamiento> listaRecomendados = FXCollections.observableArrayList(alojamientosRecomendados);
         tablaAlojamientosRecomendados.setItems(listaRecomendados);
     }

@@ -6,6 +6,8 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.CiudadAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.ServicioAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -76,17 +78,9 @@ public interface ServicioEmpresa {
     Factura generarFactura(double subTotalFactura, double totalFactura);
 
     List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception;
-    List<Estadistica> obtenerEstadisticas() throws Exception;
+    List<BarChart.Data<String, Number>> obtenerEstadisticas() throws Exception;
     List<Alojamiento> alojamientosPopulares() throws Exception;
-    List<Alojamiento> alojamientosRentables() throws Exception;
-
-    List<Alojamiento> obtenerAlojamientos();
-
-    List<Alojamiento> obtenerAlojamientosPopulares();
-
-    List<Alojamiento> obtenerAlojamientosRentables();
-
-    List<Alojamiento> getAlojamientos();
+    List<PieChart.Data> alojamientosRentables() throws Exception;
 
     //Estadistica obtenerEstadisticas();
 

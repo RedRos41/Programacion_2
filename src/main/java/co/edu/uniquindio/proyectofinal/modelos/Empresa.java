@@ -8,6 +8,8 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
 import co.edu.uniquindio.proyectofinal.servicios.ServicioEmpresa;
 import co.edu.uniquindio.proyectofinal.utils.EnvioEmail;
 import co.edu.uniquindio.proyectofinal.utils.Qr;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,9 +30,9 @@ public class Empresa implements ServicioEmpresa {
     private final List<Usuario> usuarios;
     private final List<Alojamiento> alojamientos;
     private final List<Alojamiento> filtroAlojamiento;
-    private final List<Estadistica> estadisticaAlojamiento;
+    private final List<BarChart.Data<String, Number>> estadisticaAlojamiento;
     private final List<Alojamiento> alojamientoPopular;
-    private final List<Alojamiento> alojamientoRentable;
+    private final List<PieChart.Data> alojamientoRentable;
 
 
     public Empresa() {
@@ -2025,6 +2027,7 @@ public class Empresa implements ServicioEmpresa {
 
     }
 
+
     @Override
     public String generarCodigo() {
 
@@ -2047,13 +2050,15 @@ public class Empresa implements ServicioEmpresa {
 
     }
 
-    public List<Alojamiento> obtenerAlojamientosAleatorios(int limite) {
+
+    public List<Alojamiento> obtenerAlojamientosAleatorios() {
         return alojamientos.stream()
                 .filter(alojamiento -> !alojamiento.getReservasAlojamiento().isEmpty())
                 .sorted((a, b) -> Math.random() > 0.5 ? 1 : -1)
-                .limit(limite)
+                .limit(5)
                 .toList();
     }
+
 
     public List<Oferta> obtenerOfertasActivas() {
         return alojamientos.stream()
@@ -2095,7 +2100,7 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public List<Estadistica> obtenerEstadisticas() throws Exception {
+    public List<BarChart.Data<String, Number>> obtenerEstadisticas() throws Exception {
 
         estadisticaAlojamiento.clear();
 
@@ -2123,9 +2128,9 @@ public class Empresa implements ServicioEmpresa {
 
             double ocupacionPorcentual = (double) totalDiasReservados / (alojamiento.getCapacidadMaximaAlojamiento() * 365) * 100;
 
-            Estadistica estadistica = crearEstadistica(ocupacionPorcentual, gananciasTotales);
+            estadisticaAlojamiento.add(new BarChart.Data<>(alojamiento.getNombreAlojamiento() + " (Ocupación)", ocupacionPorcentual));
 
-            estadisticaAlojamiento.add(estadistica);
+            estadisticaAlojamiento.add(new BarChart.Data<>(alojamiento.getNombreAlojamiento() + " (Ganancias)", gananciasTotales));
 
         }
 
@@ -2166,37 +2171,58 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public List<Alojamiento> alojamientosRentables() throws Exception {
+    public List<PieChart.Data> alojamientosRentables() throws Exception {
 
-        if (alojamientoRentable.isEmpty()) {
+        alojamientoRentable.clear();
 
-            throw new Exception("No se encontraron alojamientos rentables.");
+        double totalGananciasCasas = 0;
+
+        double totalGananciasApartamentos = 0;
+
+        double totalGananciasHoteles = 0;
+
+        for (Alojamiento alojamiento : alojamientos) {
+
+            double totalReservas = 0;
+
+            for (Reserva reserva : alojamiento.getReservasAlojamiento()) {
+
+                double costo = calcularCostoReserva(reserva.getAlojamientoReserva(), reserva.getFechaInicioReserva(), reserva.getFechaFinReserva());
+
+                double descuento = obtenerDescuento(reserva.getAlojamientoReserva(), reserva.getFechaInicioReserva(), reserva.getFechaFinReserva());
+
+                double calculo = calcularDescuento(descuento);
+
+                totalReservas += costo * calculo;
+
+            }
+
+            switch (alojamiento.getTipoAlojamiento()) {
+
+                case CASA -> totalGananciasCasas += totalReservas;
+
+                case APARTAMENTO -> totalGananciasApartamentos += totalReservas;
+
+                case HOTEL -> totalGananciasHoteles += totalReservas;
+
+            }
 
         }
+
+        if (totalGananciasCasas == 0 && totalGananciasApartamentos == 0 && totalGananciasHoteles == 0) {
+
+            throw new Exception("No se encontraron ganancias para los tipos de alojamiento.");
+
+        }
+
+        alojamientoRentable.add(new PieChart.Data(TipoAlojamiento.CASA.getNombre(), totalGananciasCasas));
+
+        alojamientoRentable.add(new PieChart.Data(TipoAlojamiento.APARTAMENTO.getNombre(), totalGananciasApartamentos));
+
+        alojamientoRentable.add(new PieChart.Data(TipoAlojamiento.HOTEL.getNombre(), totalGananciasHoteles));
 
         return alojamientoRentable;
 
     }
-
-    @Override
-    public List<Alojamiento> obtenerAlojamientos() {
-        return List.of();
-    }
-
-    @Override
-    public List<Alojamiento> obtenerAlojamientosPopulares() {
-        return List.of();
-    }
-
-    @Override
-    public List<Alojamiento> obtenerAlojamientosRentables() {
-        return List.of();
-    }
-
-    @Override
-    public List<Alojamiento> getAlojamientos() {
-        return this.alojamientos;
-    }
-
 
 }

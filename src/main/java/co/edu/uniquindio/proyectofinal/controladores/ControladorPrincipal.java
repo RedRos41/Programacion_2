@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
@@ -253,26 +255,6 @@ public class ControladorPrincipal implements ServicioEmpresa{
     }
 
     @Override
-    public List<Alojamiento> obtenerAlojamientos() {
-        return List.of();
-    }
-
-    @Override
-    public List<Alojamiento> obtenerAlojamientosPopulares() {
-        return List.of();
-    }
-
-    @Override
-    public List<Alojamiento> obtenerAlojamientosRentables() {
-        return List.of();
-    }
-
-    @Override
-    public List<Alojamiento> getAlojamientos() {
-        return List.of();
-    }
-
-    @Override
     public int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva){
         return empresa.calcularDiasReserva(fechaInicioReserva, fechaFinReserva);
     }
@@ -389,11 +371,11 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return empresa.obtenerOfertasActivas();
     }
 
-    public List<Alojamiento> obtenerAlojamientosAleatorios(int limite) {
-        return empresa.obtenerAlojamientosAleatorios(limite);
+    public List<Alojamiento> obtenerAlojamientosAleatorios() {
+        return empresa.obtenerAlojamientosAleatorios();
     }
 
-    public List<Estadistica> obtenerEstadisticas() throws Exception {
+    public List<BarChart.Data<String, Number>> obtenerEstadisticas() throws Exception {
             return empresa.obtenerEstadisticas();
     }
 
@@ -401,7 +383,7 @@ public class ControladorPrincipal implements ServicioEmpresa{
             return empresa.alojamientosPopulares();
     }
 
-    public List<Alojamiento> alojamientosRentables() throws Exception {
+    public List<PieChart.Data> alojamientosRentables() throws Exception {
             return empresa.alojamientosRentables();
     }
 
