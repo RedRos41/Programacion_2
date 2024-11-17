@@ -15,6 +15,7 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +28,9 @@ public class Empresa implements ServicioEmpresa {
     private final List<Usuario> usuarios;
     private final List<Alojamiento> alojamientos;
     private final List<Alojamiento> filtroAlojamiento;
+    private final List<Estadistica> estadisticaAlojamiento;
+    private final List<Alojamiento> alojamientoPopular;
+    private final List<Alojamiento> alojamientoRentable;
 
 
     public Empresa() {
@@ -34,6 +38,9 @@ public class Empresa implements ServicioEmpresa {
         this.usuarios = new ArrayList<>();
         this.alojamientos = new ArrayList<>();
         this.filtroAlojamiento = new ArrayList<>();
+        this.estadisticaAlojamiento = new ArrayList<>();
+        this.alojamientoPopular = new ArrayList<>();
+        this.alojamientoRentable = new ArrayList<>();
 
 
         inicializarAlojamientos();
@@ -1700,6 +1707,17 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
+    public Estadistica crearEstadistica(double ocupacionPorcentual, double gananciasTotales) {
+
+        return Estadistica.builder()
+                .ocupacionPorcentual(ocupacionPorcentual)
+                .gananciasTotales(gananciasTotales)
+                .build();
+
+    }
+
+
+    @Override
     public int buscarUsuario(long cedulaUsuario) {
 
         for (int i = 0; i < usuarios.size(); i++) {
@@ -2069,6 +2087,91 @@ public class Empresa implements ServicioEmpresa {
         }
 
         return filtroAlojamiento;
+
+    }
+
+
+    @Override
+    public List<Estadistica> obtenerEstadisticas() throws Exception {
+
+        estadisticaAlojamiento.clear();
+
+        for (Alojamiento alojamiento : alojamientos) {
+
+            int totalDiasReservados = 0;
+
+            double gananciasTotales = 0;
+
+            for (Reserva reserva : alojamiento.getReservasAlojamiento()) {
+
+                int diasReservados = calcularDiasReserva(reserva.getFechaInicioReserva(), reserva.getFechaFinReserva());
+
+                totalDiasReservados += diasReservados;
+
+                double costo = calcularCostoReserva(reserva.getAlojamientoReserva(), reserva.getFechaInicioReserva(), reserva.getFechaFinReserva());
+
+                double descuento = obtenerDescuento(reserva.getAlojamientoReserva(), reserva.getFechaInicioReserva(), reserva.getFechaFinReserva());
+
+                double calculo = calcularDescuento(descuento);
+
+                gananciasTotales += costo * calculo;
+
+            }
+
+            double ocupacionPorcentual = (double) totalDiasReservados / (alojamiento.getCapacidadMaximaAlojamiento() * 365) * 100;
+
+            Estadistica estadistica = crearEstadistica(ocupacionPorcentual, gananciasTotales);
+
+            estadisticaAlojamiento.add(estadistica);
+
+        }
+
+        if (estadisticaAlojamiento.isEmpty()) {
+
+            throw new Exception("No se encontraron estadísticas de alojamientos.");
+
+        }
+
+        return estadisticaAlojamiento;
+
+    }
+
+
+    @Override
+    public List<Alojamiento> alojamientosPopulares() throws Exception {
+
+        alojamientoPopular.clear();
+
+        for (CiudadAlojamiento ciudad : CiudadAlojamiento.values()) {
+
+            alojamientos.stream()
+                    .filter(alojamiento -> alojamiento.getCiudadAlojamiento() == ciudad)
+                    .max(Comparator.comparingInt(a -> a.getReservasAlojamiento().size()))
+                    .ifPresent(alojamientoPopular::add);
+
+        }
+
+        if (alojamientoPopular.isEmpty()) {
+
+            throw new Exception("No se encontraron alojamientos populares.");
+
+        }
+
+        return alojamientoPopular;
+
+    }
+
+
+    @Override
+    public List<Alojamiento> alojamientosRentables() throws Exception {
+
+        if (alojamientoRentable.isEmpty()) {
+
+            throw new Exception("No se encontraron alojamientos rentables.");
+
+        }
+
+        return alojamientoRentable;
 
     }
 

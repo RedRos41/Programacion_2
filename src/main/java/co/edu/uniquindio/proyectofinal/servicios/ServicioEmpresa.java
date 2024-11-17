@@ -49,6 +49,7 @@ public interface ServicioEmpresa {
     Oferta crearOferta(int idOferta, String descripcionOferta, float descuentoOferta, LocalDateTime fechaInicioOferta, LocalDateTime fechaFinOferta);
     Reserva crearReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
     Reseña crearReseña(int idReseña, String cometarioReseña, float calificacionReseña);
+    Estadistica crearEstadistica(double ocupacionPorcentual, double gananciasTotales);
 
     int buscarUsuario(long cedulaUsuario);
     int buscarAlojamiento(int direccionAlojamiento);
@@ -75,6 +76,9 @@ public interface ServicioEmpresa {
     Factura generarFactura(double subTotalFactura, double totalFactura);
 
     List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception;
+    List<Estadistica> obtenerEstadisticas() throws Exception;
+    List<Alojamiento> alojamientosPopulares() throws Exception;
+    List<Alojamiento> alojamientosRentables() throws Exception;
 
     //Estadistica obtenerEstadisticas();
 
