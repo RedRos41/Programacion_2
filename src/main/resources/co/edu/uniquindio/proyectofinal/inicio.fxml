@@ -70,8 +70,8 @@
 
         <!-- Botones de navegación -->
         <HBox alignment="CENTER" spacing="30.0">
-            <Button text="Iniciar Sesión" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;" onAction="#irIniciarSesion"/>
-            <Button text="Registrarse" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;" onAction="#irRegistroCliente"/>
+            <Button text="Iniciar Sesión" onAction="#irIniciarSesion" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;"/>
+            <Button text="Registrarse" onAction="#irRegistroCliente" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;"/>
         </HBox>
     </children>
 </VBox>

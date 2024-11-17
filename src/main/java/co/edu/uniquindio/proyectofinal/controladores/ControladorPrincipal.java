@@ -290,6 +290,12 @@ public class ControladorPrincipal implements ServicioEmpresa{
         empresa.desontarSaldo(cliente, totalFactura);
     }
 
+    @Override
+    public Estadistica crearEstadistica(double ocupacionPorcentual, double gananciasTotales){
+        return empresa.crearEstadistica(ocupacionPorcentual, gananciasTotales);
+    }
+
+
 
     public void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
@@ -365,6 +371,18 @@ public class ControladorPrincipal implements ServicioEmpresa{
 
     public List<Alojamiento> obtenerAlojamientosAleatorios(int limite) {
         return empresa.obtenerAlojamientosAleatorios(limite);
+    }
+
+    public List<Estadistica> obtenerEstadisticas() throws Exception {
+            return empresa.obtenerEstadisticas();
+    }
+
+    public List<Alojamiento> alojamientosPopulares() throws Exception {
+            return empresa.alojamientosPopulares();
+    }
+
+    public List<Alojamiento> alojamientosRentables() throws Exception {
+            return empresa.alojamientosRentables();
     }
 
     public void navegarVentanaObservableConAlojamiento(String nombreFxml, String titulo, Alojamiento alojamiento, Observador observador) {
