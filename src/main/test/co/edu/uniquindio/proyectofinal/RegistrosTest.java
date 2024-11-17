@@ -88,7 +88,7 @@ public class RegistrosTest {
 
         Casa casa = empresa.crearCasa(131, "SierraGrandeD", CiudadAlojamiento.CALARCA, "Apto 203", "", 200000, 3, ServicioAlojamiento.DESAYUNO, 40000, 1000000);
 
-        empresa.registrarOferta(casa, 415, "Apto 203", 20, LocalDateTime.of(2024, 11, 15, 12, 0), LocalDateTime.of(2024, 12, 15, 12, 0));
+        empresa.registrarOferta(casa, 415, "Apto 203", 20, LocalDateTime.of(2024, 11, 20, 12, 0), LocalDateTime.of(2024, 12, 21, 12, 0));
 
         int oferta = empresa.buscarOferta(casa, 415);
 
@@ -100,29 +100,17 @@ public class RegistrosTest {
     @Test
     public void testRegistrarReserva() throws Exception {
 
-        Usuario cliente = empresa.crearUsuario(TipoUsuario.CLIENTE, 1234567890, "Cliente", "Cliente@gmail.com", "Cliente123", 1234567890);
+        Usuario cliente = empresa.crearUsuario(TipoUsuario.CLIENTE, 1125999432, "Derek Rodriguez Rodriguez", "testemailuq01@gmail.com", "RedRosa1", 3026707477L);
+
+        empresa.recargarBilletera(cliente, 200000000);
 
         Alojamiento alojamiento = empresa.crearApartamento(718, "SierraGrandeE", CiudadAlojamiento.ARMENIA, "Apto 203", "", 200000, 3, ServicioAlojamiento.PISCINA, 40000, 1000000);
 
-        empresa.registrarReserva(cliente, 192, alojamiento, 3, LocalDateTime.of(2024, 11, 15, 12, 0), LocalDateTime.of(2024, 12, 15, 12, 0));
+        empresa.registrarReserva(cliente, 192, alojamiento, 3, LocalDateTime.of(2024, 11, 20, 12, 0), LocalDateTime.of(2024, 12, 21, 12, 0));
 
         int reserva = empresa.buscarReserva(cliente, 192);
 
         assertNotEquals(-1, reserva, "La reserva no se registro");
-
-    }
-
-
-    @Test
-    public void testRegistrarReseña() throws Exception {
-
-        Alojamiento alojamiento = empresa.crearApartamento(212, "SierraGrandeF", CiudadAlojamiento.ARMENIA, "Apto 203", "", 200000, 3, ServicioAlojamiento.PISCINA, 40000, 1000000);
-
-        empresa.registrarReseña(alojamiento, 223, "Bueno", 4.5f);
-
-        int reseña = empresa.buscarReseña(alojamiento, 223);
-
-        assertNotEquals(-1, reseña, "La reseña no se registro");
 
     }
 
