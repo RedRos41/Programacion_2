@@ -82,6 +82,4 @@ public interface ServicioEmpresa {
     List<Alojamiento> alojamientosPopulares() throws Exception;
     List<PieChart.Data> alojamientosRentables() throws Exception;
 
-    //Estadistica obtenerEstadisticas();
-
 }
