@@ -10,7 +10,7 @@
     <HBox spacing="10" alignment="CENTER">
         <Button fx:id="btnGestionarAlojamientos" text="Gestionar Alojamientos" onAction="#gestionarAlojamientos"/>
         <Button fx:id="btnAlojamientosPopulares" text="Alojamientos Populares" onAction="#mostrarAlojamientosPopulares"/>
-        <Button fx:id="btnAlojamientosRentables" text="Alojamientos Rentables" onAction="#mostrarAlojamientosRentables"/>
+
         <Button fx:id="btnVolver" text="Volver" onAction="#volver"/>
     </HBox>
 

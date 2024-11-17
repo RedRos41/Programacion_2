@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Reserva {
 
     @EqualsAndHashCode.Include

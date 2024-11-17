@@ -11,8 +11,6 @@ import co.edu.uniquindio.proyectofinal.utils.Qr;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -23,8 +21,6 @@ import java.util.UUID;
 
 
 @Getter
-@Setter
-@ToString
 public class Empresa implements ServicioEmpresa {
 
     private final List<Usuario> usuarios;
@@ -64,7 +60,7 @@ public class Empresa implements ServicioEmpresa {
                     TipoUsuario.CLIENTE,
                     1222222222,
                     "ClientePrueba",
-                    "cliente@cliente.com",
+                    "testemailuq01@gmail.com",
                     "cliente123",
                     1222222222
             );

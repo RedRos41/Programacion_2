@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -80,7 +81,7 @@ public class PanelAdminControlador implements Observador {
     @FXML
     private void mostrarAlojamientosPopulares(ActionEvent event) {
         try {
-            List<Alojamiento> alojamientosPopulares = controladorPrincipal.obtenerAlojamientosPopulares();
+            List<Alojamiento> alojamientosPopulares = controladorPrincipal.alojamientosPopulares();
             ObservableList<Alojamiento> listaPopulares = FXCollections.observableArrayList(alojamientosPopulares);
             tablaAlojamientos.setItems(listaPopulares);
         } catch (Exception e) {
@@ -88,16 +89,16 @@ public class PanelAdminControlador implements Observador {
         }
     }
 
-    @FXML
-    private void mostrarAlojamientosRentables(ActionEvent event) {
-        try {
-            List<Alojamiento> alojamientosRentables = controladorPrincipal.obtenerAlojamientosRentables();
-            ObservableList<Alojamiento> listaRentables = FXCollections.observableArrayList(alojamientosRentables);
-            tablaAlojamientos.setItems(listaRentables);
-        } catch (Exception e) {
-            controladorPrincipal.mostrarAlerta("Error al cargar alojamientos rentables: " + e.getMessage(), "Error", Alert.AlertType.ERROR);
-        }
-    }
+    //@FXML
+    //private void mostrarAlojamientosRentables(ActionEvent event) {
+        //try {
+            //List<PieChart.Data> alojamientosRentables = controladorPrincipal.alojamientosRentables();
+            //ObservableList<PieChart.Data> listaRentables = FXCollections.observableArrayList(alojamientosRentables);
+            //tablaAlojamientos.setItems(listaRentables);
+        //} catch (Exception e) {
+            //controladorPrincipal.mostrarAlerta("Error al cargar alojamientos rentables: " + e.getMessage(), "Error", Alert.AlertType.ERROR);
+        //}
+    //}
 
     @FXML
     private void volver(ActionEvent event) {

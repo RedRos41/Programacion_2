@@ -255,6 +255,11 @@ public class ControladorPrincipal implements ServicioEmpresa{
     }
 
     @Override
+    public List<Alojamiento> getAlojamientos() {
+        return empresa.getAlojamientos();
+    }
+
+    @Override
     public int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva){
         return empresa.calcularDiasReserva(fechaInicioReserva, fechaFinReserva);
     }

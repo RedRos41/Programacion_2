@@ -67,6 +67,9 @@ public interface ServicioEmpresa {
     void recargarBilletera(Usuario cliente, double saldoBilletera) throws Exception;
     void desontarSaldo(Usuario cliente, double totalFactura);
     boolean numeroValido(long numero);
+
+    List<Alojamiento> getAlojamientos();
+
     int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
     double calcularCostoReserva(Alojamiento alojamiento, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva);
     boolean fechasSeSuperponen(LocalDateTime fechaInicio1, LocalDateTime fechaFin1, LocalDateTime fechaInicio2, LocalDateTime fechaFin2);

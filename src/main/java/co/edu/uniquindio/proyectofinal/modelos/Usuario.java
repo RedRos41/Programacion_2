@@ -5,7 +5,6 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 
@@ -13,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Usuario {
 
     @EqualsAndHashCode.Include

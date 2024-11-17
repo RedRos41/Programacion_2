@@ -7,7 +7,6 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Alojamiento {
 
     @EqualsAndHashCode.Include
