@@ -66,6 +66,7 @@ public interface ServicioEmpresa {
 
     void recargarBilletera(Usuario cliente, double saldoBilletera) throws Exception;
     void desontarSaldo(Usuario cliente, double totalFactura);
+    //void reembolsarSaldo();
     boolean numeroValido(long numero);
 
     List<Alojamiento> getAlojamientos();

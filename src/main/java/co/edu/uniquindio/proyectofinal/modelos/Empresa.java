@@ -67,7 +67,7 @@ public class Empresa implements ServicioEmpresa {
             cliente.setUsuarioActivado(true);
 
             if (cliente instanceof Cliente clienteEspecifico) {
-                clienteEspecifico.getBilleteraCliente().setSaldoBilletera(500000.0); // saldo inicial
+                clienteEspecifico.getBilleteraCliente().setSaldoBilletera(500000.0);
             }
             usuarios.add(cliente);
 
@@ -1513,7 +1513,13 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
+        Reserva reserva = ((Cliente) clienteReserva).getReservas().get(identificacionReserva);
+
+        Alojamiento alojamiento = reserva.getAlojamientoReserva();
+
         ((Cliente) clienteReserva).getReservas().remove(identificacionReserva);
+
+        alojamiento.getReservasAlojamiento().remove(identificacionReserva);
 
     }
 
@@ -1936,6 +1942,14 @@ public class Empresa implements ServicioEmpresa {
         Billetera billetera = ((Cliente) cliente).getBilleteraCliente();
 
         billetera.setSaldoBilletera(billetera.getSaldoBilletera() - totalFactura);
+
+    }
+
+
+    //@Override
+    public void reembolsarSaldo() {
+
+
 
     }
 
