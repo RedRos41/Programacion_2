@@ -74,8 +74,6 @@ public class Empresa implements ServicioEmpresa {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 
