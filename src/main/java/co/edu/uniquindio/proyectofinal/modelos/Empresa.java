@@ -69,10 +69,6 @@ public class Empresa implements ServicioEmpresa {
             if (cliente instanceof Cliente clienteEspecifico) {
                 clienteEspecifico.getBilleteraCliente().setSaldoBilletera(500000.0); // saldo inicial
             }
-
-
-
-
             usuarios.add(cliente);
 
         } catch (Exception e) {
