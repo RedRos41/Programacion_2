@@ -15,6 +15,7 @@ module co.edu.uniquindio.proyectofinal {
     requires org.simplejavamail;
     requires com.google.zxing;
     requires com.google.zxing.javase;
+    requires jakarta.activation;
 
     opens co.edu.uniquindio.proyectofinal to javafx.fxml;
     exports co.edu.uniquindio.proyectofinal;

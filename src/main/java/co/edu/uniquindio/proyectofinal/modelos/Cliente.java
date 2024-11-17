@@ -16,6 +16,8 @@ import java.util.List;
 public class Cliente extends Usuario {
 
     private Billetera billeteraCliente;
+
+    @ToString.Exclude
     private List<Reserva> reservas;
 
 }

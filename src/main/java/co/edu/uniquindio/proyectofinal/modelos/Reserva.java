@@ -20,7 +20,9 @@ public class Reserva {
     @EqualsAndHashCode.Include
     private int idReserva;
 
+    @ToString.Exclude
     private Usuario clienteReserva;
+
     private Alojamiento alojamientoReserva;
     private LocalDateTime fechaInicioReserva, fechaFinReserva;
     private int numHuespedesReserva;

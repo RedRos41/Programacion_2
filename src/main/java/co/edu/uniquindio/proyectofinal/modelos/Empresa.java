@@ -175,7 +175,7 @@ public class Empresa implements ServicioEmpresa {
 
         try {
 
-            EnvioEmail.enviarCorreo(emailUsuario, "Código de Activación", "Su código de activación es: " + codigoActivacion);
+            EnvioEmail.enviarCorreo(emailUsuario, "Código de Activación", "Su código de activación es: " + codigoActivacion, null);
 
         }catch (Exception e) {
 
@@ -631,19 +631,29 @@ public class Empresa implements ServicioEmpresa {
 
         double totalFactura = costoReserva * calculoDescuento;
 
+        desontarSaldo(clienteReserva, totalFactura);
+
         Factura factura = generarFactura(costoReserva, totalFactura);
 
         String codigoFactura = factura.getCodigoFactura();
 
         String rutaQr = "Qr_" + codigoFactura + ".png";
 
-        Qr.generarQr("Factura: " + codigoFactura, rutaQr);
+        Qr.generarQr("Código de la factura: " + codigoFactura + "\n" +
+                "Detalles de la reserva:\n" +
+                " - Código de Reserva: " + reserva.getIdReserva() + "\n" +
+                " - Cliente: " + clienteReserva.getNombreUsuario() + " - " + clienteReserva.getCedulaUsuario() + "\n" +
+                " - Alojamiento: " + alojamientoReserva.getNombreAlojamiento() + " - " + alojamientoReserva.getDireccionAlojamiento() + "\n" +
+                " - Numero de Huespedes: " + reserva.getNumHuespedesReserva() + "\n" +
+                " - Fecha de Inicio: " + reserva.getFechaInicioReserva() + "\n" +
+                " - Fecha de Fin: " + reserva.getFechaFinReserva() + "\n",
+                rutaQr);
 
         String emailUsuario = clienteReserva.getEmailUsuario();
 
         try {
 
-            EnvioEmail.enviarCorreo(emailUsuario, "Factura de la Reserva", "Su factura de la reserva: " + factura + "Los detalles de la reserva:" + reserva + "La ruta del Qr:" + rutaQr);
+            EnvioEmail.enviarCorreo(emailUsuario, "Factura de la Reserva", "Su factura de la reserva es: ", rutaQr);
 
         }catch (Exception e) {
 
@@ -818,7 +828,7 @@ public class Empresa implements ServicioEmpresa {
 
         try {
 
-            EnvioEmail.enviarCorreo(emailUsuario, "Código de cambio de Contraseña", "Su código de cambio de contraseña es: " + codigoContraseña);
+            EnvioEmail.enviarCorreo(emailUsuario, "Código de cambio de Contraseña", "Su código de cambio de contraseña es: " + codigoContraseña, null);
 
         }catch (Exception e) {
 
@@ -1371,11 +1381,6 @@ public class Empresa implements ServicioEmpresa {
 
     }
 
-    @Override
-    public void editarReserva(Usuario clienteReserva, int idReserva, Alojamiento alojamientoReserva, int numHuespedesReserva, LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva) throws Exception {
-
-    }
-
 
     @Override
     public void eliminarUsuario(long cedulaUsuario) throws Exception {
@@ -1908,6 +1913,16 @@ public class Empresa implements ServicioEmpresa {
         Billetera billetera = ((Cliente) cliente).getBilleteraCliente();
 
         billetera.setSaldoBilletera(billetera.getSaldoBilletera() + saldoBilletera);
+
+    }
+
+
+    @Override
+    public void desontarSaldo(Usuario cliente, double totalFactura) {
+
+        Billetera billetera = ((Cliente) cliente).getBilleteraCliente();
+
+        billetera.setSaldoBilletera(billetera.getSaldoBilletera() - totalFactura);
 
     }
 
