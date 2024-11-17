@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
-<GridPane alignment="CENTER" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.proyectofinal.controladores.AgregarReseñaControlador">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.proyectofinal.controladores.AgregarReseñaControlador"
+            style="-fx-background-color: #f5f5f5;">
+    <children>
+        <VBox alignment="TOP_CENTER" spacing="20.0" style="-fx-padding: 20;" prefWidth="400.0" prefHeight="300.0">
 
-    <Label text="Calificación (1 a 5)" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <Spinner fx:id="spinnerCalificacion" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <!-- Título -->
+            <Label text="Agregar Reseña"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;" />
 
-    <Label text="Comentario" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <TextArea fx:id="txtComentario" prefRowCount="4" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <!-- Calificación -->
+            <HBox spacing="10.0" alignment="CENTER">
+                <Label text="Calificación (1 a 5):" style="-fx-font-size: 14px;" />
+                <Spinner fx:id="spinnerCalificacion" prefWidth="100.0" />
+            </HBox>
 
-    <Button text="Guardar Reseña" onAction="#guardarReseña" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
-</GridPane>
+            <!-- Comentario -->
+            <VBox spacing="10.0" alignment="CENTER">
+                <Label text="Comentario:" style="-fx-font-size: 14px;" />
+                <TextArea fx:id="txtComentario" promptText="Escriba su comentario aquí"
+                          prefRowCount="4" prefWidth="300.0" wrapText="true"
+                          style="-fx-background-color: #ffffff;"/>
+            </VBox>
+
+            <!-- Botón Guardar -->
+            <Button text="Guardar Reseña" onAction="#guardarReseña"
+                    style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"
+                    prefWidth="150.0" />
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,17 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="co.edu.uniquindio.proyectofinal.controladores.BilleteraControlador"
-      spacing="10" alignment="CENTER" style="-fx-padding: 20;">
-    <Label text="Billetera" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="Saldo Actual:"/>
-        <Label fx:id="lblSaldoActual" text="0.0" style="-fx-font-weight: bold;"/>
-    </HBox>
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="Monto a Recargar:"/>
-        <TextField fx:id="txtMontoRecarga" promptText="Ingrese el monto"/>
-    </HBox>
-    <Button text="Recargar" onAction="#recargarSaldo"/>
-</VBox>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.proyectofinal.controladores.BilleteraControlador"
+            style="-fx-background-color: #f5f5f5;">
+    <children>
+        <VBox alignment="CENTER" spacing="15.0" style="-fx-padding: 20;" prefWidth="400.0" prefHeight="250.0">
+
+            <!-- Título -->
+            <Label text="Billetera"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;" />
+
+            <!-- Saldo Actual -->
+            <HBox spacing="10.0" alignment="CENTER">
+                <Label text="Saldo Actual:" style="-fx-font-size: 14px;" />
+                <Label fx:id="lblSaldoActual" text="0.0"
+                       style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #007bff;" />
+            </HBox>
+
+            <!-- Campo para Monto a Recargar -->
+            <HBox spacing="10.0" alignment="CENTER">
+                <Label text="Monto a Recargar:" style="-fx-font-size: 14px;" />
+                <TextField fx:id="txtMontoRecarga" promptText="Ingrese el monto"
+                           style="-fx-background-color: #ffffff;" />
+            </HBox>
+
+            <!-- Botón Recargar -->
+            <Button text="Recargar" onAction="#recargarSaldo"
+                    style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"
+                    prefWidth="150.0" />
+        </VBox>
+    </children>
+</AnchorPane>

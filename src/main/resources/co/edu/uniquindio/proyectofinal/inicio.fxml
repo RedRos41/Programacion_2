@@ -1,35 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
+<VBox xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" spacing="20.0" style="-fx-padding: 30; -fx-background-color: #f5f5f5;" fx:controller="co.edu.uniquindio.proyectofinal.controladores.InicioControlador">
 
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="co.edu.uniquindio.proyectofinal.controladores.InicioControlador">
+    <children>
+        <!-- Header -->
+        <VBox alignment="CENTER" spacing="10.0">
+            <Label text="Bienvenido a BookYourStayApp" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+            <Label text="Encuentra tu lugar ideal para hospedarte" style="-fx-font-size: 18px; -fx-text-fill: #666666;"/>
+        </VBox>
 
+        <!-- Sección principal -->
+        <HBox alignment="TOP_CENTER" spacing="30.0" prefHeight="400.0" prefWidth="1000.0">
+            <!-- Tabla de Alojamientos Recomendados -->
+            <VBox alignment="TOP_CENTER" spacing="15.0" prefWidth="450.0" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;">
+                <Label text="Alojamientos Recomendados" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;"/>
+                <TableView fx:id="tablaAlojamientosRecomendados" prefHeight="300.0">
+                    <columns>
+                        <TableColumn fx:id="colNombreAlojamiento" text="Nombre" prefWidth="100"/>
+                        <TableColumn fx:id="colTipoAlojamiento" text="Tipo" prefWidth="100"/>
+                        <TableColumn fx:id="colCiudadAlojamiento" text="Ciudad" prefWidth="100"/>
+                        <TableColumn fx:id="colPrecioAlojamiento" text="Precio por Noche" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
 
-    <Label text="Bienvenido a BookYourStayApp." >
-        <font>
-            <Font size="18.0" />
-        </font>
-    </Label>
+            <!-- Tabla de Ofertas -->
+            <VBox alignment="TOP_CENTER" spacing="15.0" prefWidth="450.0" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;">
+                <Label text="Ofertas Activas" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;"/>
+                <TableView fx:id="tablaOfertas" prefHeight="300.0">
+                    <columns>
+                        <TableColumn fx:id="colDescripcionOferta" text="Descripción" prefWidth="200"/>
+                        <TableColumn fx:id="colDescuentoOferta" text="Descuento (%)" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
 
+        <!-- Tabla de Resultados de Búsqueda -->
+        <VBox alignment="TOP_CENTER" spacing="15.0" prefWidth="1000.0" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;">
+            <Label text="Resultados de Búsqueda" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;"/>
+            <TableView fx:id="tablaResultadosBusqueda" prefHeight="300.0">
+                <columns>
+                    <TableColumn fx:id="colResultadoNombre" text="Nombre" prefWidth="100"/>
+                    <TableColumn fx:id="colResultadoTipo" text="Tipo" prefWidth="100"/>
+                    <TableColumn fx:id="colResultadoCiudad" text="Ciudad" prefWidth="100"/>
+                    <TableColumn fx:id="colResultadoPrecio" text="Precio por Noche" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </VBox>
 
-    <Label text="¿Qué desea hacer?" >
-        <font>
-            <Font size="14.0" />
-        </font>
-    </Label>
+        <!-- Filtros y búsqueda -->
+        <VBox alignment="CENTER" spacing="15.0" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;">
+            <Label text="Filtrar Alojamientos" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;"/>
+            <HBox alignment="CENTER" spacing="15.0">
+                <TextField fx:id="txtBusqueda" promptText="Buscar por nombre" prefWidth="200" style="-fx-background-color: #f9f9f9;"/>
+                <ComboBox fx:id="comboTipoAlojamiento" promptText="Tipo de Alojamiento" prefWidth="150" style="-fx-background-color: #f9f9f9;"/>
+                <ComboBox fx:id="comboCiudadAlojamiento" promptText="Ciudad" prefWidth="150" style="-fx-background-color: #f9f9f9;"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="15.0">
+                <TextField fx:id="txtPrecioMin" promptText="Precio Min" prefWidth="100" style="-fx-background-color: #f9f9f9;"/>
+                <TextField fx:id="txtPrecioMax" promptText="Precio Max" prefWidth="100" style="-fx-background-color: #f9f9f9;"/>
+                <Button text="Buscar" onAction="#buscarAlojamientos" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 20;"/>
+            </HBox>
+        </VBox>
 
-    <HBox alignment="CENTER" spacing="20.0" >
-        <Button minWidth="130.0" minHeight="40.0" text="Iniciar sesión" onAction="#irIniciarSesion" />
-        <Button minWidth="130.0" minHeight="40.0" text="Registrarse" onAction="#irRegistroCliente" />
-    </HBox>
-
+        <!-- Botones de navegación -->
+        <HBox alignment="CENTER" spacing="30.0">
+            <Button text="Iniciar Sesión" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;" onAction="#irIniciarSesion"/>
+            <Button text="Registrarse" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;" onAction="#irRegistroCliente"/>
+        </HBox>
+    </children>
 </VBox>

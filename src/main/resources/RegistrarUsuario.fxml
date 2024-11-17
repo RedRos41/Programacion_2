@@ -2,45 +2,46 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyectofinal.controladores.RegistrarUsuarioControlador">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" style="-fx-background-color: #f5f5f5; -fx-padding: 30;" fx:controller="co.edu.uniquindio.proyectofinal.controladores.RegistrarUsuarioControlador">
     <children>
-        <VBox alignment="CENTER" spacing="10" layoutX="50" layoutY="30">
-            <Label text="Registro de Usuario" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <VBox alignment="CENTER" spacing="20.0" prefWidth="500.0" style="-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 20;">
+            <!-- Header -->
+            <Label text="Registro de Usuario" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333333;" />
 
-            <HBox spacing="10">
-                <Label text="Cédula:" />
-                <TextField fx:id="txtCedula" promptText="Ingrese su cédula" />
-            </HBox>
+            <!-- Campos de Entrada -->
+            <VBox spacing="15.0" prefWidth="400.0">
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <Label text="Cédula:" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                    <TextField fx:id="txtCedula" promptText="Ingrese su cédula" style="-fx-background-color: #f9f9f9; -fx-pref-width: 250;" />
+                </HBox>
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <Label text="Nombre:" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                    <TextField fx:id="txtNombre" promptText="Ingrese su nombre" style="-fx-background-color: #f9f9f9; -fx-pref-width: 250;" />
+                </HBox>
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <Label text="Email:" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                    <TextField fx:id="txtEmail" promptText="Ingrese su email" style="-fx-background-color: #f9f9f9; -fx-pref-width: 250;" />
+                </HBox>
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <Label text="Contraseña:" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                    <PasswordField fx:id="txtContraseña" promptText="Ingrese su contraseña" style="-fx-background-color: #f9f9f9; -fx-pref-width: 250;" />
+                </HBox>
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <Label text="Teléfono:" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                    <TextField fx:id="txtTelefono" promptText="Ingrese su teléfono" style="-fx-background-color: #f9f9f9; -fx-pref-width: 250;" />
+                </HBox>
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <Label text="Tipo de Usuario:" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                    <ComboBox fx:id="comboTipoUsuario" promptText="Seleccione tipo de usuario" style="-fx-background-color: #f9f9f9; -fx-pref-width: 250;" />
+                </HBox>
+            </VBox>
 
-            <HBox spacing="10">
-                <Label text="Nombre:" />
-                <TextField fx:id="txtNombre" promptText="Ingrese su nombre" />
-            </HBox>
-
-            <HBox spacing="10">
-                <Label text="Email:" />
-                <TextField fx:id="txtEmail" promptText="Ingrese su email" />
-            </HBox>
-
-            <HBox spacing="10">
-                <Label text="Contraseña:" />
-                <PasswordField fx:id="txtContraseña" promptText="Ingrese su contraseña" />
-            </HBox>
-
-            <HBox spacing="10">
-                <Label text="Teléfono:" />
-                <TextField fx:id="txtTelefono" promptText="Ingrese su teléfono" />
-            </HBox>
-
-            <HBox spacing="10">
-                <Label text="Tipo de Usuario:" />
-                <ComboBox fx:id="comboTipoUsuario" promptText="Seleccione tipo de usuario" />
-            </HBox>
-
-            <HBox spacing="10" alignment="CENTER">
-                <Button text="Registrar" onAction="#registrarUsuario" />
-                <Button text="Cancelar" onAction="#cancelarRegistro" />
+            <!-- Botones de Acción -->
+            <HBox spacing="20.0" alignment="CENTER" prefWidth="300.0" style="-fx-padding: 10;">
+                <Button text="Registrar" onAction="#registrarUsuario" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;" />
+                <Button text="Cancelar" onAction="#cancelarRegistro" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;" />
             </HBox>
         </VBox>
     </children>

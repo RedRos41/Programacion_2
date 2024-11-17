@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="co.edu.uniquindio.proyectofinal.controladores.RealizarReservaControlador"
-      spacing="15" alignment="CENTER" style="-fx-padding: 20;">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.proyectofinal.controladores.RealizarReservaControlador"
+            style="-fx-background-color: #f5f5f5;">
+    <children>
+        <VBox alignment="TOP_CENTER" spacing="20.0" style="-fx-padding: 20;" prefWidth="600.0" prefHeight="400.0">
 
-    <!-- Título -->
-    <Label text="Realizar Reserva" style="-fx-font-size: 20px; -fx-font-weight: bold;" alignment="CENTER"/>
+            <!-- Título -->
+            <Label text="Realizar Reserva" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;" />
 
-    <!-- Selección de Alojamiento -->
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="Alojamiento:"/>
-        <ComboBox fx:id="comboAlojamientos" promptText="Seleccione un alojamiento" prefWidth="200"/>
-    </HBox>
+            <!-- Selección de Alojamiento -->
+            <HBox spacing="15.0" alignment="CENTER" style="-fx-padding: 10;">
+                <Label text="Alojamiento:" style="-fx-font-size: 14px;" />
+                <ComboBox fx:id="comboAlojamientos" promptText="Seleccione un alojamiento" prefWidth="300.0" style="-fx-background-color: #ffffff;" />
+            </HBox>
 
-    <!-- Capacidad del Alojamiento -->
-    <Label fx:id="lblCapacidad" text="Capacidad Máxima: -" style="-fx-font-size: 14px;"/>
+            <!-- Capacidad del Alojamiento -->
+            <Label fx:id="lblCapacidad" text="Capacidad Máxima: -" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4a4a4a;" />
 
-    <!-- Selección de Fechas -->
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="Fecha de Inicio:"/>
-        <DatePicker fx:id="fechaInicioReserva"/>
-    </HBox>
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="Fecha de Fin:"/>
-        <DatePicker fx:id="fechaFinReserva"/>
-    </HBox>
+            <!-- Selección de Fechas -->
+            <VBox spacing="10.0" style="-fx-padding: 10;">
+                <HBox spacing="15.0" alignment="CENTER_LEFT">
+                    <Label text="Fecha de Inicio:" style="-fx-font-size: 14px;" />
+                    <DatePicker fx:id="fechaInicioReserva" style="-fx-background-color: #ffffff;" />
+                </HBox>
+                <HBox spacing="15.0" alignment="CENTER_LEFT">
+                    <Label text="Fecha de Fin:" style="-fx-font-size: 14px;" />
+                    <DatePicker fx:id="fechaFinReserva" style="-fx-background-color: #ffffff;" />
+                </HBox>
+            </VBox>
 
-    <!-- Número de Huéspedes -->
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="Número de Huéspedes:"/>
-        <Spinner fx:id="spinnerNumHuespedes" prefWidth="100"/>
-    </HBox>
+            <!-- Número de Huéspedes -->
+            <HBox spacing="15.0" alignment="CENTER_LEFT" style="-fx-padding: 10;">
+                <Label text="Número de Huéspedes:" style="-fx-font-size: 14px;" />
+                <Spinner fx:id="spinnerNumHuespedes" prefWidth="100.0" style="-fx-background-color: #ffffff;" />
+            </HBox>
 
-    <!-- Botón Confirmar -->
-    <Button text="Confirmar Reserva" onAction="#confirmarReserva" style="-fx-font-size: 14px;"/>
-</VBox>
+            <!-- Botón Confirmar -->
+            <Button text="Confirmar Reserva" onAction="#confirmarReserva" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;" />
+        </VBox>
+    </children>
+</AnchorPane>

@@ -364,6 +364,14 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return (int) (Math.random() * 9000) + 1000;
     }
 
+    public List<Oferta> obtenerOfertasActivas() {
+        return empresa.obtenerOfertasActivas();
+    }
+
+    public List<Alojamiento> obtenerAlojamientosAleatorios(int limite) {
+        return empresa.obtenerAlojamientosAleatorios(limite);
+    }
+
     public void navegarVentanaObservableConAlojamiento(String nombreFxml, String titulo, Alojamiento alojamiento, Observador observador) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreFxml));
