@@ -285,11 +285,10 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return empresa.generarFactura(subTotalFactura,totalFactura);
     }
 
-
-
-    //  metodos de los servicios:
-    // Qr generarQr() throws Exception;
-    // Estadistica obtenerEstadisticas();
+    @Override
+    public void desontarSaldo(Usuario cliente, double totalFactura){
+        empresa.desontarSaldo(cliente, totalFactura);
+    }
 
 
     public void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {

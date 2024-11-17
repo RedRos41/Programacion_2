@@ -2026,6 +2026,22 @@ public class Empresa implements ServicioEmpresa {
 
     }
 
+    public List<Alojamiento> obtenerAlojamientosAleatorios(int limite) {
+        return alojamientos.stream()
+                .filter(alojamiento -> !alojamiento.getReservasAlojamiento().isEmpty())
+                .sorted((a, b) -> Math.random() > 0.5 ? 1 : -1)
+                .limit(limite)
+                .toList();
+    }
+
+    public List<Oferta> obtenerOfertasActivas() {
+        return alojamientos.stream()
+                .flatMap(alojamiento -> alojamiento.getOfertas().stream())
+                .filter(oferta -> oferta.getFechaInicioOferta().isBefore(LocalDateTime.now()) &&
+                        oferta.getFechaFinOferta().isAfter(LocalDateTime.now()))
+                .toList();
+    }
+
 
     @Override
     public List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception {
