@@ -253,6 +253,26 @@ public class ControladorPrincipal implements ServicioEmpresa{
     }
 
     @Override
+    public List<Alojamiento> obtenerAlojamientos() {
+        return List.of();
+    }
+
+    @Override
+    public List<Alojamiento> obtenerAlojamientosPopulares() {
+        return List.of();
+    }
+
+    @Override
+    public List<Alojamiento> obtenerAlojamientosRentables() {
+        return List.of();
+    }
+
+    @Override
+    public List<Alojamiento> getAlojamientos() {
+        return List.of();
+    }
+
+    @Override
     public int calcularDiasReserva(LocalDateTime fechaInicioReserva, LocalDateTime fechaFinReserva){
         return empresa.calcularDiasReserva(fechaInicioReserva, fechaFinReserva);
     }
@@ -404,5 +424,4 @@ public class ControladorPrincipal implements ServicioEmpresa{
             e.printStackTrace();
         }
     }
-
 }

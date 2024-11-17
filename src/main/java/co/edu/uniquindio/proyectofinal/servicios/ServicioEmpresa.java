@@ -80,6 +80,14 @@ public interface ServicioEmpresa {
     List<Alojamiento> alojamientosPopulares() throws Exception;
     List<Alojamiento> alojamientosRentables() throws Exception;
 
+    List<Alojamiento> obtenerAlojamientos();
+
+    List<Alojamiento> obtenerAlojamientosPopulares();
+
+    List<Alojamiento> obtenerAlojamientosRentables();
+
+    List<Alojamiento> getAlojamientos();
+
     //Estadistica obtenerEstadisticas();
 
 }

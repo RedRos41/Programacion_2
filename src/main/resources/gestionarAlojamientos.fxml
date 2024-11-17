@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyectofinal.controladores.GestionAlojamientosControlador" spacing="10" style="-fx-padding: 20;">
+    <Label text="Gestión de Alojamientos" style="-fx-font-size: 18px; -fx-font-weight: bold;" alignment="CENTER"/>
+
+    <TableView fx:id="tablaAlojamientos" style="-fx-pref-height: 200px;">
+        <columns>
+            <TableColumn fx:id="colNombre" text="Nombre" prefWidth="150"/>
+            <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
+            <TableColumn fx:id="colCiudad" text="Ciudad" prefWidth="100"/>
+            <TableColumn fx:id="colPrecio" text="Precio por Noche" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Registrar Alojamiento" onAction="#abrirFormularioRegistro"/>
+        <Button text="Editar Alojamiento" onAction="#abrirFormularioEdicion"/>
+        <Button text="Eliminar Alojamiento" onAction="#eliminarAlojamiento"/>
+    </HBox>
+
+    <Label fx:id="lblMensaje" text="" style="-fx-text-fill: red;" alignment="CENTER"/>
+</VBox>

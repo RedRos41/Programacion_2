@@ -27,11 +27,15 @@ public class Alojamiento {
     protected CiudadAlojamiento ciudadAlojamiento;
     protected String imagenAlojamiento;
     protected double precioPorNocheAlojamiento;
+    protected double gananciasTotales;
     protected int capacidadMaximaAlojamiento;
+    protected Object OcupacionPorcentual;
     protected ServicioAlojamiento servicioAlojamiento;
     protected TipoAlojamiento tipoAlojamiento;
     protected List<Oferta> ofertas;
     protected List<Reseña> reseñas;
     protected List<Reserva> reservasAlojamiento;
+
+
 
 }

@@ -51,8 +51,8 @@ public class Empresa implements ServicioEmpresa {
                     TipoUsuario.ADMINISTRADOR,
                     1111111111,
                     "Admin",
-                    "admin@nose.com",
-                    "admin123",
+                    "bb@bb.co",
+                    "12345678",
                     1111111111
             );
             admin.setUsuarioActivado(true);
@@ -62,8 +62,8 @@ public class Empresa implements ServicioEmpresa {
                     TipoUsuario.CLIENTE,
                     1222222222,
                     "ClientePrueba",
-                    "aa@aa.co",
-                    "12121212",
+                    "cliente@cliente.com",
+                    "cliente123",
                     1222222222
             );
             cliente.setUsuarioActivado(true);
@@ -71,6 +71,9 @@ public class Empresa implements ServicioEmpresa {
             if (cliente instanceof Cliente clienteEspecifico) {
                 clienteEspecifico.getBilleteraCliente().setSaldoBilletera(500000.0); // saldo inicial
             }
+
+
+
 
             usuarios.add(cliente);
 
@@ -2174,5 +2177,26 @@ public class Empresa implements ServicioEmpresa {
         return alojamientoRentable;
 
     }
+
+    @Override
+    public List<Alojamiento> obtenerAlojamientos() {
+        return List.of();
+    }
+
+    @Override
+    public List<Alojamiento> obtenerAlojamientosPopulares() {
+        return List.of();
+    }
+
+    @Override
+    public List<Alojamiento> obtenerAlojamientosRentables() {
+        return List.of();
+    }
+
+    @Override
+    public List<Alojamiento> getAlojamientos() {
+        return this.alojamientos;
+    }
+
 
 }
