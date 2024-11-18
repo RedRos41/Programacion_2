@@ -6,7 +6,6 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.CiudadAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.ServicioAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoAlojamiento;
 import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 
 import java.time.LocalDateTime;
