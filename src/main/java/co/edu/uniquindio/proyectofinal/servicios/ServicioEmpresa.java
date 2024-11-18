@@ -82,7 +82,9 @@ public interface ServicioEmpresa {
 
     List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception;
     List<BarChart.Data<String, Number>> obtenerEstadisticas() throws Exception;
-    List<Alojamiento> alojamientosPopulares() throws Exception;
-    List<PieChart.Data> alojamientosRentables() throws Exception;
+    List<Alojamiento> obtenerAlojamientosPopulares() throws Exception;
+    List<PieChart.Data> obtenerAlojamientosRentables() throws Exception;
+    List<Alojamiento> obtenerAlojamientosAleatorios();
+    List<Oferta> obtenerOfertasActivas();
 
 }

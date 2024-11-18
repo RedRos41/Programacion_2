@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.Collections;
 
 
 @Getter
@@ -29,6 +30,8 @@ public class Empresa implements ServicioEmpresa {
     private final List<BarChart.Data<String, Number>> estadisticaAlojamiento;
     private final List<Alojamiento> alojamientoPopular;
     private final List<PieChart.Data> alojamientoRentable;
+    private final List<Alojamiento> alojamientoAleatorio;
+    private final List<Oferta> ofertaActiva;
 
 
     public Empresa() {
@@ -39,6 +42,8 @@ public class Empresa implements ServicioEmpresa {
         this.estadisticaAlojamiento = new ArrayList<>();
         this.alojamientoPopular = new ArrayList<>();
         this.alojamientoRentable = new ArrayList<>();
+        this.alojamientoAleatorio = new ArrayList<>();
+        this.ofertaActiva = new ArrayList<>();
 
 
         inicializarAlojamientos();
@@ -2059,20 +2064,31 @@ public class Empresa implements ServicioEmpresa {
     }
 
 
+    @Override
     public List<Alojamiento> obtenerAlojamientosAleatorios() {
-        return alojamientos.stream()
+
+        alojamientoAleatorio.clear();
+
+        List<Alojamiento> filtrados = alojamientos.stream()
                 .filter(alojamiento -> !alojamiento.getReservasAlojamiento().isEmpty())
-                .sorted((a, b) -> Math.random() > 0.5 ? 1 : -1)
-                .limit(5)
                 .toList();
+
+        Collections.shuffle(filtrados);
+
+        alojamientoAleatorio.addAll(filtrados.stream()
+                .limit(5)
+                .toList());
+
+        return alojamientoAleatorio;
+
     }
 
 
+    @Override
     public List<Oferta> obtenerOfertasActivas() {
         return alojamientos.stream()
                 .flatMap(alojamiento -> alojamiento.getOfertas().stream())
-                .filter(oferta -> oferta.getFechaInicioOferta().isBefore(LocalDateTime.now()) &&
-                        oferta.getFechaFinOferta().isAfter(LocalDateTime.now()))
+                .filter(oferta -> oferta.getFechaInicioOferta().isBefore(LocalDateTime.now()) && oferta.getFechaFinOferta().isAfter(LocalDateTime.now()))
                 .toList();
     }
 
@@ -2152,7 +2168,7 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public List<Alojamiento> alojamientosPopulares() throws Exception {
+    public List<Alojamiento> obtenerAlojamientosPopulares() throws Exception {
 
         alojamientoPopular.clear();
 
@@ -2177,7 +2193,7 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public List<PieChart.Data> alojamientosRentables() throws Exception {
+    public List<PieChart.Data> obtenerAlojamientosRentables() throws Exception {
 
         alojamientoRentable.clear();
 
