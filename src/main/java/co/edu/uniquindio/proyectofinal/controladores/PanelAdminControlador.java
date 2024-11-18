@@ -43,6 +43,9 @@ public class PanelAdminControlador implements Observador {
     @FXML
     private Button btnAlojamientosRentables;
 
+
+
+
     @FXML
     private Button btnVolver;
 
@@ -89,16 +92,48 @@ public class PanelAdminControlador implements Observador {
         }
     }
 
-    //@FXML
-    //private void mostrarAlojamientosRentables(ActionEvent event) {
-        //try {
-            //List<PieChart.Data> alojamientosRentables = controladorPrincipal.alojamientosRentables();
-            //ObservableList<PieChart.Data> listaRentables = FXCollections.observableArrayList(alojamientosRentables);
-            //tablaAlojamientos.setItems(listaRentables);
-        //} catch (Exception e) {
-            //controladorPrincipal.mostrarAlerta("Error al cargar alojamientos rentables: " + e.getMessage(), "Error", Alert.AlertType.ERROR);
-        //}
-    //}
+    @FXML
+    private void abrirAlojamientosRentables(ActionEvent event) {
+        try {
+            // Obtener los datos de los alojamientos más rentables desde el ControladorPrincipal
+            List<PieChart.Data> datosRentables = controladorPrincipal.alojamientosRentables();
+
+            // Crear el gráfico PieChart para mostrar los datos
+            PieChart graficoRentabilidad = new PieChart(FXCollections.observableArrayList(datosRentables));
+            graficoRentabilidad.setTitle("Alojamientos Más Rentables");
+
+            // Personalizar los colores del gráfico y sincronizar con la leyenda
+            datosRentables.forEach(data -> {
+                if (data.getName().equals("Casa")) {
+                    data.getNode().setStyle("-fx-pie-color: #77dd77;"); // Verde para Casa
+                } else if (data.getName().equals("Apartamento")) {
+                    data.getNode().setStyle("-fx-pie-color: #ff6961;"); // Rojo para Apartamento
+                } else if (data.getName().equals("Hotel")) {
+                    data.getNode().setStyle("-fx-pie-color: #cba6f7;"); // Morado para Hotel
+                }
+            });
+
+            // Crear un nuevo diálogo para mostrar el gráfico
+            Dialog<Void> dialogoGrafico = new Dialog<>();
+            dialogoGrafico.setTitle("Alojamientos Más Rentables");
+            dialogoGrafico.getDialogPane().setContent(graficoRentabilidad);
+            dialogoGrafico.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+            dialogoGrafico.showAndWait();
+        } catch (Exception e) {
+            // Mostrar alerta si hay un error
+            controladorPrincipal.mostrarAlerta(
+                    "Error al cargar los alojamientos más rentables: " + e.getMessage(),
+                    "Error",
+                    Alert.AlertType.ERROR
+            );
+        }
+    }
+
+
+
+
+
+
 
     @FXML
     private void volver(ActionEvent event) {

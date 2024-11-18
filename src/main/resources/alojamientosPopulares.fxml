@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="co.edu.uniquindio.proyectofinal.controladores.AlojamientosPopularesControlador" spacing="10" style="-fx-padding: 20;">
+    <TableView fx:id="tablaAlojamientosPopulares" style="-fx-pref-height: 400px;">
+        <columns>
+            <TableColumn fx:id="colNombre" text="Nombre" prefWidth="150"/>
+            <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
+            <TableColumn fx:id="colCiudad" text="Ciudad" prefWidth="100"/>
+            <TableColumn fx:id="colPrecio" text="Precio por Noche" prefWidth="100"/>
+        </columns>
+    </TableView>
+</VBox>

@@ -82,7 +82,9 @@ public class Empresa implements ServicioEmpresa {
             registrarCasa(
                     100, "Casa Bella", CiudadAlojamiento.ARMENIA, "Casa amplia y cómoda",
                     "casa_bella.jpg", 200.0, 5, ServicioAlojamiento.WIFI, 30.0, 50.0);
-
+            registrarCasa(
+                    103, "Casa fea", CiudadAlojamiento.ARMENIA, "Casa amplia y cómoda",
+                    "casa_bella.jpg", 200.0, 5, ServicioAlojamiento.WIFI, 30.0, 50.0);
             registrarApartamento(
                     101, "Apartamento Moderno", CiudadAlojamiento.PEREIRA, "Moderno y bien ubicado",
                     "apto_moderno.jpg", 150.0, 4, ServicioAlojamiento.DESAYUNO, 20.0, 40.0);

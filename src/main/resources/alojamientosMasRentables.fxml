@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="co.edu.uniquindio.proyectofinal.controladores.AlojamientosMasRentablesControlador" spacing="10" style="-fx-padding: 20;">
+    <PieChart fx:id="graficoRentabilidad" title="Alojamientos Más Rentables" style="-fx-pref-height: 400px;"/>
+</VBox>
