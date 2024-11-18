@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.proyectofinal.controladores.RegistrarHotelControlador">
+    <children>
+        <VBox spacing="10" alignment="TOP_CENTER" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <Label text="Registrar Hotel" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                    <ColumnConstraints halignment="LEFT" minWidth="200" hgrow="ALWAYS"/>
+                </columnConstraints>
+                <children>
+                    <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtNombre" promptText="Ingrese el nombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Ciudad:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="comboCiudad" promptText="Seleccione una ciudad" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Descripción:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtDescripcion" promptText="Ingrese la descripción" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Precio por noche:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtPrecio" promptText="Ingrese el precio" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Capacidad máxima:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtCapacidad" promptText="Ingrese la capacidad" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Servicio:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="comboServicio" promptText="Seleccione un servicio" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <Label text="Imagen:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <HBox spacing="5" GridPane.rowIndex="6" GridPane.columnIndex="1">
+                        <children>
+                            <Label fx:id="lblRutaImagen" text="No se seleccionó ninguna imagen" wrapText="true" maxWidth="200"/>
+                            <Button fx:id="btnSeleccionarImagen" text="Seleccionar" onAction="#seleccionarImagen"/>
+                        </children>
+                    </HBox>
+                </children>
+            </GridPane>
+            <Label fx:id="lblMensaje" textFill="red" wrapText="true"/>
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="btnRegistrar" text="Registrar" onAction="#registrarHotel"/>
+                <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelarRegistro"/>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

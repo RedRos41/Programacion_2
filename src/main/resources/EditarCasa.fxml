@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.proyectofinal.controladores.EditarCasasControlador" spacing="10" alignment="TOP_CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Título -->
+    <Label text="Editar Casa" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <!-- Formulario -->
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT"/>
+            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <!-- Nombre -->
+        <Label text="Nombre:"/>
+        <TextField fx:id="txtNombre" GridPane.columnIndex="1"/>
+
+        <!-- Ciudad -->
+        <Label text="Ciudad:" GridPane.rowIndex="1"/>
+        <ComboBox fx:id="comboCiudad" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <!-- Descripción -->
+        <Label text="Descripción:" GridPane.rowIndex="2"/>
+        <TextArea fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <!-- Precio -->
+        <Label text="Precio por Noche:" GridPane.rowIndex="3"/>
+        <TextField fx:id="txtPrecio" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+        <!-- Capacidad -->
+        <Label text="Capacidad:" GridPane.rowIndex="4"/>
+        <TextField fx:id="txtCapacidad" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+        <!-- Servicio -->
+        <Label text="Servicio:" GridPane.rowIndex="5"/>
+        <ComboBox fx:id="comboServicio" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+        <!-- Costo de Aseo -->
+        <Label text="Costo de Aseo:" GridPane.rowIndex="6"/>
+        <TextField fx:id="txtAseo" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+        <!-- Costo de Mantenimiento -->
+        <Label text="Costo de Mantenimiento:" GridPane.rowIndex="7"/>
+        <TextField fx:id="txtMantenimiento" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    </GridPane>
+
+    <!-- Mensaje -->
+    <Label fx:id="lblMensaje" style="-fx-text-fill: red;"/>
+
+    <!-- Botones -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Guardar Cambios" fx:id="btnGuardar" onAction="#guardarCambios"/>
+        <Button text="Cancelar" fx:id="btnCancelar" onAction="#cancelarEdicion"/>
+    </HBox>
+</VBox>

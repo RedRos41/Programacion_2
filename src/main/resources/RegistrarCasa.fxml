@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.proyectofinal.controladores.RegistrarCasaControlador">
+    <children>
+        <VBox spacing="10" alignment="CENTER" prefWidth="400" prefHeight="600">
+            <Label text="Registrar Casa" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <!-- Campo de Nombre -->
+            <TextField fx:id="txtNombre" promptText="Nombre de la Casa"/>
+
+            <!-- ComboBox para Ciudad -->
+            <ComboBox fx:id="comboCiudad" promptText="Seleccione Ciudad"/>
+
+            <!-- Campo de Descripción -->
+            <TextArea fx:id="txtDescripcion" promptText="Descripción" prefRowCount="3"/>
+
+            <!-- Campo de Dirección -->
+            <TextField fx:id="txtDireccion" promptText="Dirección de la Casa"/>
+
+            <!-- Campo de Precio -->
+            <TextField fx:id="txtPrecio" promptText="Precio por Noche"/>
+
+            <!-- Campo de Capacidad -->
+            <TextField fx:id="txtCapacidad" promptText="Capacidad Máxima"/>
+
+            <!-- ComboBox para Servicio -->
+            <ComboBox fx:id="comboServicio" promptText="Seleccione Servicio"/>
+
+            <!-- Campos de Costo de Aseo y Mantenimiento -->
+            <TextField fx:id="txtAseo" promptText="Costo de Aseo"/>
+            <TextField fx:id="txtMantenimiento" promptText="Costo de Mantenimiento"/>
+
+            <!-- Selección de Imagen -->
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="btnSeleccionarImagen" text="Seleccionar Imagen" onAction="#seleccionarImagen"/>
+                <Label fx:id="lblRutaImagen" text="No se seleccionó ninguna imagen"/>
+            </HBox>
+
+            <!-- Botones de Acción -->
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="btnRegistrar" text="Registrar" onAction="#registrarCasa"/>
+                <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelarRegistro"/>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

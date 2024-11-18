@@ -404,23 +404,32 @@ public class ControladorPrincipal implements ServicioEmpresa{
     }
 
 
-    public void navegarVentanaObservableConAlojamiento(String nombreFxml, String titulo, Alojamiento alojamiento, Observador observador) {
+    public void navegarVentanaObservableConAlojamiento(String rutaFXML, String titulo, Alojamiento alojamiento, Observador observador) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreFxml));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
             Parent root = loader.load();
 
-            RealizarReservaControlador realizarReservaControlador = loader.getController();
-            realizarReservaControlador.setAlojamientoSeleccionado(alojamiento);
-            realizarReservaControlador.setObservador(observador);
+            // Configurar el controlador
+            VentanaObservable controlador = loader.getController();
+            controlador.setObservador(observador);
 
-            Scene scene = new Scene(root);
+            if (controlador instanceof EditarCasasControlador && alojamiento instanceof Casa casa) {
+                ((EditarCasasControlador) controlador).setCasaSeleccionada(casa);
+            } else if (controlador instanceof EditarApartamentoControlador && alojamiento instanceof Apartamento apartamento) {
+                ((EditarApartamentoControlador) controlador).setApartamentoSeleccionado(apartamento);
+            } else if (controlador instanceof EditarHotelControlador && alojamiento instanceof Hotel hotel) {
+                ((EditarHotelControlador) controlador).setHotelSeleccionado(hotel);
+            }else {
+                throw new IllegalArgumentException("El tipo de alojamiento o controlador no es compatible.");
+            }
+
             Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setResizable(false);
             stage.setTitle(titulo);
+            stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            mostrarAlerta("Error al cargar ventana: " + e.getMessage(), "Error", Alert.AlertType.ERROR);
         }
     }
+
 }

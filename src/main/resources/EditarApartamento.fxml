@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+
+<VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.proyectofinal.controladores.EditarApartamentoControlador">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Título -->
+    <Label text="Editar Apartamento" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <!-- Nombre -->
+    <HBox spacing="10">
+        <Label text="Nombre:"/>
+        <TextField fx:id="txtNombre" promptText="Ingrese el nombre del apartamento" prefWidth="300"/>
+    </HBox>
+
+    <!-- Ciudad -->
+    <HBox spacing="10">
+        <Label text="Ciudad:"/>
+        <ComboBox fx:id="comboCiudad" prefWidth="300"/>
+    </HBox>
+
+    <!-- Descripción -->
+    <VBox spacing="5">
+        <Label text="Descripción:"/>
+        <TextArea fx:id="txtDescripcion" promptText="Ingrese una descripción" prefWidth="400" prefHeight="100"/>
+    </VBox>
+
+    <!-- Precio -->
+    <HBox spacing="10">
+        <Label text="Precio por Noche:"/>
+        <TextField fx:id="txtPrecio" promptText="Ingrese el precio" prefWidth="300"/>
+    </HBox>
+
+    <!-- Capacidad -->
+    <HBox spacing="10">
+        <Label text="Capacidad Máxima:"/>
+        <TextField fx:id="txtCapacidad" promptText="Ingrese la capacidad máxima" prefWidth="300"/>
+    </HBox>
+
+    <!-- Servicio -->
+    <HBox spacing="10">
+        <Label text="Servicio:"/>
+        <ComboBox fx:id="comboServicio" prefWidth="300"/>
+    </HBox>
+
+    <!-- Aseo -->
+    <HBox spacing="10">
+        <Label text="Costo de Aseo:"/>
+        <TextField fx:id="txtAseo" promptText="Ingrese el costo de aseo" prefWidth="300"/>
+    </HBox>
+
+    <!-- Mantenimiento -->
+    <HBox spacing="10">
+        <Label text="Costo de Mantenimiento:"/>
+        <TextField fx:id="txtMantenimiento" promptText="Ingrese el costo de mantenimiento" prefWidth="300"/>
+    </HBox>
+
+    <!-- Mensaje -->
+    <Label fx:id="lblMensaje" text="" style="-fx-text-fill: red;"/>
+
+    <!-- Botones -->
+    <HBox spacing="20" alignment="CENTER">
+        <Button fx:id="btnGuardar" text="Guardar Cambios" onAction="#guardarCambios" style="-fx-font-size: 14px;"/>
+        <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelarEdicion" style="-fx-font-size: 14px;"/>
+    </HBox>
+</VBox>

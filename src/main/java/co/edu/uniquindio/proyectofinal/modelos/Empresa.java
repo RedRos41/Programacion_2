@@ -1145,74 +1145,51 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public void editarHotel(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento, String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento, int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento) throws Exception {
+    public void editarHotel(int direccionAlojamiento, String nombreAlojamiento, CiudadAlojamiento ciudadAlojamiento,
+                            String descripcionAlojamiento, String imagenAlojamiento, double precioPorNocheAlojamiento,
+                            int capacidadMaximaAlojamiento, ServicioAlojamiento servicioAlojamiento) throws Exception {
 
         if (direccionAlojamiento <= 0) {
-
-            throw new Exception("La direccion solo puede tener numeros positivos.");
-
+            throw new Exception("La dirección solo puede tener números positivos.");
         }
 
         int idAlojamiento = buscarAlojamiento(direccionAlojamiento);
-
         if (idAlojamiento == -1) {
-
-            throw new Exception("No existe un alojamiento con la direccion proporcionada.");
-
+            throw new Exception("No existe un alojamiento con la dirección proporcionada.");
         }
 
         if (nombreAlojamiento.isBlank()) {
-
-            throw new Exception("El nombre no puede estar vacio.");
-
+            throw new Exception("El nombre no puede estar vacío.");
         }
 
-        if (!nombreAlojamiento.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
-
-            throw new Exception("El nombre solo puede contener letras.");
-
-        }
-
-        if (buscarAlojamientoPorNombre(nombreAlojamiento) != null) {
-
+        Alojamiento alojamientoExistente = buscarAlojamientoPorNombre(nombreAlojamiento);
+        if (alojamientoExistente != null && alojamientoExistente.getDireccionAlojamiento() != direccionAlojamiento) {
             throw new Exception("Ya existe un alojamiento con el nombre proporcionado.");
-
         }
 
         if (ciudadAlojamiento == null) {
-
-            throw new Exception("La ciudad no puede estar vacia.");
-
+            throw new Exception("La ciudad no puede estar vacía.");
         }
 
         if (descripcionAlojamiento.isBlank()) {
-
-            throw new Exception("La descripcion no puede estar vacio.");
-
+            throw new Exception("La descripción no puede estar vacía.");
         }
 
         if (precioPorNocheAlojamiento <= 0) {
-
-            throw new Exception("El precio por noche solo puede tener numeros positivos.");
-
+            throw new Exception("El precio por noche solo puede tener números positivos.");
         }
 
         if (capacidadMaximaAlojamiento <= 0) {
-
-            throw new Exception("La capacidad maxima solo puede tener numeros positivos.");
-
+            throw new Exception("La capacidad máxima solo puede tener números positivos.");
         }
 
         if (servicioAlojamiento == null) {
-
-            throw new Exception("El servicio no puede estar vacio.");
-
+            throw new Exception("El servicio no puede estar vacío.");
         }
 
         Alojamiento alojamiento = alojamientos.get(idAlojamiento);
 
         if (alojamiento instanceof Hotel editarHotel) {
-
             editarHotel.setDireccionAlojamiento(direccionAlojamiento);
             editarHotel.setNombreAlojamiento(nombreAlojamiento);
             editarHotel.setCiudadAlojamiento(ciudadAlojamiento);
@@ -1221,10 +1198,9 @@ public class Empresa implements ServicioEmpresa {
             editarHotel.setPrecioPorNocheAlojamiento(precioPorNocheAlojamiento);
             editarHotel.setCapacidadMaximaAlojamiento(capacidadMaximaAlojamiento);
             editarHotel.setServicioAlojamiento(servicioAlojamiento);
-
         }
-
     }
+
 
 
     @Override
@@ -2241,5 +2217,4 @@ public class Empresa implements ServicioEmpresa {
         return alojamientoRentable;
 
     }
-
 }
