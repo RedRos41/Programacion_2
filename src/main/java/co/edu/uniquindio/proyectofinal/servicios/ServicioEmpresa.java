@@ -81,7 +81,7 @@ public interface ServicioEmpresa {
     Factura generarFactura(double subTotalFactura, double totalFactura);
 
     List<Alojamiento> filtrarAlojamientos(String nombreAlojamiento, TipoAlojamiento tipoAlojamiento, CiudadAlojamiento ciudadAlojamiento, double precioMin, double precioMax) throws Exception;
-    List<BarChart.Data<String, Number>> obtenerEstadisticas() throws Exception;
+    List<PieChart.Data> obtenerEstadisticas() throws Exception;
     List<Alojamiento> obtenerAlojamientosPopulares() throws Exception;
     List<PieChart.Data> obtenerAlojamientosRentables() throws Exception;
     List<Alojamiento> obtenerAlojamientosAleatorios();

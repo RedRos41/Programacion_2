@@ -28,7 +28,7 @@ public class AlojamientosMasRentablesControlador {
     private void cargarAlojamientosRentables() {
         try {
             // Obtener los datos rentables
-            List<PieChart.Data> datosRentables = controladorPrincipal.alojamientosRentables();
+            List<PieChart.Data> datosRentables = controladorPrincipal.obtenerAlojamientosRentables();
 
             // Crear el gráfico de pie
             graficoRentabilidad.setData(FXCollections.observableArrayList(datosRentables));

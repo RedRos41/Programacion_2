@@ -84,7 +84,7 @@ public class PanelAdminControlador implements Observador {
     @FXML
     private void mostrarAlojamientosPopulares(ActionEvent event) {
         try {
-            List<Alojamiento> alojamientosPopulares = controladorPrincipal.alojamientosPopulares();
+            List<Alojamiento> alojamientosPopulares = controladorPrincipal.obtenerAlojamientosPopulares();
             ObservableList<Alojamiento> listaPopulares = FXCollections.observableArrayList(alojamientosPopulares);
             tablaAlojamientos.setItems(listaPopulares);
         } catch (Exception e) {
@@ -96,7 +96,7 @@ public class PanelAdminControlador implements Observador {
     private void abrirAlojamientosRentables(ActionEvent event) {
         try {
             // Obtener los datos de los alojamientos más rentables desde el ControladorPrincipal
-            List<PieChart.Data> datosRentables = controladorPrincipal.alojamientosRentables();
+            List<PieChart.Data> datosRentables = controladorPrincipal.obtenerAlojamientosRentables();
 
             // Crear el gráfico PieChart para mostrar los datos
             PieChart graficoRentabilidad = new PieChart(FXCollections.observableArrayList(datosRentables));

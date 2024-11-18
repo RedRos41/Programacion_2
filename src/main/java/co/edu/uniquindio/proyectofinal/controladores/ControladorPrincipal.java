@@ -383,16 +383,16 @@ public class ControladorPrincipal implements ServicioEmpresa{
         return empresa.obtenerAlojamientosAleatorios();
     }
 
-    public List<BarChart.Data<String, Number>> obtenerEstadisticas() throws Exception {
+    public List<PieChart.Data> obtenerEstadisticas() throws Exception {
             return empresa.obtenerEstadisticas();
     }
 
-    public List<Alojamiento> alojamientosPopulares() throws Exception {
-            return empresa.alojamientosPopulares();
+    public List<Alojamiento> obtenerAlojamientosPopulares() throws Exception {
+            return empresa.obtenerAlojamientosPopulares();
     }
 
-    public List<PieChart.Data> alojamientosRentables() throws Exception {
-            return empresa.alojamientosRentables();
+    public List<PieChart.Data> obtenerAlojamientosRentables() throws Exception {
+            return empresa.obtenerAlojamientosRentables();
     }
 
     public void abrirAlojamientosPopulares() {

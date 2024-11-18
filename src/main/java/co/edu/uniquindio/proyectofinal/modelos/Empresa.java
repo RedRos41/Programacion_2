@@ -8,7 +8,6 @@ import co.edu.uniquindio.proyectofinal.modelos.enums.TipoUsuario;
 import co.edu.uniquindio.proyectofinal.servicios.ServicioEmpresa;
 import co.edu.uniquindio.proyectofinal.utils.EnvioEmail;
 import co.edu.uniquindio.proyectofinal.utils.Qr;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import lombok.Getter;
 
@@ -27,7 +26,7 @@ public class Empresa implements ServicioEmpresa {
     private final List<Usuario> usuarios;
     private final List<Alojamiento> alojamientos;
     private final List<Alojamiento> filtroAlojamiento;
-    private final List<BarChart.Data<String, Number>> estadisticaAlojamiento;
+    private final List<PieChart.Data> estadisticaAlojamiento;
     private final List<Alojamiento> alojamientoPopular;
     private final List<PieChart.Data> alojamientoRentable;
     private final List<Alojamiento> alojamientoAleatorio;
@@ -93,11 +92,9 @@ public class Empresa implements ServicioEmpresa {
             registrarApartamento(
                     101, "Apartamento Moderno", CiudadAlojamiento.PEREIRA, "Moderno y bien ubicado",
                     "apto_moderno.jpg", 150.0, 4, ServicioAlojamiento.DESAYUNO, 20.0, 40.0);
-
             registrarHotel(
                     102, "Hotel Premium", CiudadAlojamiento.CALARCA, "Hotel de alta categoría",
                     "hotel_premium.jpg", 300.0, 20, ServicioAlojamiento.PISCINA);
-
         } catch (Exception e) {
             System.out.println("Error al inicializar alojamientos: " + e.getMessage());
         }
@@ -2124,7 +2121,7 @@ public class Empresa implements ServicioEmpresa {
 
 
     @Override
-    public List<BarChart.Data<String, Number>> obtenerEstadisticas() throws Exception {
+    public List<PieChart.Data> obtenerEstadisticas() throws Exception {
 
         estadisticaAlojamiento.clear();
 
@@ -2150,9 +2147,9 @@ public class Empresa implements ServicioEmpresa {
 
             double ocupacionPorcentual = (double) totalDiasReservados / (alojamiento.getCapacidadMaximaAlojamiento() * 365) * 100;
 
-            estadisticaAlojamiento.add(new BarChart.Data<>(alojamiento.getNombreAlojamiento() + " (Ocupación)", ocupacionPorcentual));
+            estadisticaAlojamiento.add(new PieChart.Data(alojamiento.getNombreAlojamiento() + " (Ocupación)", ocupacionPorcentual));
 
-            estadisticaAlojamiento.add(new BarChart.Data<>(alojamiento.getNombreAlojamiento() + " (Ganancias)", totalGanancias));
+            estadisticaAlojamiento.add(new PieChart.Data(alojamiento.getNombreAlojamiento() + " (Ganancias)", totalGanancias));
 
         }
 

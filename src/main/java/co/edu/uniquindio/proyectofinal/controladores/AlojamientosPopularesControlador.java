@@ -46,7 +46,7 @@ public class AlojamientosPopularesControlador {
 
     private void cargarAlojamientosPopulares() {
         try {
-            List<Alojamiento> alojamientosPopulares = controladorPrincipal.alojamientosPopulares();
+            List<Alojamiento> alojamientosPopulares = controladorPrincipal.obtenerAlojamientosPopulares();
             ObservableList<Alojamiento> listaPopulares = FXCollections.observableArrayList(alojamientosPopulares);
             tablaAlojamientosPopulares.setItems(listaPopulares);
         } catch (Exception e) {
