@@ -1513,11 +1513,19 @@ public class Empresa implements ServicioEmpresa {
 
         }
 
-        Reserva reserva = ((Cliente) clienteReserva).getReservas().get(identificacionReserva);
+        List<Reserva> reservas = ((Cliente) clienteReserva).getReservas();
+
+        Reserva reserva = reservas.get(identificacionReserva);
+
+        Factura factura = reserva.getFacturaReserva();
+
+        double reembolso = factura.getTotalFactura();
+
+        recargarBilletera(clienteReserva, reembolso);
 
         Alojamiento alojamiento = reserva.getAlojamientoReserva();
 
-        ((Cliente) clienteReserva).getReservas().remove(identificacionReserva);
+        reservas.remove(identificacionReserva);
 
         alojamiento.getReservasAlojamiento().remove(identificacionReserva);
 
@@ -1942,14 +1950,6 @@ public class Empresa implements ServicioEmpresa {
         Billetera billetera = ((Cliente) cliente).getBilleteraCliente();
 
         billetera.setSaldoBilletera(billetera.getSaldoBilletera() - totalFactura);
-
-    }
-
-
-    //@Override
-    public void reembolsarSaldo() {
-
-
 
     }
 

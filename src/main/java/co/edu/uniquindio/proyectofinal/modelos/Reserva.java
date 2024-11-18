@@ -25,6 +25,7 @@ public class Reserva {
     private Alojamiento alojamientoReserva;
     private LocalDateTime fechaInicioReserva, fechaFinReserva;
     private int numHuespedesReserva;
+    private Factura facturaReserva;
 
 
     public String getNombreAlojamiento() {
