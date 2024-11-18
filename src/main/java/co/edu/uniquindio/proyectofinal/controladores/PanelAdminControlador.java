@@ -43,6 +43,12 @@ public class PanelAdminControlador implements Observador {
     @FXML
     private Button btnAlojamientosRentables;
 
+    @FXML
+    private void abrirEstadisticas(ActionEvent event) {
+        controladorPrincipal.abrirVentanaEstadisticas();
+    }
+
+
 
 
 
@@ -129,9 +135,24 @@ public class PanelAdminControlador implements Observador {
         }
     }
 
+    @FXML
+    private void abrirEstadisticas() {
+        try {
+            // Navegar a la ventana de estadísticas
+            ControladorPrincipal controladorPrincipal = ControladorPrincipal.getInstancia();
+            controladorPrincipal.navegarVentana("/estadisticasAlojamientos.fxml", "Estadísticas de Alojamientos");
+        } catch (Exception e) {
+            mostrarAlerta("No se pudo abrir la ventana de estadísticas: " + e.getMessage(), "Error", Alert.AlertType.ERROR);
+        }
+    }
 
-
-
+    private void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
 
 
 

@@ -432,4 +432,9 @@ public class ControladorPrincipal implements ServicioEmpresa{
         }
     }
 
+    public void abrirVentanaEstadisticas() {
+        navegarVentana("/estadisticasAlojamientos.fxml", "Estadísticas de Alojamientos");
+    }
+
+}
 }

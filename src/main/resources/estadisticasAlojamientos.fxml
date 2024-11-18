@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.proyectofinal.controladores.EstadisticasAlojamientosControlador"
+      spacing="10" style="-fx-padding: 20;">
+    <BarChart fx:id="graficoEstadisticas" animated="true" legendVisible="true">
+        <xAxis>
+            <CategoryAxis label="Alojamientos"/>
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Valores"/>
+        </yAxis>
+    </BarChart>
+</VBox>

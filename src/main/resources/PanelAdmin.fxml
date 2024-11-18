@@ -11,6 +11,7 @@
         <Button fx:id="btnGestionarAlojamientos" text="Gestionar Alojamientos" onAction="#gestionarAlojamientos"/>
         <Button fx:id="btnAlojamientosPopulares" text="Alojamientos Populares" onAction="#mostrarAlojamientosPopulares"/>
         <Button fx:id="btnAlojamientosRentables" text="Alojamientos Más Rentables" onAction="#abrirAlojamientosRentables"/>
+        <Button fx:id="btnEstadisticas" text="Estadísticas Alojamientos" onAction="#abrirEstadisticas"/>
         <Button fx:id="btnVolver" text="Volver" onAction="#volver"/>
     </HBox>
 
