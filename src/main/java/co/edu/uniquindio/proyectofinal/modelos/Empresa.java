@@ -637,6 +637,8 @@ public class Empresa implements ServicioEmpresa {
 
         Factura factura = generarFactura(costoReserva, totalFactura);
 
+        reserva.setFacturaReserva(factura);
+
         String codigoFactura = factura.getCodigoFactura();
 
         String rutaQr = "Qr_" + codigoFactura + ".png";
@@ -2112,7 +2114,7 @@ public class Empresa implements ServicioEmpresa {
 
             int totalDiasReservados = 0;
 
-            double gananciasTotales = 0;
+            double totalGanancias = 0;
 
             for (Reserva reserva : alojamiento.getReservasAlojamiento()) {
 
@@ -2120,13 +2122,11 @@ public class Empresa implements ServicioEmpresa {
 
                 totalDiasReservados += diasReservados;
 
-                double costo = calcularCostoReserva(reserva.getAlojamientoReserva(), reserva.getFechaInicioReserva(), reserva.getFechaFinReserva());
+                Factura factura = reserva.getFacturaReserva();
 
-                double descuento = obtenerDescuento(reserva.getAlojamientoReserva(), reserva.getFechaInicioReserva(), reserva.getFechaFinReserva());
+                double ganancias = factura.getTotalFactura();
 
-                double calculo = calcularDescuento(descuento);
-
-                gananciasTotales += costo * calculo;
+                totalGanancias += ganancias;
 
             }
 
@@ -2134,7 +2134,7 @@ public class Empresa implements ServicioEmpresa {
 
             estadisticaAlojamiento.add(new BarChart.Data<>(alojamiento.getNombreAlojamiento() + " (Ocupación)", ocupacionPorcentual));
 
-            estadisticaAlojamiento.add(new BarChart.Data<>(alojamiento.getNombreAlojamiento() + " (Ganancias)", gananciasTotales));
+            estadisticaAlojamiento.add(new BarChart.Data<>(alojamiento.getNombreAlojamiento() + " (Ganancias)", totalGanancias));
 
         }
 
@@ -2187,27 +2187,25 @@ public class Empresa implements ServicioEmpresa {
 
         for (Alojamiento alojamiento : alojamientos) {
 
-            double totalReservas = 0;
+            double totalGanancias = 0;
 
             for (Reserva reserva : alojamiento.getReservasAlojamiento()) {
 
-                double costo = calcularCostoReserva(reserva.getAlojamientoReserva(), reserva.getFechaInicioReserva(), reserva.getFechaFinReserva());
+                Factura factura = reserva.getFacturaReserva();
 
-                double descuento = obtenerDescuento(reserva.getAlojamientoReserva(), reserva.getFechaInicioReserva(), reserva.getFechaFinReserva());
+                double ganancias = factura.getTotalFactura();
 
-                double calculo = calcularDescuento(descuento);
-
-                totalReservas += costo * calculo;
+                totalGanancias += ganancias;
 
             }
 
             switch (alojamiento.getTipoAlojamiento()) {
 
-                case CASA -> totalGananciasCasas += totalReservas;
+                case CASA -> totalGananciasCasas += totalGanancias;
 
-                case APARTAMENTO -> totalGananciasApartamentos += totalReservas;
+                case APARTAMENTO -> totalGananciasApartamentos += totalGanancias;
 
-                case HOTEL -> totalGananciasHoteles += totalReservas;
+                case HOTEL -> totalGananciasHoteles += totalGanancias;
 
             }
 
